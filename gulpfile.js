@@ -29,5 +29,6 @@ gulp.task('watch', function() {
 });
 
 gulp.task('watch', ['compass', 'browser-sync', 'watch']);
+gulp.task('test', []);
 gulp.task('build', ['compass']);
 gulp.task('default', ['build']);
