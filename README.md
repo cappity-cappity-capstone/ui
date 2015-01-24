@@ -1,4 +1,5 @@
 # Cappy UI
+![](https://travis-ci.org/cappity-cappity-capstone/ui.svg?branch=master)
 
 This repository holds the frontend user interface for NU Capstone 2015 Group W5.
 The ui is written with [React](https://facebook.github.io/react/).
