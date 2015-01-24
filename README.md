@@ -7,15 +7,19 @@ Its purpose is to serve a user interface for communicating with the [backend](ht
 
 ## Installation
 Install ruby gems
+
 `bundle install`
 
 Install node packages (likely requires sudo)
+
 `npm install`
 
 ## Building
 The default gulp task builds everything necessary
+
 `gulp`
 
 ## Development
 Gulp watch automatically re-builds when source files are changed
+
 `gulp watch`
