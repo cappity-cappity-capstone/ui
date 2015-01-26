@@ -1,0 +1,36 @@
+#!/bin/sh
+if [[ $UID != 0 ]]; then
+    echo "Please run this script with sudo:"
+    echo "sudo $0 $*"
+    exit 1
+fi
+
+npm cache clean
+npm install -g gulp
+npm install -g bower
+npm install -g browserify
+gem install bundler
+# http://stackoverflow.com/questions/10220019/how-to-write-a-shell-script-that-runs-some-commands-as-superuser-and-some-comman
+if [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
+    sudo -u ${USERNAME} npm prune
+    sudo -u ${USERNAME} npm install
+    sudo -u ${USERNAME} bower install
+    sudo -u ${USERNAME} bundle install
+    sudo -u ${USERNAME} gulp build
+    file_dir=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
+    git_hook=$file_dir/git-hooks/post-merge
+    echo "Symlinking \""$git_hook"\" to \""$file_dir"/.git/hooks/post-merge\"."
+    sudo -u ${USERNAME} ln -s $git_hook $file_dir"/.git/hooks/post-merge"
+else
+    NON_SUDO_USER=${SUDO_USER:-${USERNAME:-unknown}}
+    sudo -u ${NON_SUDO_USER} npm prune
+    sudo -u ${NON_SUDO_USER} npm install
+    sudo -u ${NON_SUDO_USER} bower install
+    sudo -u ${NON_SUDO_USER} bundle install
+    sudo -u ${NON_SUDO_USER} gulp build
+    file_dir=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
+    git_hook=$file_dir/git-hooks/post-merge
+    echo "Symlinking \""$git_hook"\" to \""$file_dir"/.git/hooks/post-merge\"."
+    sudo -u ${NON_SUDO_USER} ln -s $git_hook $file_dir"/.git/hooks/post-merge"
+fi
+

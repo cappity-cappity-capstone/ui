@@ -1,0 +1,26 @@
+@import "partials/_base";
+@import "partials/_layouts";
+
+$font-size: 20px;
+
+body {
+  padding: 0;
+  margin: 0;
+  position: relative;
+  font-size: $font-size;
+}
+
+a {
+  color: $color-link;
+  &:hover {
+    color: $color-link-hover;
+  }
+}
+
+h1 {
+  font-size: 50px;
+}
+
+ul {
+  list-style-type: none;
+}

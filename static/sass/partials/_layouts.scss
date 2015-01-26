@@ -1,0 +1,60 @@
+$width-drawer-expanded: 300px;
+$width-drawer-collapsed: 50px;
+$delay-drawer-transition: .3s;
+// the body has two states collapsed and expanded
+// collapsed means the drawer is closed and expanded
+// means the drawer is open. We control the drawer by
+// setting its width, and at the same time, setting the
+// main container's left margin so that they move together
+//
+// The default state of the page on load depends
+// on the viewport size and is set when react initilizes
+// the view.
+body {
+  &.collapsed {
+    #menu-side {
+      background-color: white;
+      width: $width-drawer-collapsed;
+
+      // hamburger menu
+      .icon-side-menu {
+        color: black;
+      }
+
+      .content {
+        opacity: 0;
+      }
+    }
+
+    #main-container {
+      margin-left: $width-drawer-collapsed;
+    }
+  }
+}
+
+#menu-side {
+  position: absolute;
+  width: $width-drawer-expanded;
+  height: 100%;
+  background-color: $color-side-menu-background;
+  overflow: hidden;
+  @include transition(width, linear, $delay-drawer-transition);
+  @include transition(background-color, ease-in, $delay-drawer-transition);
+
+  .content {
+    opacity: 100%;
+    @include transition(opacity, linear, $delay-drawer-transition);
+  }
+
+}
+
+#main-container {
+  height: 100%;
+  @include transition(margin-left, linear, $delay-drawer-transition);
+
+  header {
+    text-align: center;
+  }
+
+  margin-left: $width-drawer-expanded;
+}

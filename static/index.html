@@ -1,0 +1,60 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Cappy</title>
+        <meta name="description" content="Capstone Project">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta http-equiv="cleartype" content="on">
+        <meta http-equiv="x-dns-prefetch-control" content="off">
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+    </head>
+    <body>
+        <script>
+        function expandDrawer(width) {
+            document.getElementById('menu-side').setAttribute("style","width:" + width + "px;");
+            document.getElementById('main-container').setAttribute("style","margin-left:" + width + "px;");
+        }
+        </script>
+        <aside id="menu-side">
+            <div class="icon-side-menu"></div>
+            <div class="content">
+                <div class="photo-profile"></div>
+                <ul class="list-side-menu-options">
+                    <li>Logout</li>
+                    <li>Settings</li>
+                </ul>
+            </div>
+        </aside>
+        <div id="main-container">
+            <header>Home</header>
+                <ul class="modules">
+                    <li id="moduleAnchor"></li>
+                    <li>Outlet</li>
+                    <li>Stove</li>
+                    <li>Cabinet</li>
+                </ul>
+            </div>
+    </body>
+    <script src="components/react/react.js"></script>
+    <script src="components/react/JSXTransformer.js"></script>
+    <script type="text/jsx">
+        var Module = React.createClass({
+                render: function(){
+                return (
+                    <h1>Hello, {this.props.name}!</h1>
+                );
+            }
+        });
+
+        React.render(
+            <Module name="Daniel"/>,
+            document.getElementById('moduleAnchor')
+        );
+    </script>
+</html>

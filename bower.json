@@ -1,0 +1,23 @@
+{
+  "name": "Cappy",
+  "version": "0.0.0",
+  "homepage": "https://github.com/cappity-cappity-capstone/ui",
+  "authors": [
+    "Daniel Nordness <Daniel0524@gmail.com>",
+    "Adam Edgett <aedgett77@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "latest"
+  },
+  "devDependencies": {
+    "react": "~0.12.2"
+  }
+}
