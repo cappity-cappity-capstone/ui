@@ -5,17 +5,29 @@ if [[ $UID != 0 ]]; then
     exit 1
 fi
 
+command -v foo >/dev/null 2>&1 || { echo "This requires nodejs to be installed. Please install it with your system package manager." >&2; exit 1; }
+
+echo "Cleaning NPM Cache"
 npm cache clean
+echo "Installing Gulp"
 npm install -g gulp
+echo "Installing Bower"
 npm install -g bower
+echo "Installing browserify"
 npm install -g browserify
+echo "Installing Bundler"
 gem install bundler
 # http://stackoverflow.com/questions/10220019/how-to-write-a-shell-script-that-runs-some-commands-as-superuser-and-some-comman
 if [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
+    echo "Pruning unused NPM packages"
     sudo -u ${USERNAME} npm prune
+    echo "Installing NPM packages in package.json"
     sudo -u ${USERNAME} npm install
+    echo "Installing bower packages in bower.json"
     sudo -u ${USERNAME} bower install
+    echo "Installing Ruby gems in Gemfile"
     sudo -u ${USERNAME} bundle install
+    echo "Building site with gulp"
     sudo -u ${USERNAME} gulp build
     file_dir=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
     git_hook=$file_dir/git-hooks/post-merge
@@ -23,10 +35,15 @@ if [ "$(expr substr $(uname -s) 1 5)" = "Linux" ]; then
     sudo -u ${USERNAME} ln -s $git_hook $file_dir"/.git/hooks/post-merge"
 else
     NON_SUDO_USER=${SUDO_USER:-${USERNAME:-unknown}}
+    echo "Pruning unused NPM packages"
     sudo -u ${NON_SUDO_USER} npm prune
+    echo "Installing NPM packages in package.json"
     sudo -u ${NON_SUDO_USER} npm install
+    echo "Installing bower packages in bower.json"
     sudo -u ${NON_SUDO_USER} bower install
+    echo "Installing Ruby gems in Gemfile"
     sudo -u ${NON_SUDO_USER} bundle install
+    echo "Building site with gulp"
     sudo -u ${NON_SUDO_USER} gulp build
     file_dir=$( cd "$( dirname "${BASH_SOURCE[0]}"  )" && pwd  )
     git_hook=$file_dir/git-hooks/post-merge

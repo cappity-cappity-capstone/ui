@@ -18,6 +18,5 @@
     "font-awesome": "latest"
   },
   "devDependencies": {
-    "react": "~0.12.2"
   }
 }
