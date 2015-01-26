@@ -13,6 +13,8 @@
         <meta http-equiv="x-dns-prefetch-control" content="off">
         <link rel="shortcut icon" href="/favicon.ico">
         <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <!--ToDo: compile this with SASS/Compass-->
+        <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css">
     </head>
     <body>
         <script>
@@ -32,29 +34,16 @@
             </div>
         </aside>
         <div id="main-container">
-            <header>Home</header>
-                <ul class="modules">
-                    <li id="moduleAnchor"></li>
-                    <li>Outlet</li>
-                    <li>Stove</li>
-                    <li>Cabinet</li>
-                </ul>
+            <div class="content">
+                <header>Home</header>
+                    <ul class="modules">
+                        <li id="moduleAnchor"></li>
+                        <li>Outlet</li>
+                        <li>Stove</li>
+                        <li>Cabinet</li>
+                    </ul>
+                </div>
             </div>
     </body>
-    <script src="components/react/react.js"></script>
-    <script src="components/react/JSXTransformer.js"></script>
-    <script type="text/jsx">
-        var Module = React.createClass({
-                render: function(){
-                return (
-                    <h1>Hello, {this.props.name}!</h1>
-                );
-            }
-        });
-
-        React.render(
-            <Module name="Daniel"/>,
-            document.getElementById('moduleAnchor')
-        );
-    </script>
+    <script type="application/javascript" src="/js/bundle.js"></script>
 </html>

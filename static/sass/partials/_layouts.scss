@@ -57,4 +57,11 @@ body {
   }
 
   margin-left: $width-drawer-expanded;
+
+  .content {
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    text-align: center;
+  }
 }

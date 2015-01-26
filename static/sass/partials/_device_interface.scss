@@ -1,0 +1,20 @@
+$width-outer-circle-diameter: 300px;
+$height-outer-circle-diameter: 300px;
+
+%circle {
+  border-radius: 50%;
+}
+
+.device-outer-circle {
+  @extend %circle;
+  margin: 2em auto;
+  width: 100%;
+  max-width: $width-outer-circle-diameter;
+  height: $height-outer-circle-diameter;
+  &.off {
+    background-color: red;
+  }
+  &.on {
+    background-color: green;
+  }
+}
