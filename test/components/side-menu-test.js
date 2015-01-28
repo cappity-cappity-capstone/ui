@@ -18,8 +18,4 @@ describe('components/side-menu', function () {
   it('renders the menu', function() {
     expect(TestUtils.findRenderedDOMComponentWithClass(subject, 'menu')).not.toBe( null );
   });
-
-  it('renders the hambuger nav button', function() {
-    expect(TestUtils.findRenderedComponentWithType(subject, Icon).props.type).toBe('navicon');
-  });
 });

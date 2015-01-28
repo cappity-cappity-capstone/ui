@@ -19,11 +19,10 @@ var Device = React.createClass({
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
-          <div className={state + " device-outer-circle"}>
-            <div className="device-inner-outline">
-              <div className="device-icon-container">
-                <i className={"device-icon icon-" + this.props.type + "_" + state}></i>
-              </div>
+        <div className={state + " device-outer-circle"}>
+          <div className="device-inner-outline">
+            <div className="device-icon-container">
+              <i className={"device-icon icon-" + this.props.type + "_" + state}></i>
             </div>
           </div>
         </div>
