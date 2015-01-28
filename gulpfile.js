@@ -22,6 +22,7 @@ var paths = {
 gulp.task('js', function() {
   return browserify({ entries: './src/js/app.js' })
     .transform('reactify')
+    .on('error', swallowError)
     .bundle()
     .on('error', swallowError)
     .pipe(source('./static/js/bundle.js'))

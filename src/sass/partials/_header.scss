@@ -1,0 +1,14 @@
+header {
+  position: relative;
+}
+
+.header-menu-icon {
+  position: absolute; //like the vodka
+  left: 0;
+  cursor: pointer;
+  font-size: 30px;
+  color: $color-primary-dark;
+  i {
+    padding: .5rem 1rem;
+  }
+}

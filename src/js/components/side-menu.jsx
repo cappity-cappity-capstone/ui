@@ -1,5 +1,4 @@
 var React = require('react')
-var Icon = require('./icon.jsx')
 
 var SideMenu = React.createClass({
   propTypes: {
@@ -18,9 +17,6 @@ var SideMenu = React.createClass({
             </ul>
           </div>
         </aside>
-        <a className="icon-side-menu" onClick={this.props.onNavIconClick}>
-          <Icon type="navicon" />
-        </a>
       </div>
     );
   }

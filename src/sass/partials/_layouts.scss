@@ -28,31 +28,30 @@ body {
 }
 
 #menu-side {
-  position: absolute;
-  width: $width-drawer-expanded;
+  position: fixed;
+  box-sizing: border-box;
+  float: left;
   height: 100%;
+  width: $width-drawer-expanded;
   background-color: $color-side-menu-background;
   overflow: hidden;
   @include transition(width, linear, $delay-drawer-transition);
   @include transition(background-color, ease-in, $delay-drawer-transition);
 
   .content {
-    opacity: 100%;
     @include transition(opacity, linear, $delay-drawer-transition);
-  }
-
-}
-
-// hamburger menu
-.icon-side-menu {
-  cursor: pointer;
-
-  i {
-    color: black;
   }
 }
 
 #main-container {
+  &.dark {
+    background-color: $color-main-container-dark;
+  }
+
+  &.light {
+    background-color: $color-main-container-light;
+  }
+
   height: 100%;
   @include transition(margin-left, linear, $delay-drawer-transition);
 

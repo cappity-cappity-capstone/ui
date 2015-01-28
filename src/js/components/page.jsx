@@ -1,6 +1,7 @@
 var React = require('react')
 var Device = require('./device.jsx')
 var SideMenu = require('./side-menu.jsx')
+var Header = require('./header.jsx')
 var _ = require('underscore')
 
 var Page = React.createClass({
@@ -24,16 +25,23 @@ var Page = React.createClass({
     }
   },
 
+  getTimeClass: function() {
+    var hours = (new Date()).getHours();
+    if (hours >= 17 || hours < 7) {
+        return "dark";
+    } else {
+        return "light";
+    }
+  },
+
   render: function(){
     var renderedDevices = _.map(this.props.devices, this.renderDevice);
-
     return (
       <div>
-        <SideMenu onNavIconClick={this.handleNavIconClick}/>
-        <div id="main-container">
+        <SideMenu/>
+        <div className={this.getTimeClass()} id="main-container">
+          <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
-            <header>Home</header>
-            <h1>Hello, {this.props.name}!</h1>
             {renderedDevices}
           </div>
         </div>
@@ -58,4 +66,4 @@ var Page = React.createClass({
   }
 });
 
-module.exports = Page;
+module.exports = Page

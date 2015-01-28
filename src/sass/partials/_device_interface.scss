@@ -6,7 +6,7 @@ $color-inner-outline: white;
 $color-outer-outline: black;
 $width-inner-outline: 2px;
 $width-outer-outline: 4px;
-$size-icon-big: 250px;
+$size-icon-big: 175px;
 $size-icon-small: 300px;
 
 %circle {
@@ -17,10 +17,10 @@ $size-icon-small: 300px;
   @extend %circle;
   position: relative;
   margin: 2em auto;
-  width: 100%;
-  height: 100%;
-  max-width: $diameter-outer-circle;
-  max-height: $diameter-outer-circle;
+  // width: 100%;
+  // height: 100%;
+  width: $diameter-outer-circle;
+  height: $diameter-outer-circle;
   border: solid $width-outer-outline $color-outer-outline;
   &.off {
     background-color: $color-off;
@@ -31,8 +31,7 @@ $size-icon-small: 300px;
   &.on {
     background-color: $color-on;
     .device-inner-outline {
-      background-color: $color-on;
-    }
+      background-color: $color-on; }
   }
 
 
@@ -47,16 +46,41 @@ $size-icon-small: 300px;
     border: solid $width-inner-outline  $color-inner-outline;
   }
 
-  .device-icon {
+  .device-icon-container {
+    cursor: pointer;
     height: 100%;
     width: 100%;
     overflow: hidden;
-    /*pushed the icons down because I can't sort out how to vertical align them*/
-    padding-top: 60px;
     @extend %circle;
-    i {
+    .device-icon {
       color: white;
+      position: absolute;
+      top: 45px;
+      left: -25px;
+      width: 100%;
+      height: 100%;
       font-size: $size-icon-big;
+
+      @include transition(font-size, linear, .4s);
+    }
+
+    &:hover {
+      .icon-outlet_on {
+        top: 93px;
+        left: -11px;
+        font-size: 100px;
+      }
+    }
+    //it's a little bit different than the others
+    .icon-outlet_on {
+      font-size: $size-icon-big + 30;
+      top: 35px;
+
+      &.collapsed {
+        top: 93px;
+        left: -11px;
+        font-size: 100px;
+      }
     }
   }
 }

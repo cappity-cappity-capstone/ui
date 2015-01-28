@@ -5,5 +5,5 @@ Page = require('./components/page.jsx');
 
 window.onload = function() {
   var documentRoot = document.querySelector('#content-anchor');
-  React.render(<Page name="Dan"/>, documentRoot)
+  React.render(<Page/>, documentRoot)
 }
