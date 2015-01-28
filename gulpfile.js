@@ -12,11 +12,11 @@ function swallowError(error) {
 }
 
 var paths = {
-  html:   ['/static/**/*.html', '/src/js/**/*.jsx'],
-  js:     ['/src/js/**/*.js', '/src/js/**/*.jsx'],
-  sass:   '/src/sass/**/*.scss',
-  sassIn:  '/src/sass',
-  cssOut:  '/static/css'
+  html:   ['./static/**/*.html', './src/js/**/*.jsx'],
+  js:     ['./src/js/**/*.js', './src/js/**/*.jsx'],
+  sass:   './src/sass/**/*.scss',
+  sassIn:  'src/sass',
+  cssOut:  'static/css'
 };
 
 gulp.task('js', function() {
