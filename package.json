@@ -6,6 +6,8 @@
     "underscore": "1.7.0"
   },
   "devDependencies": {
+    "react-tools": "0.12.2",
+    "jest-cli": "0.2.1",
     "browser-sync": "^1.9.1",
     "browserify": "^8.1.1",
     "gulp": "^3.8.1",
@@ -16,6 +18,11 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "jest"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/jest/preprocessor.js",
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react", "<rootDir>/node_modules/underscore"],
+    "testDirectoryName": "test"
   }
 }

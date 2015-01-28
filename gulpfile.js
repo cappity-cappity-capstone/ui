@@ -65,6 +65,5 @@ gulp.task('watch', function() {
   gulp.watch(paths.js, ['js']);
 });
 
-gulp.task('test', []);
 gulp.task('build', ['compass','js']);
 gulp.task('default', ['browser-sync', 'connect', 'watch']);
