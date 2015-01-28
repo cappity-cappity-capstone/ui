@@ -4,6 +4,6 @@ var Router = require('react-router');
 Page = require('./components/page.jsx');
 
 window.onload = function() {
-  var documentRoot = document.querySelector('#moduleAnchor');
+  var documentRoot = document.querySelector('#content-anchor');
   React.render(<Page name="Dan"/>, documentRoot)
 }

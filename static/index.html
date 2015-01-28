@@ -17,33 +17,7 @@
         <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css">
     </head>
     <body>
-        <script>
-        function expandDrawer(width) {
-            document.getElementById('menu-side').setAttribute("style","width:" + width + "px;");
-            document.getElementById('main-container').setAttribute("style","margin-left:" + width + "px;");
-        }
-        </script>
-        <aside id="menu-side">
-            <div class="icon-side-menu"></div>
-            <div class="content">
-                <div class="photo-profile"></div>
-                <ul class="list-side-menu-options">
-                    <li>Logout</li>
-                    <li>Settings</li>
-                </ul>
-            </div>
-        </aside>
-        <div id="main-container">
-            <div class="content">
-                <header>Home</header>
-                    <ul class="modules">
-                        <li id="moduleAnchor"></li>
-                        <li>Outlet</li>
-                        <li>Stove</li>
-                        <li>Cabinet</li>
-                    </ul>
-                </div>
-            </div>
+        <div id="content-anchor"></div>
     </body>
     <script type="application/javascript" src="/js/bundle.js"></script>
 </html>

@@ -16,11 +16,6 @@ body {
       background-color: white;
       width: $width-drawer-collapsed;
 
-      // hamburger menu
-      .icon-side-menu {
-        color: black;
-      }
-
       .content {
         opacity: 0;
       }
@@ -46,6 +41,15 @@ body {
     @include transition(opacity, linear, $delay-drawer-transition);
   }
 
+}
+
+// hamburger menu
+.icon-side-menu {
+  cursor: pointer;
+
+  i {
+    color: black;
+  }
 }
 
 #main-container {
