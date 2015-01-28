@@ -2,7 +2,7 @@ var gulp        = require('gulp');
 var connect     = require('gulp-connect');
 var compass     = require('gulp-compass');
 var browserSync = require('browser-sync');
-var source = require('vinyl-source-stream');
+var source      = require('vinyl-source-stream');
 var browserify  = require('browserify');
 
 //because gulp kinda sucks
@@ -11,22 +11,20 @@ function swallowError(error) {
   this.emit('end');
 }
 
-var root = 'static'
-
 var paths = {
-  sass:   [root + '/sass/**/*.scss'],
-  html:   [root + '/**/*.html', root + '/js/**/*.jsx'],
-  js:     [root + '/js/**/*.js', root + '/js/**/*.jsx'],
-  sassIn:  root + '/sass',
-  cssOut:  root + '/css'
+  html:   ['/static/**/*.html', '/src/js/**/*.jsx'],
+  js:     ['/src/js/**/*.js', '/src/js/**/*.jsx'],
+  sass:   '/src/sass/**/*.scss',
+  sassIn:  '/src/sass',
+  cssOut:  '/static/css'
 };
 
 gulp.task('js', function() {
-  return browserify({ entries: './static/js/app.js' })
+  return browserify({ entries: './src/js/app.js' })
     .transform('reactify')
     .bundle()
     .on('error', swallowError)
-    .pipe(source(root + '/js/bundle.js'))
+    .pipe(source('./static/js/bundle.js'))
     .pipe(gulp.dest('./'));
 });
 
@@ -43,14 +41,14 @@ gulp.task('compass', function() {
 gulp.task('browser-sync', function() {
   browserSync({
     server: {
-      baseDir: root
+      baseDir: 'static'
     }
   });
 });
 
 gulp.task('connect', function() {
   connect.server({
-    root: root + '/',
+    root: 'static/',
     port: 1337,
     livereload: true
   });
