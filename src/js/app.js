@@ -1,9 +1,9 @@
 var React = require('react');
 var Router = require('react-router');
 
-Device = require('./views/hello_world.jsx');
+Page = require('./components/page.jsx');
 
 window.onload = function() {
   var documentRoot = document.querySelector('#moduleAnchor');
-  React.render(<Device name="Dan"/>, documentRoot)
+  React.render(<Page name="Dan"/>, documentRoot)
 }
