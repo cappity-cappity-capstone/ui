@@ -1,5 +1,13 @@
-$width-outer-circle-diameter: 300px;
-$height-outer-circle-diameter: 300px;
+$diameter-outer-circle: 300px;
+$diameter-inner-outline: 280px;
+$color-off: red;
+$color-on: green;
+$color-inner-outline: white;
+$color-outer-outline: black;
+$width-inner-outline: 2px;
+$width-outer-outline: 4px;
+$size-icon-big: 250px;
+$size-icon-small: 300px;
 
 %circle {
   border-radius: 50%;
@@ -7,14 +15,48 @@ $height-outer-circle-diameter: 300px;
 
 .device-outer-circle {
   @extend %circle;
+  position: relative;
   margin: 2em auto;
   width: 100%;
-  max-width: $width-outer-circle-diameter;
-  height: $height-outer-circle-diameter;
+  height: 100%;
+  max-width: $diameter-outer-circle;
+  max-height: $diameter-outer-circle;
+  border: solid $width-outer-outline $color-outer-outline;
   &.off {
-    background-color: red;
+    background-color: $color-off;
+    .device-inner-outline {
+      background-color: $color-off;
+    }
   }
   &.on {
-    background-color: green;
+    background-color: $color-on;
+    .device-inner-outline {
+      background-color: $color-on;
+    }
+  }
+
+
+  .device-inner-outline {
+    @extend %circle;
+    position: absolute;
+    margin: (($diameter-outer-circle - $diameter-inner-outline) / 2) - $width-inner-outline;
+    width: 100%;
+    height: 100%;
+    max-width: $diameter-inner-outline;
+    max-height: $diameter-inner-outline;
+    border: solid $width-inner-outline  $color-inner-outline;
+  }
+
+  .device-icon {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    /*pushed the icons down because I can't sort out how to vertical align them*/
+    padding-top: 60px;
+    @extend %circle;
+    i {
+      color: white;
+      font-size: $size-icon-big;
+    }
   }
 }

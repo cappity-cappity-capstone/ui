@@ -1,0 +1,65 @@
+/*I converted the SVG in /img/svg/ to an icon-font because SVGs are unruly to work with*/
+/*I used this site: http://app.fontastic.me/#publish/font/VcS7nKKDAgCk6QJM8hrUZe*/
+
+@charset "UTF-8";
+
+@font-face {
+  font-family: "device_icons";
+  src:url("/fonts/icon-fonts/device_icons.eot");
+  src:url("/fonts/icon-fonts/device_icons.eot?#iefix") format("embedded-opentype"),
+    url("/fonts/icon-fonts/device_icons.woff") format("woff"),
+    url("/fonts/icon-fonts/device_icons.ttf") format("truetype"),
+    url("/fonts/icon-fonts/device_icons.svg#device_icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "device_icons" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "device_icons" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-info:before {
+  content: "a";
+}
+.icon-lock-off:before {
+  content: "b";
+}
+.icon-lock-on:before {
+  content: "c";
+}
+.icon-outlet-off:before {
+  content: "d";
+}
+.icon-outlet-on:before {
+  content: "e";
+}
+.icon-stove-off:before {
+  content: "f";
+}
+.icon-stove-on:before {
+  content: "g";
+}
+

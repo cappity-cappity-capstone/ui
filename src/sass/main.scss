@@ -1,4 +1,5 @@
 @import "partials/_base";
+@import "partials/_icons";
 @import "partials/_layouts";
 @import "partials/_device_interface";
 
@@ -9,6 +10,7 @@ body {
   margin: 0;
   position: relative;
   font-size: $font-size;
+  font-family: $base-font-family;
 }
 
 a {
