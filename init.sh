@@ -5,7 +5,7 @@ if [[ $UID != 0 ]]; then
     exit 1
 fi
 
-command -v foo >/dev/null 2>&1 || { echo "This requires nodejs to be installed. Please install it with your system package manager." >&2; exit 1; }
+command -v npm >/dev/null 2>&1 || { echo "This requires nodejs to be installed. Please install it with your system package manager." >&2; exit 1; }
 
 echo "Cleaning NPM Cache"
 npm cache clean
