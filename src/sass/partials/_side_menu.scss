@@ -1,0 +1,38 @@
+#menu-side {
+  position: fixed;
+  box-sizing: border-box;
+  float: left;
+  height: 100%;
+  width: $width-drawer-expanded;
+  background-color: $color-side-menu-background;
+  overflow: hidden;
+  @include transition(width, linear, $delay-drawer-transition);
+  @include transition(background-color, ease-in, $delay-drawer-transition);
+  @include box-shadow(1px 0 5px -2px);
+
+  .content {
+    @include transition(opacity, linear, $delay-drawer-transition);
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+    color: white;
+    li {
+      padding: 20px;
+      outline: solid 1px;
+      margin-top: 1px;
+    }
+  }
+}
+
+.image-circular {
+	width: 200px;
+	height: 200px;
+	margin: 2em auto;
+	background-size: 100% !important;
+	border-radius: 150px;
+	-webkit-border-radius: 150px;
+	-moz-border-radius: 150px; 
+}

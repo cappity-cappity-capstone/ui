@@ -27,22 +27,6 @@ body {
   }
 }
 
-#menu-side {
-  position: fixed;
-  box-sizing: border-box;
-  float: left;
-  height: 100%;
-  width: $width-drawer-expanded;
-  background-color: $color-side-menu-background;
-  overflow: hidden;
-  @include transition(width, linear, $delay-drawer-transition);
-  @include transition(background-color, ease-in, $delay-drawer-transition);
-
-  .content {
-    @include transition(opacity, linear, $delay-drawer-transition);
-  }
-}
-
 #main-container {
   &.dark {
     background-color: $color-main-container-dark;

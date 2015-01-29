@@ -1,42 +1,204 @@
 $diameter-outer-circle: 300px;
 $diameter-inner-outline: 280px;
+$color-text-light: white;
 $color-off: red;
 $color-on: green;
 $color-inner-outline: white;
 $color-outer-outline: black;
+$color-circle-dark: black;
 $width-inner-outline: 2px;
 $width-outer-outline: 4px;
 $size-icon-big: 175px;
 $size-icon-small: 300px;
+$size-info-circle: 50px;
+$size-control-circle: 195px;
+$size-control-button: 75px;
+$delay-opacity: .3s;
+$delay-movement: .2s;
 
 %circle {
   border-radius: 50%;
 }
 
+// centers an absolutely positioned item
+// vertically and horizontally 
+%absolute_center {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left:0;
+  right:0;
+}
+
 .device-outer-circle {
+  span {
+      @include vertical-align(30%);  
+    }
   @extend %circle;
+  @include transition(background-color, ease-in, $delay-opacity);
   position: relative;
-  margin: 2em auto;
-  // width: 100%;
-  // height: 100%;
+  margin: 2rem auto;
   width: $diameter-outer-circle;
   height: $diameter-outer-circle;
   border: solid $width-outer-outline $color-outer-outline;
+  text-transform: uppercase;
+
   &.off {
     background-color: $color-off;
     .device-inner-outline {
       background-color: $color-off;
     }
+
+    &:hover, &.control {
+      .device-inner-outline {
+        border-color: $color-off;
+      }
+    }
   }
+
   &.on {
     background-color: $color-on;
     .device-inner-outline {
-      background-color: $color-on; }
+      background-color: $color-on; 
+    }
+
+    &:hover, &.control {
+      .device-inner-outline {
+        border-color: $color-on;
+      }
+    }
+  }
+
+
+  //state for controlling the outer circle
+  &.control, &:hover {
+    background-color: $color-circle-dark;
+
+    .device-inner-outline {
+      background-color: $color-circle-dark;
+    }
+
+    .device-control-circle {
+      opacity: 1;
+    }
+
+    .device-control-status {
+      transform: translateY(10px);
+    }
+
+    .device-control-off {
+      transform: translateX(-10px);
+    }
+
+    .device-control-on {
+      transform: translateX(10px);
+    }
+
+    .device-info {
+      transform: translateY(-17px);
+    }
+
+    .device-icon-container {
+      transform: scale(.5);
+    }
+  }
+
+  .device-control-circle {
+    @extend %circle;
+    @extend %absolute_center;
+    opacity: 0;
+    @include transition(opacity, ease-in, $delay-opacity);
+    height: $size-control-circle;
+    width: $size-control-circle;
+    border: solid 1px $color-inner-outline;
+  }
+
+  .device-control-status {
+    @extend %circle;
+    @include transition(transform, linear, $delay-movement);
+    height: $size-control-button;
+    width: $size-control-button;
+    background-color: $color-circle-dark;
+    color: $color-text-light;
+    transform: translateY(-90px);
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+  }
+
+  .device-control-off {
+    @extend %circle;
+    @include transition(transform, linear, $delay-movement);
+    height: $size-control-button;
+    width: $size-control-button;
+    background-color: $color-circle-dark;
+    position: absolute;
+    right: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    bottom: 0;
+    top: 0;
+    transform: translateX(90px);
+    &.on {
+      border: solid 1px $color-on;
+      color: $color-on;
+    }
+
+    &.off {
+      color: $color-text-light;
+      background-color: $color-off;
+    }
+  }
+
+  .device-control-on {
+    @extend %circle;
+    @include transition(transform, linear, $delay-movement);
+    height: $size-control-button;
+    width: $size-control-button;
+    background-color: $color-circle-dark;
+    position: absolute;
+    left: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    bottom: 0;
+    top: 0;
+    transform: translateX(-90px);
+    &.on {
+      background-color: $color-on;
+      color: $color-text-light;
+    }
+
+    &.off {
+      border: solid 1px $color-off;
+      color: $color-off;
+    }
+  }
+
+
+  .device-info {
+    @extend %circle;
+    @include transition(transform, linear, $delay-movement);
+    transform: translateY(65px);
+    height: $size-info-circle;
+    width: $size-info-circle;
+    position: absolute;
+    margin: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    font-size: 50px;
+    color: $color-text-light;
+    background-color: $color-circle-dark;
   }
 
 
   .device-inner-outline {
+    overflow: hidden;
     @extend %circle;
+    @include transition(background-color, ease-in, $delay-opacity);
     position: absolute;
     margin: (($diameter-outer-circle - $diameter-inner-outline) / 2) - $width-inner-outline;
     width: 100%;
@@ -47,40 +209,17 @@ $size-icon-small: 300px;
   }
 
   .device-icon-container {
-    cursor: pointer;
     height: 100%;
     width: 100%;
     overflow: hidden;
     @extend %circle;
+    @extend %absolute_center;
+    @include transition(transform, linear, $delay-movement);
+    text-align: left;
     .device-icon {
-      color: white;
-      position: absolute;
-      top: 45px;
-      left: -25px;
-      width: 100%;
-      height: 100%;
+      color: $color-text-light;
+      @include vertical-align(18%);
       font-size: $size-icon-big;
-
-      @include transition(font-size, linear, .4s);
-    }
-
-    &:hover {
-      .icon-outlet_on {
-        top: 93px;
-        left: -11px;
-        font-size: 100px;
-      }
-    }
-    //it's a little bit different than the others
-    .icon-outlet_on {
-      font-size: $size-icon-big + 30;
-      top: 35px;
-
-      &.collapsed {
-        top: 93px;
-        left: -11px;
-        font-size: 100px;
-      }
     }
   }
 }

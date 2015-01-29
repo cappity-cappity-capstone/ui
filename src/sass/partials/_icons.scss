@@ -30,6 +30,7 @@
   width: 1em;
   margin-right: .2em;
   text-align: center;
+  margin-left: -0.053em;
   /* opacity: .8; */
  
   /* For safety - reset parent styles, that can break glyph codes*/
@@ -41,7 +42,7 @@
  
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
-  margin-left: .2em;
+  margin-left: .176em;
  
   /* you can be more comfortable with increased icons size */
   /* font-size: 120%; */
@@ -55,5 +56,5 @@
 .icon-stove_off:before { content: '\e802'; } /* '' */
 .icon-outlet_off:before { content: '\e803'; } /* '' */
 .icon-lock_on:before { content: '\e804'; } /* '' */
-.icon-info:before { content: '\e805'; } /* '' */
+.icon-info:before { content: '\e805'; margin-left: -6px; } /* '' */
 .icon-lock_off:before { content: '\e806'; } /* '' */

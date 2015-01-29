@@ -50,7 +50,7 @@ var Page = React.createClass({
     var renderedDevices = _.map(this.props.devices, this.renderDevice);
     return (
       <div>
-        <SideMenu/>
+        <SideMenu profileImageUrl="/img/todd.jpg" />
         <div className={this.getTimeClass()} id="main-container">
           <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
