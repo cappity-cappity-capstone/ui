@@ -7,15 +7,22 @@ var Header = require('./header.jsx');
 
 var Page = React.createClass({
   propTypes: {
-    devices: React.PropTypes.arrayOf(React.PropTypes.object),
+    devices: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        on: React.PropTypes.bool.isRequired,
+        type: React.PropTypes.string.isRequired,
+        name: React.PropTypes.string.isRequired
+      })
+    ),
     name: React.PropTypes.string
   },
 
   getDefaultProps: function(){
     return {
       devices: [
-        { on: true, type: "outlet", name: "Kitchen Outlet" },
-        { on: false, type: "lock", name: "Cabinet" }
+        { id: 1, on: true, type: "outlet", name: "Kitchen Outlet" },
+        { id: 2, on: false, type: "lock", name: "Cabinet" }
       ]
     };
   },
@@ -24,6 +31,10 @@ var Page = React.createClass({
     return {
       menuExpanded: true
     }
+  },
+
+  renderDevice: function(device){
+    return <Device key={device.id} on={device.on} type={device.type} name={device.name} />;
   },
 
   getTimeClass: function() {
@@ -48,10 +59,6 @@ var Page = React.createClass({
         </div>
       </div>
     );
-  },
-
-  renderDevice: function(device){
-    return <Device key={device.name} on={device.on} type={device.type} name={device.name} />;
   },
 
   handleNavIconClick: function() {
