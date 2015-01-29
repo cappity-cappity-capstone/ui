@@ -1,5 +1,6 @@
 # Cappy UI
 [![build status](https://img.shields.io/travis/cappity-cappity-capstone/ui.svg?style=flat)](https://travis-ci.org/cappity-cappity-capstone/ui)
+[![dependencies](https://img.shields.io/gemnasium/cappity-cappity-capstone/ui.svg?style=flat)](https://gemnasium.com/cappity-cappity-capstone/ui)
 
 This repository holds the frontend user interface for NU Capstone 2015 Group W5.
 The ui is written with [React](https://facebook.github.io/react/).
