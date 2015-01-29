@@ -3,8 +3,8 @@ var TestUtils = React.addons.TestUtils;
 
 jest.dontMock('../../src/js/components/side-menu.jsx');
 
-var SideMenu = require('../../src/js/components/side-menu.jsx')
-var Icon = require('../../src/js/components/icon.jsx')
+var SideMenu = require('../../src/js/components/side-menu.jsx');
+var Icon = require('../../src/js/components/icon.jsx');
 
 describe('components/side-menu', function () {
   var subject;

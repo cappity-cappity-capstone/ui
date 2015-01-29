@@ -3,7 +3,7 @@ var TestUtils = React.addons.TestUtils;
 
 jest.dontMock('../../src/js/components/device.jsx');
 
-var Device = require('../../src/js/components/device.jsx')
+var Device = require('../../src/js/components/device.jsx');
 
 describe('components/device', function () {
   var subject;

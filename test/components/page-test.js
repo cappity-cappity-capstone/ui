@@ -3,9 +3,9 @@ var TestUtils = React.addons.TestUtils;
 
 jest.dontMock('../../src/js/components/page.jsx');
 
-var Page = require('../../src/js/components/page.jsx')
-var SideMenu = require('../../src/js/components/side-menu.jsx')
-var Device = require('../../src/js/components/device.jsx')
+var Page = require('../../src/js/components/page.jsx');
+var SideMenu = require('../../src/js/components/side-menu.jsx');
+var Device = require('../../src/js/components/device.jsx');
 
 describe('components/page', function () {
   var subject;

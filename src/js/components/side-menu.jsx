@@ -1,4 +1,4 @@
-var React = require('react')
+var React = require('react');
 
 var SideMenu = React.createClass({
   propTypes: {
