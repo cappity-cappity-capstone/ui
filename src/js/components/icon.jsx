@@ -6,7 +6,7 @@ var Icon = React.createClass({
   },
 
   render: function(){
-    const type = this.props.type;
+    var type = this.props.type;
     return <i className={"fa fa-" + type}></i>;
   }
 });

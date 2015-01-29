@@ -1,9 +1,9 @@
-const React = require('react/addons');
-const TestUtils = React.addons.TestUtils;
+var React = require('react/addons');
+var TestUtils = React.addons.TestUtils;
 
 jest.dontMock('../../src/js/components/icon.jsx');
 
-const Icon = require('../../src/js/components/icon.jsx')
+var Icon = require('../../src/js/components/icon.jsx')
 
 describe('components/icon', function () {
   var subject;

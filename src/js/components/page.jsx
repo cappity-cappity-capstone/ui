@@ -54,8 +54,8 @@ var Page = React.createClass({
   },
 
   handleNavIconClick: function() {
-    const menuExpanded = this.state.menuExpanded;
-    const newWidth = menuExpanded ? 0 : 300;
+    var menuExpanded = this.state.menuExpanded;
+    var newWidth = menuExpanded ? 0 : 300;
     this.expandDrawer(newWidth);
     this.setState({menuExpanded: !menuExpanded});
   },

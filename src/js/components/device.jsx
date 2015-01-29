@@ -1,6 +1,6 @@
 var React = require('react')
 
-const DEVICE_TYPES = [
+var DEVICE_TYPES = [
   'outlet',
   'gas-valve',
   'gas-sensor',
@@ -15,7 +15,7 @@ var Device = React.createClass({
   },
 
   render: function() {
-    const state = this.props.on ? 'on' : 'off';
+    var state = this.props.on ? 'on' : 'off';
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
