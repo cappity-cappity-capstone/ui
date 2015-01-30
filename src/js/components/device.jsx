@@ -22,14 +22,19 @@ var Device = React.createClass({
         <div className="device-name">{this.props.name}</div>
           <div className={state + " device-outer-circle"}>
             <div className="device-inner-outline">
-              <div className="device-control-circle"></div>
-              <div className={"device-control-status " + state }>
+              <div className="device-icon-background"></div>
+              <div className="device-control-circle">
+                <div className="device-control-circle-crossbar"></div>
+              </div>
+              <div className="device-control-status">
                 <span>{state}</span>
               </div>
-              <div className={"device-control-on " + state }>
+              <div className="device-control-on">
+                <div className="fill"></div>
                 <span>On</span>
               </div>
-              <div className={"device-control-off " + state }>
+              <div className="device-control-off">
+                <div className="fill"></div>
                 <span>Off</span>
               </div>
               <div className="device-info">
