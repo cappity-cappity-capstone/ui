@@ -67,4 +67,4 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', ['compass','js']);
-gulp.task('default', ['browser-sync', 'connect', 'watch']);
+gulp.task('default', ['build', 'browser-sync', 'connect', 'watch']);
