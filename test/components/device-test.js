@@ -10,7 +10,7 @@ describe('components/device', function () {
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <Device on={true} type='outlet' name='Test Outlet' />
+      <Device id={1} on={true} type='outlet' name='Test Outlet' />
     );
   });
 

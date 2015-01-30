@@ -34,7 +34,13 @@ var Page = React.createClass({
   },
 
   renderDevice: function(device){
-    return <Device key={device.id} on={device.on} type={device.type} name={device.name} />;
+    return (
+      <Device key={device.id}
+        id={device.id}
+        on={device.on}
+        type={device.type}
+        name={device.name} />
+    );
   },
 
   getTimeClass: function() {

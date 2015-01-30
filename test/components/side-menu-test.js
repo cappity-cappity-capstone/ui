@@ -11,7 +11,7 @@ describe('components/side-menu', function () {
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <SideMenu />
+      <SideMenu profileImageUrl="test.jpg" />
     );
   });
 
