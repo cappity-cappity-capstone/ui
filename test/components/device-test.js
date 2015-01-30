@@ -22,7 +22,26 @@ describe('components/device', function () {
 
   it('renders the device icon', function() {
     expect(
-      TestUtils.findRenderedDOMComponentWithTag(subject, 'i').getDOMNode().className
+      TestUtils.findRenderedDOMComponentWithClass(subject, 'device-icon').getDOMNode().className
     ).toContain( 'icon-outlet' );
+  });
+
+  it('renders the device controls', function() {
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        subject, 'device-control-on'
+      ).getDOMNode().textContent
+    ).toBe( 'On' );
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(
+        subject, 'device-control-off'
+      ).getDOMNode().textContent
+    ).toBe( 'Off' );
+  });
+
+  it('renders the device info button', function() {
+    expect(
+      TestUtils.findRenderedDOMComponentWithClass(subject, 'icon-info')
+    ).not.toBe( null );
   });
 });
