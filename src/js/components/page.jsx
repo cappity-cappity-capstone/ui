@@ -18,15 +18,6 @@ var Page = React.createClass({
     name: React.PropTypes.string
   },
 
-  getDefaultProps: function(){
-    return {
-      devices: [
-        { id: 1, on: true, type: "outlet", name: "Kitchen Outlet" },
-        { id: 2, on: false, type: "lock", name: "Cabinet" }
-      ]
-    };
-  },
-
   getInitialState: function(){
     return {
       menuExpanded: true
