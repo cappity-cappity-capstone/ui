@@ -1,62 +1,54 @@
-$diameter-outer-circle: 300px;
-$diameter-inner-outline: 280px;
+$diameter-outer-circle: 15em;
+$diameter-inner-outline: 14em;
 
 // colors
 $color-text-light: white;
 $color-off: #D62027;
 $color-on: #009345;
-$color-inner-outline: #A6A8AB;
-$color-outer-outline: #404041;
-$color-circle-dark: #231F20;
+$color-border-inner-outline: #A6A8AB;
+$color-border-outer-outline: #404041;
+$color-background-circle-dark: #231F20;
 $color-info-icon: #A6A8AB;
 
 //sizes
-$width-outer-outline: 4px;
-$width-inner-outline: 2px;
-$width-control-button-border: 3px;
-$size-icon-big: 175px;
-$size-icon-small: 300px;
-$size-info-circle: 50px;
-$size-control-circle: 195px;
-$size-control-button: 70px;
-$size-device-info: 50px;
-$width-device-icon-background: 70px;
+$width-border-outer-outline: 4px;
+$width-border-inner-outline: 2px;
+$width-border-control-button: 3px;
+$size-icon-big: 8.75em;
+$size-info-circle: 1em;
+$diameter-control-circle: 9.5em;
+$diameter-control-button: 3.5em;
+$size-device-info: 2.5em;
+$width-device-icon-background: 3.5em;
 $delay-opacity: .3s;
 $delay-movement: .2s;
 
-@mixin circle($size) {
-  border-radius: 50%;
-  height: $size;
-  width: $size;
-}
+// device
+//   device-outer-circle
+//     device-inner-circle
+//       device-control-circle
+//         device-control-circle-crossbar
+//       device-control-status
+//       device-control-on
+//       device-control-off
+//       device-info
+//       device-icon-background
+//       device-icon-container
+//         device-icon
 
-// http://www.smashingmagazine.com/2013/08/09/absolute-horizontal-vertical-centering-css/
-@mixin absolute_center($top: 0, $right: 0, $bottom: 0, $left: 0) {
-  position: absolute;
-  top: $top;
-  right: $right;
-  bottom: $bottom;
-  left: $left;
-
-  @if ($bottom == 0 && $top == 0) {
-    margin-top: auto;
-    margin-bottom: auto;
-  }
-
-  @if ($left == 0 && $right== 0) {
-    margin-right: auto;
-    margin-left: auto;
-  }
-
+.device {
+  //this changes the whole size of the module
+  //so when the time comes put your media queries here
+  font-size: 20px;
 }
 
 .device-outer-circle {
+  font-size: 1em;
   @include circle($diameter-outer-circle);
   @include transition(background-color, ease-in, $delay-opacity);
   margin: 2rem auto;
-  border: solid $width-outer-outline $color-outer-outline;
+  border: solid $width-border-outer-outline $color-border-outer-outline;
   font-family: "Raleway Medium", sans-serif;
-  font-size: 1.2em;
   text-transform: uppercase;
 
   // if device in off state
@@ -73,7 +65,7 @@ $delay-movement: .2s;
 
     .device-control-on {
       color: $color-on;
-      border: solid $width-control-button-border $color-on;
+      border: solid $width-border-control-button $color-on;
     }
 
     .device-icon-background {
@@ -85,7 +77,7 @@ $delay-movement: .2s;
     background-color: $color-on;
 
     .device-control-off {
-      border: solid $width-control-button-border $color-off;
+      border: solid $width-border-control-button $color-off;
     }
 
     .device-control-on {
@@ -105,179 +97,184 @@ $delay-movement: .2s;
 
   //state for controlling the outer circle
   &.control, &:hover {
-    background-color: $color-circle-dark;
+    background-color: $color-background-circle-dark;
 
     .device-control-circle {
       opacity: 1;
     }
 
     .device-control-status {
-      @include transform(translateY(10px));
+      @include transform(translateY(.7em));
     }
 
     .device-control-off {
-      @include transform(translateX(-13px));
+      @include transform(translateX(-.6em));
     }
 
     .device-control-on {
-      @include transform(translateX(13px));
+      @include transform(translateX(.6em));
     }
 
     .device-info {
-      @include transform(translateY(-17px));
+      @include transform(translateY(-.4em));
     }
 
     .device-icon-background {
-      background-color: $color-circle-dark;
+      background-color: $color-background-circle-dark;
     }
 
     .device-icon-container {
-      @include transform(scale(.5));
-    }
-
-    &.on {
-      .device-icon {
-        color: $color-on;
-      }
-
-      .device-inner-outline {
-        border-color: $color-on;
-      }
-    }
-
-    &.off {
-      .device-icon {
-        color: $color-off;
-      }
-
-      .device-inner-outline {
-        border-color: $color-off;
-      }
+      @include transform(scale(.4));
     }
   }
 
-  // the outline in the control state that goes through all the buttons
-  .device-control-circle {
-    @include circle($size-control-circle);
-    @include absolute_center;
-    opacity: 0;
-    @include transition(opacity, ease-in, $delay-opacity);
-    border: solid 1px $color-inner-outline;
-  }
-
-  // the line that goes through device-control-circle
-  .device-control-circle-crossbar {
-    box-sizing: border-box;
-    border-top: 1px solid $color-inner-outline;
-    position: absolute;
-    top: 50%;
-    width: 100%;
-    height: 100%;
-  }
-
-  // the top text that indicates device status
-  .device-control-status {
-    @include circle($size-control-button);
-    @include transition(transform, linear, $delay-movement);
-    @include absolute_center($bottom: inherit);
-    color: $color-text-light;
-    @include transform(translateY(-90px));
-    background-color: $color-circle-dark;
-    display: table;
-    * {
-      vertical-align: middle;
-      display: table-cell;
-    }
-  }
-
-  // fills in the on/off buttons with color
-  .fill {
-    @include circle(0);
-    @include absolute_center;
-    /*@include transition(transform, linear, $delay-movement);*/
-    /*@include transform(scale(0));*/
-    @include transition(width, linear, $delay-movement);
-    @include transition(height, linear, $delay-movement);
-    z-index: -1;
-  }
-
-  %device-control-button {
-    overflow: hidden;
-    @include box-sizing(border-box);
-    @include circle($size-control-button);
-    @include absolute_center($left: inherit, $right: inherit);
-    @include transition(transform, linear, $delay-movement);
-    background-color: $color-circle-dark;
-    display: table;
-    * {
-      vertical-align: middle;
-      display: table-cell;
-    }
-  }
-
-  // the off button on the right
-  .device-control-off {
-    @extend %device-control-button;
-    @include transform(translateX(90px));
-    color: $color-off;
-    right: 0;
-  }
-
-  // the on button on the left
-  .device-control-on {
-    @extend %device-control-button;
-    @include transform(translateX(-90px));
-    color: $color-off;
-    left: 0;
-  }
-
-
-  .device-info {
-    @include circle($size-info-circle);
-    @include absolute_center($top: inherit);
-    @include transition(transform, linear, $delay-movement);
-    @include transform(translateY(65px));
-    font-size: $size-device-info;
-    background-color: $color-circle-dark;
-    color: $color-info-icon;
-  }
-
-
-  .device-inner-outline {
-    overflow: hidden;
-    @include circle($diameter-inner-outline);
-    @include transition(background-color, ease-in, $delay-opacity);
-    position: absolute;
-    margin: (($diameter-outer-circle - $diameter-inner-outline) / 2) - $width-inner-outline;
-    border: solid $width-inner-outline  $color-inner-outline;
-  }
-
-  .device-icon-background {
-    @include circle($width-device-icon-background);
-    @include absolute_center;
-    @include transition(opacity, ease-in, $delay-opacity);
-    z-index: 1;
-  }
-
-  .device-icon-container {
-    overflow: hidden;
-    @include circle(100%);
-    @include absolute_center;
-    @include transition(transform, linear, $delay-movement);
-    text-align: left;
-    z-index: 2;
-
+  &.control.on, &:hover.on {
     .device-icon {
-      @include transition(color, linear, $delay-movement);
-      @include vertical-align(18%);
-      color: $color-text-light;
-      font-size: $size-icon-big;
+      color: $color-on;
     }
 
-    // this one is special because it's a different size
-    .icon-outlet_on, .icon-outlet_off {
-      /*font-size: $size-icon-big+20;*/
-      /*margin-left: -15px;*/
+    .device-inner-circle {
+      border-color: $color-on;
     }
+  }
+
+  &.control.off, &:hover.off {
+    .device-icon {
+      color: $color-off;
+    }
+
+    .device-inner-circle {
+      border-color: $color-off;
+    }
+  }
+}
+
+.device-inner-circle {
+  overflow: hidden;
+  @include circle($diameter-inner-outline);
+  @include transition(background-color, ease-in, $delay-opacity);
+  position: absolute;
+  margin: $width-border-inner-outline;
+  border: solid $width-border-inner-outline  $color-border-inner-outline;
+  margin: .4em;
+}
+
+// the outline in the control state that goes through all the buttons
+.device-control-circle {
+  @include circle($diameter-control-circle);
+  @include absolute_center;
+  opacity: 0;
+  @include transition(opacity, ease-in, $delay-opacity);
+  border: solid 1px $color-border-inner-outline;
+}
+
+// the line that goes through device-control-circle
+.device-control-circle-crossbar {
+  box-sizing: border-box;
+  border-top: 1px solid $color-border-inner-outline;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+// the top text that indicates device status
+.device-control-status {
+  @include circle($diameter-control-button);
+  @include transition(transform, linear, $delay-movement);
+  @include transform(translateY(-4.5em));
+  color: $color-text-light;
+  padding: .2em;
+  margin: auto;
+  background-color: $color-background-circle-dark;
+  display: table;
+  * {
+    vertical-align: middle;
+    display: table-cell;
+  }
+}
+
+// fills in the on/off buttons with color
+.fill {
+  @include circle(0);
+  @include absolute_center;
+  /*@include transition(transform, linear, $delay-movement);*/
+  /*@include transform(scale(0));*/
+  @include transition(width, linear, $delay-movement);
+  @include transition(height, linear, $delay-movement);
+  z-index: -1;
+}
+
+// clickable buttons to control device
+%device-control-button {
+  overflow: hidden;
+  @include box-sizing(border-box);
+  @include circle($diameter-control-button);
+  @include absolute_center($left: inherit, $right: inherit);
+  @include transition(transform, linear, $delay-movement);
+  background-color: $color-background-circle-dark;
+  display: table;
+  cursor: pointer;
+
+  * {
+    vertical-align: middle;
+    display: table-cell;
+  }
+}
+
+// the off button on the right
+.device-control-off {
+  @extend %device-control-button;
+  @include transform(translateX(4.5em));
+  color: $color-off;
+  right: 0;
+}
+
+// the on button on the left
+.device-control-on {
+  @extend %device-control-button;
+  @include transform(translateX(-4.5em));
+  color: $color-off;
+  left: 0;
+}
+
+
+.device-info {
+  @include circle($size-info-circle);
+  @include absolute_center($top: inherit);
+  @include transition(transform, linear, $delay-movement);
+  @include transform(translateY(1.5em));
+  font-size: $size-device-info;
+  background-color: $color-background-circle-dark;
+  color: $color-info-icon;
+  cursor: pointer;
+}
+
+.device-icon-background {
+  @include circle($width-device-icon-background);
+  @include absolute_center;
+  @include transition(opacity, ease-in, $delay-opacity);
+  z-index: 1;
+}
+
+.device-icon-container {
+  overflow: hidden;
+  @include circle(100%);
+  @include absolute_center;
+  @include transition(transform, linear, $delay-movement);
+  text-align: left;
+  z-index: 2;
+
+  .device-icon {
+    @include transition(color, linear, $delay-movement);
+    @include vertical-align(18%);
+    color: $color-text-light;
+    font-size: $size-icon-big;
+  }
+
+  // this one is special because it's a different size
+  .icon-outlet_on, .icon-outlet_off {
+    /*font-size: $size-icon-big+20;*/
+    /*margin-left: -15px;*/
   }
 }

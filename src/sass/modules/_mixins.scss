@@ -5,3 +5,28 @@
   -ms-transform: translateY(-$amount);
   transform: translateY(-$amount);
 }
+
+@mixin circle($size) {
+  border-radius: 50%;
+  height: $size;
+  width: $size;
+}
+
+// http://www.smashingmagazine.com/2013/08/09/absolute-horizontal-vertical-centering-css/
+@mixin absolute_center($top: 0, $right: 0, $bottom: 0, $left: 0) {
+  position: absolute;
+  top: $top;
+  right: $right;
+  bottom: $bottom;
+  left: $left;
+
+  @if ($bottom == 0 && $top == 0) {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
+  @if ($left == 0 && $right== 0) {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

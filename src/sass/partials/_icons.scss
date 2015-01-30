@@ -54,8 +54,8 @@
 .icon-stove_on:before { content: '\e800'; } /* '' */
 .icon-outlet_on:before {
   content: '\e801';
-  @include transform(scale(1.3));
-  margin-left: .15em;
+  @include transform(scale(1.4));
+  margin-left: .14em;
  } /* '' */
 .icon-outlet_off:before { content: '\e803'; } /* '' */
 .icon-stove_off:before { content: '\e802'; } /* '' */

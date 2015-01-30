@@ -5,7 +5,7 @@ var transformResponse = require('./transform-response.js');
 var DeviceInterface = {
   getDevices: function (responseHandler) {
     request.get(
-      'https://gist.githubusercontent.com/AdamEdgett/7232a7f525fb42e5d3bb/raw/devices.json',
+      'https://gist.githubusercontent.com/Daniel0524/f840091f221fd3fd7f72/raw/722f798efea440496e60e2a285645aade95d94d7/devices',
       function (err, res) {
         if (err) throw err;
         responseHandler(transformResponse(res));
