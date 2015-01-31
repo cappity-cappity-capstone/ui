@@ -30,6 +30,10 @@ body {
 #main-container {
   &.dark {
     background-color: $color-main-container-dark;
+
+    div {
+      color: $color-primary-light;
+    }
   }
 
   &.light {
