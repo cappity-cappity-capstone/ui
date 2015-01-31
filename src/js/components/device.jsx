@@ -7,7 +7,6 @@ var DEVICE_TYPES = [
   'lock'
 ];
 
-// not really sure where something like this should go
 var STATUS_COPY = {
   'outlet': {
     'on': 'on',
@@ -46,27 +45,6 @@ var Device = React.createClass({
   },
 
   render: function() {
-    var STATUS_COPY = {
-      'outlet': {
-        'on': 'on',
-        'off': 'off'
-      },
-
-      'stove': {
-        'on': 'on',
-        'off': 'off'
-      },
-
-      'gas-sensor': {
-        'on': 'on',
-        'off': 'off'
-      },
-
-      'lock': {
-        'on': 'locked',
-        'off': 'unlocked'
-      }
-    };
     var status = STATUS_COPY[this.props.type][this.state.device_state];
     return (
       <div className="device">
