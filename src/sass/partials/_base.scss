@@ -18,5 +18,6 @@ $fixed-line-height: $base-line-height;
 
 // Headings
 $header-font-weight: $bold;
-
+$width-drawer-expanded: 300px;
+$width-drawer-expanded-mobile: 250px;
 @import "modules/all";

@@ -32,7 +32,8 @@ var Page = React.createClass({
     var viewportWidth = getViewportWidth();
     var menuExpanded = viewportWidth > widthCutoff;
     return {
-      menuExpanded: menuExpanded
+      menuExpanded: menuExpanded,
+      modulesShowControls: false
     }
   },
 
@@ -42,7 +43,8 @@ var Page = React.createClass({
         id={device.id}
         on={device.on}
         type={device.type}
-        name={device.name} />
+        name={device.name}
+        showControls={this.state.modulesShowControls} />
     );
   },
 
@@ -61,7 +63,7 @@ var Page = React.createClass({
     return (
       <div>
         <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded}/>
-        <div className={this.getTimeClass() + " " + menuExpandedClass} id="main-container" onClick={this.handleOffModuleClick}>
+        <div className={this.getTimeClass() + " " + menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
           <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
             {renderedDevices}
@@ -71,14 +73,26 @@ var Page = React.createClass({
     );
   },
 
-  handleNavIconClick: function() {
+  handleNavIconClick: function(event) {
     var menuExpanded = this.state.menuExpanded;
     this.setState({menuExpanded: !menuExpanded});
   },
 
-  handleOffModuleClick: function() {
-    return;
+  isMoving: false,
+
+  handleOffModuleAction: function(event) {
+    if (this.isMoving) {
+      this.isMoving = false;
+    } else {
+      this.setState({modulesShowControls: false});  
+    }
+  },
+
+  swallowMovement: function(event) {
+    console.log('moving');
+    this.isMoving = true;
   }
+
 });
 
 module.exports = Page

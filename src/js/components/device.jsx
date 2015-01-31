@@ -31,12 +31,9 @@ var STATUS_COPY = {
 
 var Device = React.createClass({
   getInitialState: function() {
-    // naming it initialX clearly indicates that the only purpose
-    // of the passed down prop is to initialize something internally
     var state = this.props.on ? 'on' : 'off';
     return {
-      deviceState: state,
-      showControls: false
+      deviceState: state
     };
   },
 
@@ -49,11 +46,11 @@ var Device = React.createClass({
 
   render: function() {
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
-    var controlClass = this.state.showControls ? "control" : "";
+    var controlClass = this.props.showControls ? "control" : "";
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
-          <div className={this.state.deviceState + " device-outer-circle " + controlClass} onTouchStart={this.handleModuleOpenTouch}>
+          <div className={this.state.deviceState + " device-outer-circle " + controlClass} onTouchEnd={this.handleModuleOpenTouch}>
             <div className="device-inner-circle">
               <div className="device-icon-background"></div>
               <div className="device-control-circle">
@@ -77,8 +74,8 @@ var Device = React.createClass({
               <div className="device-info" onClick={this.handleInfoClick}>
                 <i className="icon-info"></i>
               </div>
-              <div className="device-icon-container" onTouchStart={this.handleModuleCloseTouch}>
-                <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState}></i>
+              <div className="device-icon-container">
+                <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState} onTouchEnd={this.handleModuleCloseTouch}></i>
               </div>
             </div>
           </div>
@@ -99,13 +96,17 @@ var Device = React.createClass({
   },
 
   //opens the controls for a module
-  handleModuleOpenTouch: function() {
-    this.setState({showControls: true});
+  handleModuleOpenTouch: function(event) {
+    event.stopPropagation();
+    this.props.showControls = true;
+    this.render();
   },
 
   //closes the controls for a module
-  handleModuleCloseTouch: function() {
-    this.setState({showControls: false});
+  handleModuleCloseTouch: function(event) {
+    event.stopPropagation();
+    this.props.showControls = true;
+    this.render();
   }
 });
 

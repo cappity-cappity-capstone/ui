@@ -39,7 +39,19 @@ $delay-movement: .2s;
 .device {
   //this changes the whole size of the module
   //so when the time comes put your media queries here
+  padding: 0    20px;
   font-size: 20px;
+
+  @media (max-width: $breakpoint-phone-small) {
+    font-size: 18px;
+  }
+}
+
+.device-name {
+    min-width: 300px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 30px;
 }
 
 .device-outer-circle {

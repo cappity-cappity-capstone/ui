@@ -1,9 +1,16 @@
+$width-drawer-expanded: 300px;
 #menu-side {
+  z-index: 100;
   position: fixed;
   box-sizing: border-box;
   float: left;
   height: 100%;
+  
   width: $width-drawer-expanded;
+  @media (max-width: $breakpoint-phone-small) {
+    width: $width-drawer-expanded-mobile;
+  }
+
   background-color: $color-side-menu-background;
   overflow: hidden;
   @include transition(width, linear, $delay-drawer-transition);
@@ -35,6 +42,7 @@
       border-top: 1px solid white;
       border-bottom: 1px solid white;
       margin-top: -1px;
+      font-size: 30px;
     }
   }
 
