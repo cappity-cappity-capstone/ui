@@ -40,6 +40,10 @@ body {
     background-color: $color-main-container-light;
   }
 
+  &.menu-collapsed {
+    margin-left: 0;
+  }
+
   height: 100%;
   @include transition(margin-left, linear, $delay-drawer-transition);
 

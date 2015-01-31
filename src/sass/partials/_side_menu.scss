@@ -28,11 +28,18 @@
     padding: 0;
     text-align: center;
     color: white;
+
     li {
       padding: 20px;
-      outline: solid 1px;
-      margin-top: 1px;
+      box-sizing: border-box;
+      border-top: 1px solid white;
+      border-bottom: 1px solid white;
+      margin-top: -1px;
     }
+  }
+
+  &.collapsed {
+    width: 0;
   }
 }
 
@@ -42,4 +49,5 @@
   margin: 2em auto;
   background-size: 100% !important;
   @include border-radius(150px);
+  @include box-shadow(0 1px 5px 0 rgba(0, 0, 0, 0.4));
 }

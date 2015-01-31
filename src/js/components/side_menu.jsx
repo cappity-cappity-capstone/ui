@@ -9,10 +9,11 @@ var SideMenu = React.createClass({
     var imageStyle = {
       background: 'url(' + this.props.profileImageUrl + ') no-repeat;'
     }
-
+    
+    var menuExpandedClass = this.props.menuExpanded ? "" : "collapsed";
     return (
       <div className="menu">
-        <aside id="menu-side">
+        <aside id="menu-side" className={menuExpandedClass}>
           <div className="content">
             <div className="photo-profile">
               <div className="image-circular" style={imageStyle}></div>

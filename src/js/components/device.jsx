@@ -1,5 +1,5 @@
 var React = require('react');
-
+React.initializeTouchEvents(true);
 var DEVICE_TYPES = [
   'outlet',
   'stove',
@@ -34,7 +34,10 @@ var Device = React.createClass({
     // naming it initialX clearly indicates that the only purpose
     // of the passed down prop is to initialize something internally
     var state = this.props.on ? 'on' : 'off';
-    return {device_state: state};
+    return {
+      deviceState: state,
+      showControls: false
+    };
   },
 
   propTypes: {
@@ -45,12 +48,12 @@ var Device = React.createClass({
   },
 
   render: function() {
-    var status = STATUS_COPY[this.props.type][this.state.device_state];
-
+    var status = STATUS_COPY[this.props.type][this.state.deviceState];
+    var controlClass = this.state.showControls ? "control" : "";
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
-          <div className={this.state.device_state + " device-outer-circle"}>
+          <div className={this.state.deviceState + " device-outer-circle " + controlClass} onTouchStart={this.handleModuleOpenTouch}>
             <div className="device-inner-circle">
               <div className="device-icon-background"></div>
               <div className="device-control-circle">
@@ -74,8 +77,8 @@ var Device = React.createClass({
               <div className="device-info" onClick={this.handleInfoClick}>
                 <i className="icon-info"></i>
               </div>
-              <div className="device-icon-container">
-                <i className={"device-icon icon-" + this.props.type + "_" + this.state.device_state}></i>
+              <div className="device-icon-container" onTouchStart={this.handleModuleCloseTouch}>
+                <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState}></i>
               </div>
             </div>
           </div>
@@ -84,15 +87,25 @@ var Device = React.createClass({
   },
 
   handleOnClick: function() {
-    this.setState({device_state: "on"});
+    this.setState({deviceState: "on"});
   },
 
   handleOffClick: function() {
-    this.setState({device_state: "off"});
+    this.setState({deviceState: "off"});
   },
 
   handleInfoClick: function() {
-    this.setState({device_state: "info"});
+    this.setState({deviceState: "info"});
+  },
+
+  //opens the controls for a module
+  handleModuleOpenTouch: function() {
+    this.setState({showControls: true});
+  },
+
+  //closes the controls for a module
+  handleModuleCloseTouch: function() {
+    this.setState({showControls: false});
   }
 });
 

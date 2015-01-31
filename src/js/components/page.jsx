@@ -1,9 +1,18 @@
 var React = require('react');
 var _ = require('underscore');
-
 var Device = require('./device.jsx');
 var SideMenu = require('./side_menu.jsx');
 var Header = require('./header.jsx');
+React.initializeTouchEvents(true);
+function getViewportWidth() {
+  var w = window,
+      d = document,
+      e = d.documentElement,
+      g = d.getElementsByTagName('body')[0],
+      width  = w.innerWidth || e.clientWidth || g.clientWidth,
+      height = w.innerHeight|| e.clientHeight|| g.clientHeight;
+      return width;
+}
 
 var Page = React.createClass({
   propTypes: {
@@ -19,8 +28,11 @@ var Page = React.createClass({
   },
 
   getInitialState: function(){
+    var widthCutoff  = 750;
+    var viewportWidth = getViewportWidth();
+    var menuExpanded = viewportWidth > widthCutoff;
     return {
-      menuExpanded: true
+      menuExpanded: menuExpanded
     }
   },
 
@@ -45,10 +57,11 @@ var Page = React.createClass({
 
   render: function(){
     var renderedDevices = _.map(this.props.devices, this.renderDevice);
+    var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
     return (
       <div>
-        <SideMenu profileImageUrl="/img/todd.jpg" />
-        <div className={this.getTimeClass()} id="main-container">
+        <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded}/>
+        <div className={this.getTimeClass() + " " + menuExpandedClass} id="main-container" onClick={this.handleOffModuleClick}>
           <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
             {renderedDevices}
@@ -60,14 +73,11 @@ var Page = React.createClass({
 
   handleNavIconClick: function() {
     var menuExpanded = this.state.menuExpanded;
-    var newWidth = menuExpanded ? 0 : 300;
-    this.expandDrawer(newWidth);
     this.setState({menuExpanded: !menuExpanded});
   },
 
-  expandDrawer: function(width) {
-    document.getElementById('menu-side').setAttribute("style","width:" + width + "px;");
-    document.getElementById('main-container').setAttribute("style","margin-left:" + width + "px;");
+  handleOffModuleClick: function() {
+    return;
   }
 });
 

@@ -12,9 +12,9 @@ var Header = React.createClass({
   render: function(){
     return (
       <header>
-        <a className="header-menu-icon" onClick={this.props.onNavIconClick}>
+        <div className="header-menu-icon" onClick={this.props.onNavIconClick}>
           <Icon type="navicon"/>
-        </a>
+        </div>
         <div className="container-header-text">
           <div className="header-title">{this.props.homeName}</div>
         </div>
