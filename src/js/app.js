@@ -1,7 +1,7 @@
 var React = require('react');
 var Router = require('react-router');
 
-var DeviceInterface = require('./interfaces/device-interface.js');
+var DeviceInterface = require('./interfaces/device_interface.js');
 
 var Page = require('./components/page.jsx');
 

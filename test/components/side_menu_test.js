@@ -1,9 +1,9 @@
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 
-jest.dontMock('../../src/js/components/side-menu.jsx');
+jest.dontMock('../../src/js/components/side_menu.jsx');
 
-var SideMenu = require('../../src/js/components/side-menu.jsx');
+var SideMenu = require('../../src/js/components/side_menu.jsx');
 var Icon = require('../../src/js/components/icon.jsx');
 
 describe('components/side-menu', function () {

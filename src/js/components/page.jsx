@@ -2,7 +2,7 @@ var React = require('react');
 var _ = require('underscore');
 
 var Device = require('./device.jsx');
-var SideMenu = require('./side-menu.jsx');
+var SideMenu = require('./side_menu.jsx');
 var Header = require('./header.jsx');
 
 var Page = React.createClass({

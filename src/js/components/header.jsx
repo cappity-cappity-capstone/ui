@@ -1,7 +1,7 @@
 var React = require('react');
 
 var Icon = require('./icon.jsx');
-var HeaderInfo = require('./header-info.jsx');
+var HeaderInfo = require('./header_info.jsx');
 
 var Header = React.createClass({
   propTypes: {
