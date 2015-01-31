@@ -46,6 +46,7 @@ var Device = React.createClass({
 
   render: function() {
     var status = STATUS_COPY[this.props.type][this.state.device_state];
+
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
@@ -58,15 +59,15 @@ var Device = React.createClass({
               <div className="device-control-status">
                 <span>{status}</span>
               </div>
-              <div className="device-control-on"  onClick={this.handleOnClick}>
+              <div className="device-control-on" onClick={this.handleOnClick}>
                 <div className="fill"></div>
                 <span>On</span>
               </div>
-              <div className="device-control-off"  onClick={this.handleOffClick}>
+              <div className="device-control-off" onClick={this.handleOffClick}>
                 <div className="fill"></div>
                 <span>Off</span>
               </div>
-              <div className="device-info"  onClick={this.handleInfoClick}>
+              <div className="device-info" onClick={this.handleInfoClick}>
                 <i className="icon-info"></i>
               </div>
               <div className="device-icon-container">
@@ -89,8 +90,6 @@ var Device = React.createClass({
   handleInfoClick: function() {
     this.setState({device_state: "info"});
   }
-
-
 });
 
 module.exports = Device;
