@@ -37,11 +37,9 @@
 }
 
 .image-circular {
-	width: 200px;
-	height: 200px;
-	margin: 2em auto;
-	background-size: 100% !important;
-	border-radius: 150px;
-	-webkit-border-radius: 150px;
-	-moz-border-radius: 150px; 
+  width: 200px;
+  height: 200px;
+  margin: 2em auto;
+  background-size: 100% !important;
+  @include border-radius(150px);
 }
