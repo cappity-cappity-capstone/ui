@@ -60,12 +60,16 @@ var Device = React.createClass({
                 <span>{status}</span>
               </div>
               <div className="device-control-on" onClick={this.handleOnClick}>
-                <div className="fill"></div>
-                <span>On</span>
+                <div className="device-control-button-container">
+                  <div className="fill"></div>
+                  <span>On</span>
+                </div>
               </div>
               <div className="device-control-off" onClick={this.handleOffClick}>
-                <div className="fill"></div>
-                <span>Off</span>
+                <div className="device-control-button-container">
+                  <div className="fill"></div>
+                  <span>Off</span>
+                </div>
               </div>
               <div className="device-info" onClick={this.handleInfoClick}>
                 <i className="icon-info"></i>

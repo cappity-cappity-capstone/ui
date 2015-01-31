@@ -213,7 +213,6 @@ $delay-movement: .2s;
   @include absolute_center($left: inherit, $right: inherit);
   @include transition(transform, linear, $delay-movement);
   background-color: $color-background-circle-dark;
-  display: table;
   cursor: pointer;
 
   * {
@@ -238,6 +237,11 @@ $delay-movement: .2s;
   left: 0;
 }
 
+.device-control-button-container {
+  width: 100%;
+  height: 100%;
+  display: table;  
+}
 
 .device-info {
   @include circle($size-info-circle);
@@ -258,10 +262,10 @@ $delay-movement: .2s;
 }
 
 .device-icon-container {
-  overflow: hidden;
   @include circle(100%);
   @include absolute_center;
   @include transition(transform, linear, $delay-movement);
+  overflow: hidden;
   text-align: left;
   z-index: 2;
 
@@ -270,11 +274,5 @@ $delay-movement: .2s;
     @include vertical-align(18%);
     color: $color-text-light;
     font-size: $size-icon-big;
-  }
-
-  // this one is special because it's a different size
-  .icon-outlet_on, .icon-outlet_off {
-    /*font-size: $size-icon-big+20;*/
-    /*margin-left: -15px;*/
   }
 }
