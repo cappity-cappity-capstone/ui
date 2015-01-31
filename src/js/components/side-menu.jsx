@@ -18,8 +18,8 @@ var SideMenu = React.createClass({
               <div className="image-circular" style={imageStyle}></div>
             </div>
             <ul className="list-side-menu-options">
-              <li>Logout</li>
-              <li>Settings</li>
+              <li><a href="/logout">Logout</a></li>
+              <li><a href="/settings">Settings</a></li>
             </ul>
           </div>
         </aside>
