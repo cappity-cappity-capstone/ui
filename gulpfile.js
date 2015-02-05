@@ -68,3 +68,4 @@ gulp.task('watch', function() {
 
 gulp.task('build', ['compass','js']);
 gulp.task('default', ['build', 'browser-sync', 'connect', 'watch']);
+gulp.task('nobs', ['build', 'connect', 'watch']);

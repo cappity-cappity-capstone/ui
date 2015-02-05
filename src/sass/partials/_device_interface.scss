@@ -54,6 +54,65 @@ $delay-movement: .2s;
     font-size: 30px;
 }
 
+// so hover gets pretty weird on different mobile
+// devices so we should disable it if we're on one
+body:not(.touch) {
+  .device-outer-circle {
+    &:hover {
+      background-color: $color-background-circle-dark;
+
+    .device-control-circle {
+      opacity: 1;
+    }
+
+    .device-control-status {
+      @include transform(translateY(.7em));
+      background-color: $color-background-circle-dark;
+    }
+
+    .device-control-off {
+      @include transform(translateX(-.6em));
+    }
+
+    .device-control-on {
+      @include transform(translateX(.6em));
+    }
+
+    .device-info {
+      @include transform(translateY(-.4em));
+    }
+
+    .device-icon-background {
+      background-color: $color-background-circle-dark;
+    }
+
+    .device-icon-container {
+      @include transform(scale(.4));
+    }
+    }
+
+    &:hover.on {
+      .device-icon {
+        color: $color-on;
+      }
+
+      .device-inner-circle {
+        border-color: $color-on;
+      }
+    }
+
+    &:hover.off {
+      .device-icon {
+        color: $color-off;
+      }
+
+      .device-inner-circle {
+        border-color: $color-off;
+      }
+    }
+  }
+}
+
 .device-outer-circle {
   font-size: 1em;
   @include circle($diameter-outer-circle);
@@ -109,7 +168,7 @@ $delay-movement: .2s;
 
 
   //state for controlling the outer circle
-  &.control, &:hover {
+  &.control {
     background-color: $color-background-circle-dark;
 
     .device-control-circle {
@@ -142,7 +201,7 @@ $delay-movement: .2s;
     }
   }
 
-  &.control.on, &:hover.on {
+  &.control.on {
     .device-icon {
       color: $color-on;
     }
@@ -152,7 +211,7 @@ $delay-movement: .2s;
     }
   }
 
-  &.control.off, &:hover.off {
+  &.control.off {
     .device-icon {
       color: $color-off;
     }
