@@ -33,7 +33,8 @@ var Device = React.createClass({
   getInitialState: function() {
     var state = this.props.on ? 'on' : 'off';
     return {
-      deviceState: state
+      deviceState: state,
+      showControls: this.props.showControls
     };
   },
 
@@ -45,12 +46,13 @@ var Device = React.createClass({
   },
 
   render: function() {
+    console.log('Rendering controlClass: ' + this.state.showControls + ' but the props for it is ' + this.props.showControls);
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
-    var controlClass = this.props.showControls ? "control" : "";
+    var controlClass = this.state.showControls ? "control" : "";
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
-          <div className={this.state.deviceState + " device-outer-circle " + controlClass} onTouchEnd={this.handleModuleOpenTouch}>
+          <div className={this.state.deviceState + " device-outer-circle " + controlClass} onTouchEnd={this.touchStart} onClick={this.handleModuleOpenTouch}>
             <div className="device-inner-circle">
               <div className="device-icon-background"></div>
               <div className="device-control-circle">
@@ -75,7 +77,7 @@ var Device = React.createClass({
                 <i className="icon-info"></i>
               </div>
               <div className="device-icon-container">
-                <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState} onTouchEnd={this.handleModuleCloseTouch}></i>
+                <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState}/>
               </div>
             </div>
           </div>
@@ -83,12 +85,26 @@ var Device = React.createClass({
     );
   },
 
-  handleOnClick: function() {
-    this.setState({deviceState: "on"});
+  touchStart: function(event) {
+    console.log('touch on module started');
+    event.stopPropagation();
   },
 
-  handleOffClick: function() {
-    this.setState({deviceState: "off"});
+  handleOnClick: function(event) {
+    console.log('click on module started');
+    event.stopPropagation();
+    this.setState({
+      deviceState: "on",
+      showControls: false
+    });
+  },
+
+  handleOffClick: function(event) {
+    event.stopPropagation();
+    this.setState({
+      deviceState: "off",
+      showControls: false
+    });
   },
 
   handleInfoClick: function() {
@@ -98,15 +114,7 @@ var Device = React.createClass({
   //opens the controls for a module
   handleModuleOpenTouch: function(event) {
     event.stopPropagation();
-    this.props.showControls = true;
-    this.render();
-  },
-
-  //closes the controls for a module
-  handleModuleCloseTouch: function(event) {
-    event.stopPropagation();
-    this.props.showControls = true;
-    this.render();
+    this.setState({showControls: true});
   }
 });
 

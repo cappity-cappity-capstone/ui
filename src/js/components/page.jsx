@@ -84,7 +84,8 @@ var Page = React.createClass({
     if (this.isMoving) {
       this.isMoving = false;
     } else {
-      this.setState({modulesShowControls: false});  
+      console.log('Single Tap Outside Module Detected');
+      this.setState({modulesShowControls: false});
     }
   },
 
