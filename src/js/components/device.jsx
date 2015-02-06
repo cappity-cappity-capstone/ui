@@ -1,6 +1,5 @@
 var React = require('react');
 var DeviceInterface = require('../interfaces/device_interface.js');
-React.initializeTouchEvents(true);
 var DEVICE_TYPES = [
   'outlet',
   'stove',
@@ -31,12 +30,12 @@ var STATUS_COPY = {
 };
 
 var Device = React.createClass({
+  // usually setting state from a prop is bad practice
+  // but since we're getting these states in a request in
+  // app.js there is no other good way, after pageload though
+  // this page is the source of tuth and nothing else will
+  // change the state so it's okay
   getInitialState: function() {
-    // usually setting state from a prop is bad practice
-    // but since we're getting these states in a request in
-    // app.js there is no other good way, after pageload though
-    // this page is the source of tuth and nothing else will
-    // change the state so it's okay
     var state = this.props.on ? 'on' : 'off';
     return {
       deviceState: state,
@@ -52,13 +51,12 @@ var Device = React.createClass({
   },
 
   render: function() {
-    console.log('Rendering controlClass: ' + this.state.showControls + ' but the props for it is ' + this.props.showControls);
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
     var controlClass = this.props.showControls ? " control" : "";
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
-          <div className={this.state.deviceState + " device-outer-circle" + controlClass + this.state.loadingClass} onClick={this.props.onClickModule}>
+          <div className={this.state.deviceState + " device-outer-circle" + controlClass + this.state.loadingClass} onTouchEnd={this.handDevicetouch} onTouchMove={this.swallowMovement}>
             <div className="device-inner-circle">
               <div className="device-icon-background"></div>
               <div className="device-control-circle">
@@ -67,19 +65,19 @@ var Device = React.createClass({
               <div className="device-control-status">
                 <span>{status}</span>
               </div>
-              <div className="device-control-on" onClick={this.handleOnClick}>
+              <div className="device-control-on" onClick={this.handleOnButtonAction}>
                 <div className="device-control-button-container">
                   <div className="fill"></div>
                   <span>On</span>
                 </div>
               </div>
-              <div className="device-control-off" onClick={this.handleOffClick}>
+              <div className="device-control-off" onClick={this.handleOffButtonAction}>
                 <div className="device-control-button-container">
                   <div className="fill"></div>
                   <span>Off</span>
                 </div>
               </div>
-              <div className="device-info" onClick={this.handleInfoClick}>
+              <div className="device-info" onClick={this.handleInfoButtonAction}>
                 <i className="icon-info"></i>
               </div>
               <div className="device-icon-container">
@@ -91,7 +89,18 @@ var Device = React.createClass({
     );
   },
 
-  handleOnClick: function(event) {
+  handDevicetouch: function(event) {
+    event.stopPropagation();
+    if (this.isMoving) {
+      this.isMoving = false;
+    } else {
+      if (!this.props.showControls) {
+        this.props.onClickModule()
+      }
+    }
+  },
+
+  handleOnButtonAction: function(event) {
     event.stopPropagation();
     this.setState({
       loadingClass: " loading"
@@ -99,7 +108,7 @@ var Device = React.createClass({
     DeviceInterface.setDeviceState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
   },
 
-  handleOffClick: function(event) {
+  handleOffButtonAction: function(event) {
     event.stopPropagation();
     this.setState({
       loadingClass: " loading"
@@ -121,15 +130,19 @@ var Device = React.createClass({
     });
   },
 
-  handleInfoClick: function() {
+  //info can probably be bootstrapped
+  handleInfoButtonAction: function() {
     this.setState({deviceState: "info"});
   },
 
-  //opens the controls for a module
-  handleModuleOpenTouch: function(event) {
-    console.log("CHILD");
-    console.log(this.props);
-    //this.setState({showControls: true});
+  // so this is kind of hacky, but basically we're trying to avoid triggering onTouchEnd when the user
+  // is scrolling, so if the user is scrolling,
+  isMoving: false,
+
+  swallowMovement: function(event) {
+    event.stopPropagation();
+    console.log('swallowing movement on a button')
+    this.isMoving = true;
   }
 });
 

@@ -21,10 +21,11 @@ window.onload = function() {
   DeviceInterface.getDevices(
     function (resp) {
       component.props.devices = resp
+      // devicesControlView is whether or not each device is showing its controls or not
+      // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to 
+      // add a controls class onTouch to show the controls
       devicesControlView = []
-      _.each(resp, function(item, index) {
-        devicesControlView.push(false);
-      });
+      _.each(resp, function(item, index) {devicesControlView.push(false)});
       component.setState({ devicesControlView: devicesControlView });
     }
   );

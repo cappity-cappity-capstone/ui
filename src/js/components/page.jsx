@@ -3,7 +3,9 @@ var _ = require('underscore');
 var Device = require('./device.jsx');
 var SideMenu = require('./side_menu.jsx');
 var Header = require('./header.jsx');
+
 React.initializeTouchEvents(true);
+
 function getViewportWidth() {
   var w = window,
       d = document,
@@ -91,22 +93,21 @@ var Page = React.createClass({
     }
   },
 
-  isMoving: false,
-
   handleOffModuleAction: function(event) {
     if (this.isMoving) {
       this.isMoving = false;
     } else {
       var devicesControlView = []
-      _.each(this.state.devicesControlView, function(item, index) {
-        devicesControlView.push(false);
-      });
+      _.each(this.state.devicesControlView, function(item, index) {devicesControlView.push(false);});
       this.setState({devicesControlView: devicesControlView});
     }
   },
 
+  // so this is kind of hacky, but basically we're trying to avoid triggering onTouchEnd when the user
+  // is scrolling, so if the user is scrolling,
+  isMoving: false,
+
   swallowMovement: function(event) {
-    console.log('moving');
     this.isMoving = true;
   }
 

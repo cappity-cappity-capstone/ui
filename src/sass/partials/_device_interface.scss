@@ -279,8 +279,6 @@ body:not(.touch) {
 .fill {
   @include circle(0);
   @include absolute_center;
-  /*@include transition(transform, linear, $delay-movement);*/
-  /*@include transform(scale(0));*/
   @include transition(width, linear, $delay-movement);
   @include transition(height, linear, $delay-movement);
   z-index: -1;
@@ -293,8 +291,8 @@ body:not(.touch) {
   @include circle($diameter-control-button);
   @include absolute_center($left: inherit, $right: inherit);
   @include transition(transform, linear, $delay-movement);
+  @include box-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.3));
   background-color: $color-background-circle-dark;
-    @include box-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.3));
   cursor: pointer;
 
   * {
