@@ -33,18 +33,19 @@ var Page = React.createClass({
     var menuExpanded = viewportWidth > widthCutoff;
     return {
       menuExpanded: menuExpanded,
-      modulesShowControls: false
+      devicesControlView: []
     }
   },
 
-  renderDevice: function(device){
+  renderDevice: function(device, index){
     return (
       <Device key={device.id}
         id={device.id}
         on={device.on}
         type={device.type}
         name={device.name}
-        showControls={this.state.modulesShowControls} />
+        onClickModule={this.handleOnModuleClick(index)}
+        showControls={this.state.devicesControlView[index]} />
     );
   },
 
@@ -58,7 +59,10 @@ var Page = React.createClass({
   },
 
   render: function(){
-    var renderedDevices = _.map(this.props.devices, this.renderDevice);
+    var renderedDevices = []
+    _.each(this.props.devices, function(device, index) {
+      renderedDevices.push(this.renderDevice(device, index));
+    }, this);
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
     return (
       <div>
@@ -78,14 +82,26 @@ var Page = React.createClass({
     this.setState({menuExpanded: !menuExpanded});
   },
 
+  handleOnModuleClick: function(index) {
+    var self = this;
+    return function() {
+      var devicesControlView = self.state.devicesControlView;
+      devicesControlView[index] = !devicesControlView[index];
+      self.setState({devicesControlView: devicesControlView});
+    }
+  },
+
   isMoving: false,
 
   handleOffModuleAction: function(event) {
     if (this.isMoving) {
       this.isMoving = false;
     } else {
-      console.log('Single Tap Outside Module Detected');
-      this.setState({modulesShowControls: false});
+      var devicesControlView = []
+      _.each(this.state.devicesControlView, function(item, index) {
+        devicesControlView.push(false);
+      });
+      this.setState({devicesControlView: devicesControlView});
     }
   },
 

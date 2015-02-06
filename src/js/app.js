@@ -1,4 +1,5 @@
 var React = require('react');
+var _ = require('underscore');
 var Router = require('react-router');
 
 var DeviceInterface = require('./interfaces/device_interface.js');
@@ -15,11 +16,16 @@ window.onload = function() {
   }
 
   var documentRoot = document.querySelector('#content-anchor');
-  var component = React.render(<Page />, documentRoot);
+  var component = React.render(<Page/>, documentRoot);
 
   DeviceInterface.getDevices(
     function (resp) {
-      component.setProps({ devices: resp });
+      component.props.devices = resp
+      devicesControlView = []
+      _.each(resp, function(item, index) {
+        devicesControlView.push(false);
+      });
+      component.setState({ devicesControlView: devicesControlView });
     }
   );
 }

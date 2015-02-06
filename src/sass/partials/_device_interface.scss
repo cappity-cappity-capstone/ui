@@ -8,6 +8,7 @@ $color-on: #009345;
 $color-border-inner-outline: #A6A8AB;
 $color-border-outer-outline: #404041;
 $color-background-circle-dark: #231F20;
+$color-background-circle-loading: grey;
 $color-info-icon: #A6A8AB;
 
 //sizes
@@ -219,6 +220,13 @@ body:not(.touch) {
     .device-inner-circle {
       border-color: $color-off;
     }
+  }
+
+  &.loading {
+    .device-icon-background {
+      background-color: $color-background-circle-loading !important;
+    }
+    background-color: $color-background-circle-loading !important;
   }
 }
 

@@ -1,4 +1,5 @@
 var React = require('react');
+var DeviceInterface = require('../interfaces/device_interface.js');
 React.initializeTouchEvents(true);
 var DEVICE_TYPES = [
   'outlet',
@@ -31,10 +32,15 @@ var STATUS_COPY = {
 
 var Device = React.createClass({
   getInitialState: function() {
+    // usually setting state from a prop is bad practice
+    // but since we're getting these states in a request in
+    // app.js there is no other good way, after pageload though
+    // this page is the source of tuth and nothing else will
+    // change the state so it's okay
     var state = this.props.on ? 'on' : 'off';
     return {
       deviceState: state,
-      showControls: this.props.showControls
+      loadingClass: ""
     };
   },
 
@@ -48,11 +54,11 @@ var Device = React.createClass({
   render: function() {
     console.log('Rendering controlClass: ' + this.state.showControls + ' but the props for it is ' + this.props.showControls);
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
-    var controlClass = this.state.showControls ? "control" : "";
+    var controlClass = this.props.showControls ? " control" : "";
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
-          <div className={this.state.deviceState + " device-outer-circle " + controlClass} onTouchEnd={this.touchStart} onClick={this.handleModuleOpenTouch}>
+          <div className={this.state.deviceState + " device-outer-circle" + controlClass + this.state.loadingClass} onClick={this.props.onClickModule}>
             <div className="device-inner-circle">
               <div className="device-icon-background"></div>
               <div className="device-control-circle">
@@ -85,25 +91,33 @@ var Device = React.createClass({
     );
   },
 
-  touchStart: function(event) {
-    console.log('touch on module started');
-    event.stopPropagation();
-  },
-
   handleOnClick: function(event) {
-    console.log('click on module started');
     event.stopPropagation();
     this.setState({
-      deviceState: "on",
-      showControls: false
+      loadingClass: " loading"
     });
+    DeviceInterface.setDeviceState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
   },
 
   handleOffClick: function(event) {
     event.stopPropagation();
     this.setState({
-      deviceState: "off",
-      showControls: false
+      loadingClass: " loading"
+    });
+    DeviceInterface.setDeviceState(this.props.id, false, this.deviceStateChangeSuccess, this.deviceStateChangeError);
+  },
+
+  deviceStateChangeSuccess: function(response) {
+    var deviceState = response.state ? 'on' : 'off';
+    this.setState({
+      deviceState: deviceState,
+      loadingClass: ""
+    });
+  },
+
+  deviceStateChangeError: function(error) {
+    this.setState({
+      loadingClass: ""
     });
   },
 
@@ -113,8 +127,9 @@ var Device = React.createClass({
 
   //opens the controls for a module
   handleModuleOpenTouch: function(event) {
-    event.stopPropagation();
-    this.setState({showControls: true});
+    console.log("CHILD");
+    console.log(this.props);
+    //this.setState({showControls: true});
   }
 });
 
