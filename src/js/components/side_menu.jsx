@@ -12,7 +12,6 @@ var SideMenu = React.createClass({
     
     var menuExpandedClass = this.props.menuExpanded ? "" : "collapsed";
     return (
-      <div className="menu">
         <aside id="menu-side" className={menuExpandedClass}>
           <div className="content">
             <div className="photo-profile">
@@ -24,7 +23,6 @@ var SideMenu = React.createClass({
             </ul>
           </div>
         </aside>
-      </div>
     );
   }
 });

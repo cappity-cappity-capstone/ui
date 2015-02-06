@@ -51,15 +51,6 @@ var Page = React.createClass({
     );
   },
 
-  getTimeClass: function() {
-    var hours = (new Date()).getHours();
-    if (hours >= 17 || hours < 7) {
-        return "dark";
-    } else {
-        return "light";
-    }
-  },
-
   render: function(){
     var renderedDevices = []
     _.each(this.props.devices, function(device, index) {
@@ -69,7 +60,7 @@ var Page = React.createClass({
     return (
       <div>
         <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded}/>
-        <div className={this.getTimeClass() + " " + menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
+        <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
           <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
             {renderedDevices}
