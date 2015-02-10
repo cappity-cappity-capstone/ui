@@ -20,7 +20,10 @@ var paths = {
 };
 
 gulp.task('js', function() {
-  return browserify({ entries: './src/js/app.js' })
+  return browserify({
+    entries: './src/js/app.js',
+    paths: [ './node_modules', './src/js' ]
+  })
     .transform('reactify')
     .on('error', swallowError)
     .bundle()

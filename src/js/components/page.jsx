@@ -1,8 +1,9 @@
 var React = require('react');
 var _ = require('underscore');
-var Device = require('./device.jsx');
-var SideMenu = require('./side_menu.jsx');
-var Header = require('./header.jsx');
+
+var Device = require('components/device.jsx');
+var SideMenu = require('components/side_menu.jsx');
+var Header = require('components/header.jsx');
 
 React.initializeTouchEvents(true);
 

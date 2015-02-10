@@ -1,5 +1,6 @@
 var React = require('react');
-var DeviceInterface = require('../interfaces/device_interface.js');
+var DeviceInterface = require('interfaces/device_interface.js');
+
 var DEVICE_TYPES = [
   'outlet',
   'stove',
