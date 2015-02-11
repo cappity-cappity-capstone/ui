@@ -1,5 +1,6 @@
 var React = require('react');
-var DeviceInterface = require('interfaces/device_interface.js');
+
+var StateInterface = require('interfaces/state_interface.js');
 
 var DEVICE_TYPES = [
   'outlet',
@@ -106,7 +107,7 @@ var Device = React.createClass({
     this.setState({
       loadingClass: " loading"
     });
-    DeviceInterface.setDeviceState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
+    StateInterface.setState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
   },
 
   handleOffButtonAction: function(event) {
@@ -114,7 +115,7 @@ var Device = React.createClass({
     this.setState({
       loadingClass: " loading"
     });
-    DeviceInterface.setDeviceState(this.props.id, false, this.deviceStateChangeSuccess, this.deviceStateChangeError);
+    StateInterface.setState(this.props.id, false, this.deviceStateChangeSuccess, this.deviceStateChangeError);
   },
 
   deviceStateChangeSuccess: function(response) {

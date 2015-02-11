@@ -2,11 +2,11 @@ var request = require('superagent');
 
 var API_HOST = 'http://localhost:4567';
 
-var DeviceInterface = {
-  addDevice: function(device, successHandler, errorHandler) {
+var ScheduleInterface = {
+  addSchedule: function(schedule, deviceId, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/devices')
-      .send(JSON.stringify(device))
+      .put(API_HOST + '/schedules/' + deviceId)
+      .send(JSON.stringify(schedule))
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
@@ -16,9 +16,9 @@ var DeviceInterface = {
       });
   },
 
-  getDevices: function(responseHandler) {
+  getSchedules: function(responseHandler) {
     request
-      .get('https://api.myjson.com/bins/vwfz')
+      .get(API_HOST + '/schedules')
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -28,9 +28,9 @@ var DeviceInterface = {
       });
   },
 
-  getDevice: function(deviceId, responseHandler) {
+  getSchedule: function(scheduleId, responseHandler) {
     request
-      .get(API_HOST + '/devices/' + deviceId)
+      .get(API_HOST + '/schedules/' + scheduleId)
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -40,42 +40,42 @@ var DeviceInterface = {
       });
   },
 
-  updateDevice: function(deviceId, device, successHandler, errorHandler) {
+  getDeviceSchedule: function(deviceId, responseHandler) {
     request
-      .put(API_HOST + '/devices/' + deviceId)
-      .send(JSON.stringify(device))
+      .get(API_HOST + '/devices/' + deviceId + '/schedules')
       .end(function(err, res) {
         if (err) {
-          errorHandler(err);
+          throw err;
         } else {
-          successHandler(device);
+          responseHandler(res.body);
         }
       });
   },
 
-  deleteDevice: function(deviceId, successHandler, errorHandler) {
+  updateSchedule: function(scheduleId, schedule, successHandler, errorHandler) {
     request
-      .delete(API_HOST + '/devices/' + deviceId)
+      .put(API_HOST + '/schedules/' + scheduleId)
+      .send(JSON.stringify(schedule))
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
         } else {
-          successHandler(deviceId);
+          successHandler(schedule);
         }
       });
   },
 
-  checkinDevice: function(deviceId, successHandler, errorHandler) {
+  deleteschedule: function(scheduleId, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/devices/' + deviceId)
+      .delete(API_HOST + '/schedules/' + scheduleId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
         } else {
-          successHandler(deviceId);
+          successHandler(scheduleId);
         }
       });
   }
 };
 
-module.exports = DeviceInterface;
+module.exports = ScheduleInterface;
