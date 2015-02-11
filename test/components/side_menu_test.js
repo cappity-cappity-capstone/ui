@@ -16,6 +16,6 @@ describe('components/side-menu', function () {
   });
 
   it('renders the menu', function() {
-    expect(TestUtils.findRenderedDOMComponentWithClass(subject, 'menu')).not.toBe( null );
+    expect(TestUtils.findRenderedDOMComponentWithTag(subject, 'aside')).not.toBe( null );
   });
 });

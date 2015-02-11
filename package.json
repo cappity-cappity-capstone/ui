@@ -25,7 +25,16 @@
     "scriptPreprocessor": "<rootDir>/jest/preprocessor.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/underscore"
+      "<rootDir>/node_modules/underscore",
+      "superagent",
+      "debug",
+      "tty",
+      "util",
+      "stream",
+      "fs",
+      "delayed-stream",
+      "mime",
+      "path"
     ],
     "testDirectoryName": "test"
   }
