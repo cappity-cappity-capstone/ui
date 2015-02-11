@@ -29,4 +29,4 @@ var Header = React.createClass({
   }
 });
 
-module.exports = Header
+module.exports = Header;

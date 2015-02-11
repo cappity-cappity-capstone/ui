@@ -37,7 +37,7 @@ var Page = React.createClass({
     return {
       menuExpanded: menuExpanded,
       devicesControlView: []
-    }
+    };
   },
 
   renderDevice: function(device, index){
@@ -53,7 +53,7 @@ var Page = React.createClass({
   },
 
   render: function(){
-    var renderedDevices = []
+    var renderedDevices = [];
     _.each(this.props.devices, function(device, index) {
       renderedDevices.push(this.renderDevice(device, index));
     }, this);
@@ -82,14 +82,14 @@ var Page = React.createClass({
       var devicesControlView = self.state.devicesControlView;
       devicesControlView[index] = !devicesControlView[index];
       self.setState({devicesControlView: devicesControlView});
-    }
+    };
   },
 
   handleOffModuleAction: function(event) {
     if (this.isMoving) {
       this.isMoving = false;
     } else {
-      var devicesControlView = []
+      var devicesControlView = [];
       _.each(this.state.devicesControlView, function(item, index) {devicesControlView.push(false);});
       this.setState({devicesControlView: devicesControlView});
     }
@@ -105,4 +105,4 @@ var Page = React.createClass({
 
 });
 
-module.exports = Page
+module.exports = Page;

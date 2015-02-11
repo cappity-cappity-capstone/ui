@@ -97,7 +97,7 @@ var Device = React.createClass({
       this.isMoving = false;
     } else {
       if (!this.props.showControls) {
-        this.props.onClickModule()
+        this.props.onClickModule();
       }
     }
   },
@@ -143,7 +143,7 @@ var Device = React.createClass({
 
   swallowMovement: function(event) {
     event.stopPropagation();
-    console.log('swallowing movement on a button')
+    console.log('swallowing movement on a button');
     this.isMoving = true;
   }
 });

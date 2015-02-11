@@ -8,7 +8,7 @@ var SideMenu = React.createClass({
   render: function(){
     var imageStyle = {
       background: 'url(' + this.props.profileImageUrl + ') no-repeat;'
-    }
+    };
 
     var menuExpandedClass = this.props.menuExpanded ? "" : "collapsed";
     return (
@@ -27,4 +27,4 @@ var SideMenu = React.createClass({
   }
 });
 
-module.exports = SideMenu
+module.exports = SideMenu;
