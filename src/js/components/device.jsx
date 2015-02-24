@@ -1,5 +1,6 @@
 var React = require('react');
 
+var DeviceInfo = require('components/device_info.jsx');
 var StateInterface = require('interfaces/state_interface.js');
 
 var DEVICE_TYPES = [
@@ -41,7 +42,8 @@ var Device = React.createClass({
     var state = this.props.on ? 'on' : 'off';
     return {
       deviceState: state,
-      loadingClass: ""
+      loadingClass: "",
+      showInfo: false
     };
   },
 
@@ -55,39 +57,45 @@ var Device = React.createClass({
   render: function() {
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
     var controlClass = this.props.showControls ? " control" : "";
+    var deviceInfo;
+    if(this.state.showInfo) {
+      deviceInfo = <DeviceInfo {...this.props} onDeviceInfoClose={this.handleDeviceInfoClose} />;
+    }
+
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
-          <div className={this.state.deviceState + " device-outer-circle" + controlClass + this.state.loadingClass} onTouchEnd={this.handDevicetouch} onTouchMove={this.swallowMovement}>
-            <div className="device-inner-circle">
-              <div className="device-icon-background"></div>
-              <div className="device-control-circle">
-                <div className="device-control-circle-crossbar"></div>
+        <div className={this.state.deviceState + " device-outer-circle" + controlClass + this.state.loadingClass} onTouchEnd={this.handDevicetouch} onTouchMove={this.swallowMovement}>
+          <div className="device-inner-circle">
+            <div className="device-icon-background"></div>
+            <div className="device-control-circle">
+              <div className="device-control-circle-crossbar"></div>
+            </div>
+            <div className="device-control-status">
+              <span>{status}</span>
+            </div>
+            <div className="device-control-on" onClick={this.handleOnButtonAction}>
+              <div className="device-control-button-container">
+                <div className="fill"></div>
+                <span>On</span>
               </div>
-              <div className="device-control-status">
-                <span>{status}</span>
+            </div>
+            <div className="device-control-off" onClick={this.handleOffButtonAction}>
+              <div className="device-control-button-container">
+                <div className="fill"></div>
+                <span>Off</span>
               </div>
-              <div className="device-control-on" onClick={this.handleOnButtonAction}>
-                <div className="device-control-button-container">
-                  <div className="fill"></div>
-                  <span>On</span>
-                </div>
-              </div>
-              <div className="device-control-off" onClick={this.handleOffButtonAction}>
-                <div className="device-control-button-container">
-                  <div className="fill"></div>
-                  <span>Off</span>
-                </div>
-              </div>
-              <div className="device-info" onClick={this.handleInfoButtonAction}>
-                <i className="icon-info"></i>
-              </div>
-              <div className="device-icon-container">
-                <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState}/>
-              </div>
+            </div>
+            <div className="device-info" onClick={this.handleInfoButtonAction}>
+              <i className="icon-info"></i>
+            </div>
+            <div className="device-icon-container">
+              <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState}/>
             </div>
           </div>
         </div>
+        {deviceInfo}
+      </div>
     );
   },
 
@@ -134,7 +142,11 @@ var Device = React.createClass({
 
   //info can probably be bootstrapped
   handleInfoButtonAction: function() {
-    this.setState({deviceState: "info"});
+    this.setState({showInfo: true});
+  },
+
+  handleDeviceInfoClose: function() {
+    this.setState({showInfo: false});
   },
 
   // so this is kind of hacky, but basically we're trying to avoid triggering onTouchEnd when the user
