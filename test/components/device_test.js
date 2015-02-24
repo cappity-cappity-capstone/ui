@@ -1,9 +1,9 @@
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 
-jest.dontMock('../../src/js/components/device.jsx');
+jest.dontMock('components/device.jsx');
 
-var Device = require('../../src/js/components/device.jsx');
+var Device = require('components/device.jsx');
 
 describe('components/device', function () {
   var subject;

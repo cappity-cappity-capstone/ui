@@ -1,11 +1,11 @@
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 
-jest.dontMock('../../src/js/components/page.jsx');
+jest.dontMock('components/page.jsx');
 
-var Page = require('../../src/js/components/page.jsx');
-var SideMenu = require('../../src/js/components/side_menu.jsx');
-var Device = require('../../src/js/components/device.jsx');
+var Page = require('components/page.jsx');
+var SideMenu = require('components/side_menu.jsx');
+var Device = require('components/device.jsx');
 
 describe('components/page', function () {
   var subject;

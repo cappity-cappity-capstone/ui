@@ -20,7 +20,7 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "scripts": {
-    "test": "jest"
+    "test": "NODE_PATH=$NODE_PATH:./node_modules:./src/js jest"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/jest/preprocessor.js",
