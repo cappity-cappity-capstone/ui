@@ -14,7 +14,8 @@ var StateInterface = {
         if (err) {
           errorHandler(err);
         } else {
-          successHandler(body);
+          res.body.state = res.body.state != "0.0";
+          successHandler(res.body);
         }
       });
   },
