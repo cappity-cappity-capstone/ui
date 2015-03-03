@@ -1,11 +1,11 @@
 var request = require('superagent');
 var camelizeKeys = require('humps').camelizeKeys;
 
-var API_HOST = 'http://localhost:4567';
+var API_HOST = 'http://ccs.cappitycappitycapstone.com/api';
 
 var StateInterface = {
   setState: function(deviceId, deviceState, successHandler, errorHandler) {
-    var body = { state: deviceState };
+    var body = { "state": (deviceState ? "1.0" : "0") , "source": "manual_override"};
 
     request
       .post( API_HOST + '/devices/' + deviceId + '/state')
@@ -14,14 +14,15 @@ var StateInterface = {
         if (err) {
           errorHandler(err);
         } else {
-          successHandler(body);
+          res.body.state = res.body.state != "0.0";
+          successHandler(res.body);
         }
       });
   },
 
-  getState: function(deviceId, responseHandler) {
+  getState: function(deviceId, responseHandler, list) {
     request.get(
-      'https://gist.githubusercontent.com/AdamEdgett/71845ff7846e5e1d4c51/raw/' + deviceId + '.json',
+      API_HOST +  '/devices/' + deviceId + '/state',
       function (err, res) {
         if (err) throw err;
         responseHandler(res.body);
@@ -31,7 +32,7 @@ var StateInterface = {
 
   getStates: function(deviceId, responseHandler) {
     request.get(
-      'https://gist.githubusercontent.com/AdamEdgett/e236f7a3a5ea7ed8ddee/raw/' + deviceId + '.json',
+      API_HOST +  '/devices',
       function (err, res) {
         if (err) throw err;
         responseHandler(camelizeKeys(JSON.parse(res.text)).states);
