@@ -21,7 +21,7 @@ var paths = {
 
 gulp.task('js', function() {
   return browserify({
-    entries: './src/js/app.js',
+    entries: './src/js/app.jsx',
     paths: [ './node_modules', './src/js' ]
   })
     .transform('reactify')

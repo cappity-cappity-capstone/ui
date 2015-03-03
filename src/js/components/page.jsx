@@ -1,5 +1,7 @@
 var React = require('react');
 var _ = require('underscore');
+var Router = require('react-router');
+var RouteHandler = Router.RouteHandler;
 
 var Device = require('components/device.jsx');
 var SideMenu = require('components/side_menu.jsx');
@@ -35,28 +37,11 @@ var Page = React.createClass({
     var viewportWidth = getViewportWidth();
     var menuExpanded = viewportWidth > widthCutoff;
     return {
-      menuExpanded: menuExpanded,
-      devicesControlView: []
+      menuExpanded: menuExpanded
     };
   },
 
-  renderDevice: function(device, index){
-    return (
-      <Device key={device.id}
-        id={device.id}
-        on={device.on}
-        type={device.type}
-        name={device.name}
-        onClickModule={this.handleOnModuleClick(index)}
-        showControls={this.state.devicesControlView[index]} />
-    );
-  },
-
   render: function(){
-    var renderedDevices = [];
-    _.each(this.props.devices, function(device, index) {
-      renderedDevices.push(this.renderDevice(device, index));
-    }, this);
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
     return (
       <div>
@@ -64,7 +49,7 @@ var Page = React.createClass({
         <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
           <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
-            {renderedDevices}
+            <RouteHandler />
           </div>
         </div>
       </div>
@@ -76,22 +61,13 @@ var Page = React.createClass({
     this.setState({menuExpanded: !menuExpanded});
   },
 
-  handleOnModuleClick: function(index) {
-    var self = this;
-    return function() {
-      var devicesControlView = self.state.devicesControlView;
-      devicesControlView[index] = !devicesControlView[index];
-      self.setState({devicesControlView: devicesControlView});
-    };
-  },
-
   handleOffModuleAction: function(event) {
     if (this.isMoving) {
       this.isMoving = false;
     } else {
-      var devicesControlView = [];
-      _.each(this.state.devicesControlView, function(item, index) {devicesControlView.push(false);});
-      this.setState({devicesControlView: devicesControlView});
+      //var devicesControlView = [];
+      //_.each(this.state.devicesControlView, function(item, index) {devicesControlView.push(false);});
+      //this.setState({devicesControlView: devicesControlView});
     }
   },
 
