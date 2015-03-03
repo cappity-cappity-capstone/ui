@@ -4,7 +4,8 @@ var Router = require('react-router');
 
 var DeviceInterface = require('interfaces/device_interface.js');
 
-var Page = require('components/page.jsx');
+var Home = require('components/home.jsx');
+var Login = require('components/login.jsx');
 
 window.onload = function() {
   // because fuck if I know a better way to do this
@@ -16,17 +17,22 @@ window.onload = function() {
   }
 
   var documentRoot = document.querySelector('#content-anchor');
-  var component = React.render(<Page/>, documentRoot);
 
-  DeviceInterface.getDevices(
-    function (resp) {
-      component.props.devices = resp;
-      // devicesControlView is whether or not each device is showing its controls or not
-      // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
-      // add a controls class onTouch to show the controls
-      devicesControlView = [];
-      _.each(resp, function(item, index) {devicesControlView.push(false);});
-      component.setState({ devicesControlView: devicesControlView });
-    }
-  );
+  if (confirm("View login?")) {
+    var component = React.render(<Login />, documentRoot);
+  }
+  else {
+    var component = React.render(<Home />, documentRoot);
+
+    DeviceInterface.getDevices(
+      function (resp) {
+        component.props.devices = resp;
+        // devicesControlView is whether or not each device is showing its controls or not
+        // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
+        // add a controls class onTouch to show the controls
+        devicesControlView = _.map(resp, function(item, index) { return false; });
+        component.setState({ devicesControlView: devicesControlView });
+      }
+    );
+  }
 };
