@@ -1,0 +1,121 @@
+$color-input-text: white;
+$color-input-labels: #D3D3D3;
+$color-input-underline: white;
+$color-button-border: white;
+$color-button-border-hover: #D3D3D3;
+$color-button-background-hover: #D3D3D3;
+$color-button-label-hover: $color-side-menu-background;
+$color-input-underline-hightlight: #393A3F;
+
+$width-input-underline: 2px;
+$width-input-underline-highlight: 2px;
+$height-input: 2.5em;
+//Button Input
+.button {
+  position: relative;
+
+  input {
+    border-radius: 0;
+    font-family: inherit;
+    padding-left: .5em;
+    color: $color-input-text;
+    width: 100%;
+    height: $height-input;
+
+    position: relative;
+    font-size: 1em;
+    background: transparent;
+    border: solid $color-button-border $width-input-underline;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: -1;
+    @include transition(background, ease-in, .1s);
+  }
+
+  &:hover:before {
+    background: $color-button-background-hover;
+  }
+
+  &:hover input {
+    color: $color-button-label-hover;
+    border: solid $color-button-border-hover $width-input-underline;
+  }
+}
+//Underlined Input
+.input-group.underline {
+  position: relative;
+
+  input {
+    border-radius: 0;
+    font-family: inherit;
+    padding-left: .5em;
+    color: $color-input-text;
+    width: 100%;
+    height: 2.5em;
+    position: relative;
+    font-size: 1em;
+    background: transparent;
+    border: none;
+    border-bottom: solid $color-input-underline $width-input-underline;
+  }
+
+  label {
+    pointer-events: none;
+    position: absolute;
+    bottom: -.25em;
+    left: 0;
+    color: $color-input-text;
+    font-size: 1em;
+    width: 100%;
+    text-align: left;
+
+    & > span {
+      padding-left: .5em;
+      @include transition(opacity, linear, .2s);
+    }
+  }
+
+  label:after {
+    border-bottom: solid;
+    border-color: $color-input-underline-hightlight;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: calc(100% + 6px);
+    opacity: 1;
+    @include transition(width, linear, .1s);
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  input:focus + label > span {
+    opacity: 0;
+  }
+
+  //in our template our input tag should have the required attr
+  //<input required/>
+  //this means that the css psedoselector :valid will only happen
+  //if text has been entered in the box
+  input:valid + label > span {
+    opacity: 0;
+  }
+}
+
+body:not(.touch) {
+  .input-group.underline {
+    input:focus + label:after {
+      width: 100%;
+    }
+  }
+}
