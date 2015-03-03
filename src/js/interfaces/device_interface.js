@@ -1,7 +1,7 @@
 var request = require('superagent');
 var _ = require('underscore');
 
-var DeviceInterface function(host) {
+var DeviceInterface = function(host) {
   this.host = host;
 }
 
