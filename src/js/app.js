@@ -22,8 +22,9 @@ window.onload = function() {
     var component = React.render(<Login />, documentRoot);
   }
   else {
-    var component = React.render(<Home />, documentRoot);
-    var deviceInterface = new DeviceInterface('http://ccs.cappitycappitycapstone.com/api');
+    var host = 'http://ccs.cappitycappitycapstone.com/api';
+    var component = React.render(<Home host={host} />, documentRoot);
+    var deviceInterface = new DeviceInterface(host);
 
     deviceInterface.getDevices(
       function (resp) {

@@ -51,7 +51,8 @@ var Device = React.createClass({
     id: React.PropTypes.number.isRequired,
     on: React.PropTypes.bool.isRequired,
     type: React.PropTypes.oneOf(DEVICE_TYPES).isRequired,
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    host: React.PropTypes.string.isRequired
   },
 
   render: function() {
@@ -115,7 +116,9 @@ var Device = React.createClass({
     this.setState({
       loadingClass: " loading"
     });
-    StateInterface.setState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
+
+    this.getStateInterface()
+      .setState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
   },
 
   handleOffButtonAction: function(event) {
@@ -123,7 +126,9 @@ var Device = React.createClass({
     this.setState({
       loadingClass: " loading"
     });
-    StateInterface.setState(this.props.id, false, this.deviceStateChangeSuccess, this.deviceStateChangeError);
+
+    this.getStateInterface()
+      .setState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
   },
 
   deviceStateChangeSuccess: function(response) {
@@ -152,6 +157,14 @@ var Device = React.createClass({
   // so this is kind of hacky, but basically we're trying to avoid triggering onTouchEnd when the user
   // is scrolling, so if the user is scrolling,
   isMoving: false,
+
+  getStateInterface: function() {
+    if (!(this._stateInterface instanceof StateInterface)) {
+      this._stateInterface = new StateInterface(this.props.host);
+    }
+
+    return _stateInterface;
+  },
 
   swallowMovement: function(event) {
     event.stopPropagation();

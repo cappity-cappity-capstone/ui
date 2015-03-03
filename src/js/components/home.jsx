@@ -27,6 +27,7 @@ var Page = React.createClass({
         name: React.PropTypes.string.isRequired
       })
     ),
+    host: React.PropTypes.string.isRequired,
     name: React.PropTypes.string
   },
 
@@ -47,6 +48,7 @@ var Page = React.createClass({
         on={device.on}
         type={device.type}
         name={device.name}
+        host={this.props.host}
         onClickModule={this.handleOnModuleClick(index)}
         showControls={this.state.devicesControlView[index]} />
     );
