@@ -1,12 +1,14 @@
 var request = require('superagent');
 var _ = require('underscore');
-var StateInterface = require('interfaces/state_interface.js');
-var API_HOST = 'http://ccs.cappitycappitycapstone.com/api';
 
-var DeviceInterface = {
+var DeviceInterface function(host) {
+  this.host = host;
+}
+
+DeviceInterface.prototype = {
   addDevice: function(device, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/devices')
+      .put(this.host + '/devices')
       .send(JSON.stringify(device))
       .end(function(err, res) {
         if (err) {
@@ -17,21 +19,9 @@ var DeviceInterface = {
       });
   },
 
-  getDevicesStatic: function(responseHandler) {
-    request
-    .get('https://api.myjson.com/bins/vwfz')
-    .end(function(err, res) {
-      if (err) {
-        throw err;
-      } else {
-        responseHandler(res.body);
-      }
-    });
-  },
-
   getDevices: function(responseHandler) {
     request
-      .get(API_HOST +  '/devices')
+      .get(this.host +  '/devices')
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -65,7 +55,7 @@ var DeviceInterface = {
 
   getDevice: function(deviceId, responseHandler) {
     request
-      .get(API_HOST + '/devices/' + deviceId)
+      .get(this.host + '/devices/' + deviceId)
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -77,7 +67,7 @@ var DeviceInterface = {
 
   updateDevice: function(deviceId, device, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/devices/' + deviceId)
+      .put(this.host + '/devices/' + deviceId)
       .send(JSON.stringify(device))
       .end(function(err, res) {
         if (err) {
@@ -90,7 +80,7 @@ var DeviceInterface = {
 
   deleteDevice: function(deviceId, successHandler, errorHandler) {
     request
-      .delete(API_HOST + '/devices/' + deviceId)
+      .delete(this.host + '/devices/' + deviceId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
@@ -102,7 +92,7 @@ var DeviceInterface = {
 
   checkinDevice: function(deviceId, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/devices/' + deviceId)
+      .put(this.host + '/devices/' + deviceId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
