@@ -1,11 +1,13 @@
 var request = require('superagent');
 
-var API_HOST = 'http://localhost:4567';
+var ScheduleInterface = function(host) {
+  this.host = host;
+};
 
-var ScheduleInterface = {
+ScheduleInterface.prototype = {
   addSchedule: function(schedule, deviceId, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/schedules/' + deviceId)
+      .put(this.host + '/schedules/' + deviceId)
       .send(JSON.stringify(schedule))
       .end(function(err, res) {
         if (err) {
@@ -18,7 +20,7 @@ var ScheduleInterface = {
 
   getSchedules: function(responseHandler) {
     request
-      .get(API_HOST + '/schedules')
+      .get(this.host + '/schedules')
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -30,7 +32,7 @@ var ScheduleInterface = {
 
   getSchedule: function(scheduleId, responseHandler) {
     request
-      .get(API_HOST + '/schedules/' + scheduleId)
+      .get(this.host + '/schedules/' + scheduleId)
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -42,7 +44,7 @@ var ScheduleInterface = {
 
   getDeviceSchedule: function(deviceId, responseHandler) {
     request
-      .get(API_HOST + '/devices/' + deviceId + '/schedules')
+      .get(this.host + '/devices/' + deviceId + '/schedules')
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -54,7 +56,7 @@ var ScheduleInterface = {
 
   updateSchedule: function(scheduleId, schedule, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/schedules/' + scheduleId)
+      .put(this.host + '/schedules/' + scheduleId)
       .send(JSON.stringify(schedule))
       .end(function(err, res) {
         if (err) {
@@ -67,7 +69,7 @@ var ScheduleInterface = {
 
   deleteschedule: function(scheduleId, successHandler, errorHandler) {
     request
-      .delete(API_HOST + '/schedules/' + scheduleId)
+      .delete(this.host + '/schedules/' + scheduleId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
