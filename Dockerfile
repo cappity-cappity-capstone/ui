@@ -19,7 +19,7 @@ WORKDIR /opt/cappy/ui
 RUN bundle install
 USER ui
 RUN npm install
-RUN rm -rf static/components static/js static/css
+RUN rm -rf static/js static/css
 RUN gulp build
 
 # Default command
