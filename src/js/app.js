@@ -22,9 +22,11 @@ window.onload = function() {
     var component = React.render(<Login />, documentRoot);
   }
   else {
-    var component = React.render(<Home />, documentRoot);
+    var host = 'http://ccs.cappitycappitycapstone.com/api';
+    var component = React.render(<Home host={host} />, documentRoot);
+    var deviceInterface = new DeviceInterface(host);
 
-    DeviceInterface.getDevices(
+    deviceInterface.getDevices(
       function (resp) {
         component.props.devices = resp;
         // devicesControlView is whether or not each device is showing its controls or not
