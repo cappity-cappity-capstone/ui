@@ -1,14 +1,16 @@
 var request = require('superagent');
 var camelizeKeys = require('humps').camelizeKeys;
 
-var API_HOST = 'http://ccs.cappitycappitycapstone.com/api';
+var StateInterface = function(host) {
+  this.host = host;
+};
 
-var StateInterface = {
+StateInterface.prototype = {
   setState: function(deviceId, deviceState, successHandler, errorHandler) {
     var body = { "state": (deviceState ? "1.0" : "0") , "source": "manual_override"};
 
     request
-      .post( API_HOST + '/devices/' + deviceId + '/state')
+      .post( this.host + '/devices/' + deviceId + '/state')
       .send(body)
       .end(function(err, res) {
         if (err) {
@@ -22,7 +24,7 @@ var StateInterface = {
 
   getState: function(deviceId, responseHandler, list) {
     request.get(
-      API_HOST +  '/devices/' + deviceId + '/state',
+      this.host +  '/devices/' + deviceId + '/state',
       function (err, res) {
         if (err) throw err;
         responseHandler(res.body);
@@ -32,7 +34,7 @@ var StateInterface = {
 
   getStates: function(deviceId, responseHandler) {
     request.get(
-      API_HOST +  '/devices',
+      this.host +  '/devices',
       function (err, res) {
         if (err) throw err;
         responseHandler(camelizeKeys(JSON.parse(res.text)).states);
