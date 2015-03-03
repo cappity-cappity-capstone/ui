@@ -1,17 +1,19 @@
 var request = require('superagent');
+var camelizeKeys = require('humps').camelizeKeys;
 
 var API_HOST = 'http://localhost:4567';
 
 var AuthInterface = {
   // User
-  getCurrentUser: function(responseHandler) {
+  getCurrentUser: function(successHandler, errorHandler) {
     request
       .get(API_HOST + '/auth/users/logged_in')
-      .end(function(err, res) {
-        if (err) {
-          throw err;
+      .withCredentials()
+      .end(function(res) {
+        if (res.ok) {
+          successHandler(camelizeKeys(res.body));
         } else {
-          responseHandler(res.body);
+          errorHandler(camelizeKeys(res.body));
         }
       });
   },

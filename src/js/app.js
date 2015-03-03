@@ -1,11 +1,14 @@
 var React = require('react');
 var _ = require('underscore');
-var Router = require('react-router');
+var Cookies = require('cookies-js');
 
+var AuthInterface = require('interfaces/auth_interface.js');
 var DeviceInterface = require('interfaces/device_interface.js');
 
 var Home = require('components/home.jsx');
 var Login = require('components/login.jsx');
+
+var host = 'http://ccs.cappitycappitycapstone.com/api';
 
 window.onload = function() {
   // because fuck if I know a better way to do this
@@ -18,15 +21,11 @@ window.onload = function() {
 
   var documentRoot = document.querySelector('#content-anchor');
 
-  if (confirm("View login?")) {
-    var component = React.render(<Login />, documentRoot);
-  }
-  else {
-    //var host = 'http://ccs.cappitycappitycapstone.com/api';
-    var host = 'http://192.168.3.115:4567/api';
-    var component = React.render(<Home host={host} />, documentRoot);
-    var deviceInterface = new DeviceInterface(host);
+  Cookies.set("session_key", "5AOh9gCF5hHs9lziVUj6ew==", { expires: new Date("2015-04-02T12:51:59.343-04:00")});
+  AuthInterface.getCurrentUser(function(user) {
+    var component = React.render(<Home host={host} user={user} />, documentRoot);
 
+    var deviceInterface = new DeviceInterface(host);
     deviceInterface.getDevices(
       function (resp) {
         component.props.devices = resp;
@@ -37,5 +36,8 @@ window.onload = function() {
         component.setState({ devicesControlView: devicesControlView });
       }
     );
-  }
+  },
+  function(error) {
+    var component = React.render(<Login />, documentRoot);
+  });
 };
