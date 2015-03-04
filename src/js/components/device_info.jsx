@@ -17,7 +17,8 @@ var DeviceInfo = React.createClass({
     on: React.PropTypes.bool.isRequired,
     type: React.PropTypes.oneOf(DEVICE_TYPES).isRequired,
     name: React.PropTypes.string.isRequired,
-    onDeviceInfoClose: React.PropTypes.func.isRequired
+    onDeviceInfoClose: React.PropTypes.func.isRequired,
+    host: React.PropTypes.string.isRequired
   },
 
   getInitialState: function() {
@@ -27,7 +28,7 @@ var DeviceInfo = React.createClass({
   },
 
   componentDidMount: function() {
-    StateInterface.getStates(this.props.id, function(response) {
+    this.getStateInterface().getStates(this.props.id, function(response) {
       this.setState({states: response});
     }.bind(this));
   },
@@ -63,7 +64,15 @@ var DeviceInfo = React.createClass({
 
   handleCloseButtonEventAction: function(event) {
     this.props.onDeviceInfoClose(event);
-  }
+  },
+
+  getStateInterface: function() {
+    if (!(this._stateInterface instanceof StateInterface)) {
+      this._stateInterface = new StateInterface(this.props.host);
+    }
+
+    return this._stateInterface;
+  },
 });
 
 module.exports = DeviceInfo;
