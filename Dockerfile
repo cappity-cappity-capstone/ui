@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 # Install system dependencies
 RUN apt-get -y update
-RUN apt-get -y install ruby-dev nginx nodejs npm
+RUN apt-get -y install ruby-dev nginx nodejs npm git
 RUN ln -sfv "$(which nodejs)" /usr/bin/node
 
 # Install language dependencies
