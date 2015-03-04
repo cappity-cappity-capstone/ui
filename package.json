@@ -5,7 +5,8 @@
     "humps": "^0.4.2",
     "react": "0.12.2",
     "superagent": "0.21.0",
-    "underscore": "1.7.0"
+    "underscore": "1.7.0",
+    "cookies-js": "1.2.1"
   },
   "devDependencies": {
     "react-tools": "^0.12.2",
