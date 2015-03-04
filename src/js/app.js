@@ -22,7 +22,8 @@ window.onload = function() {
     var component = React.render(<Login />, documentRoot);
   }
   else {
-    var host = 'http://ccs.cappitycappitycapstone.com/api';
+    //var host = 'http://ccs.cappitycappitycapstone.com/api';
+    var host = 'http://192.168.3.115:4567/api';
     var component = React.render(<Home host={host} />, documentRoot);
     var deviceInterface = new DeviceInterface(host);
 

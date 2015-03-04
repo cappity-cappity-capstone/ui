@@ -4,29 +4,25 @@ var Login = React.createClass({
   render: function() {
     return (
       <div className='login'>
-        <form method="post">
-          <div className='input-row username'>
-            <span className='input-group underline'>
+        <div className='container-login-form'>
+          <form method="post">
+            <div className='input-group underline'>
               <input type="text" name="email" required/>
               <label for="email">
                 <span>Username</span>
               </label>
-            </span>
-          </div>
-          <div className='input-row password'>
-            <span className='input-group underline'>
+            </div>
+            <div className='input-group underline'>
               <input type="password" name="password" required/>
               <label for="password">
                 <span>Password</span>
               </label>
-            </span>
-          </div>
-          <div className='input-row submit'>
-            <div className='button'>
+            </div>
+            <div className='input-group button'>
               <input type="submit" name="submit" value="Login"/>
             </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     );
   }
