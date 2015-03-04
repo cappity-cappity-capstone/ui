@@ -21,3 +21,7 @@ $header-font-weight: $bold;
 $width-drawer-expanded: 300px;
 $width-drawer-expanded-mobile: 250px;
 @import "modules/all";
+
+a, input[type=button] {
+  cursor: pointer;
+}

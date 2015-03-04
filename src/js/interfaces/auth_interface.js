@@ -88,16 +88,12 @@ AuthInterface.prototype = {
       });
   },
 
-  deleteSession: function(successHandler, errorHandler) {
+  deleteSession: function(responseHandler) {
     request
       .del(this.host + '/auth/sessions')
       .withCredentials()
       .end(function(res) {
-        if (res.ok) {
-          successHandler(camelizeKeys(res.body));
-        } else {
-          errorHandler(camelizeKeys(res.body));
-        }
+        responseHandler(camelizeKeys(res.body));
       });
   },
 
