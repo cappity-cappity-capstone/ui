@@ -128,7 +128,7 @@ var Device = React.createClass({
     });
 
     this.getStateInterface()
-      .setState(this.props.id, true, this.deviceStateChangeSuccess, this.deviceStateChangeError);
+      .setState(this.props.id, false, this.deviceStateChangeSuccess, this.deviceStateChangeError);
   },
 
   deviceStateChangeSuccess: function(response) {
@@ -163,7 +163,7 @@ var Device = React.createClass({
       this._stateInterface = new StateInterface(this.props.host);
     }
 
-    return _stateInterface;
+    return this._stateInterface;
   },
 
   swallowMovement: function(event) {
