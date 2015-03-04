@@ -1,24 +1,28 @@
 var request = require('superagent');
+var camelizeKeys = require('humps').camelizeKeys;
 
-var API_HOST = 'http://localhost:4567';
+var AuthInterface = function(host) {
+  this.host = host;
+}
 
-var AuthInterface = {
+AuthInterface.prototype = {
   // User
-  getCurrentUser: function(responseHandler) {
+  getCurrentUser: function(successHandler, errorHandler) {
     request
-      .get(API_HOST + '/auth/users/logged_in')
-      .end(function(err, res) {
-        if (err) {
-          throw err;
+      .get(this.host + '/auth/users/logged_in')
+      .withCredentials()
+      .end(function(res) {
+        if (res.ok) {
+          successHandler(camelizeKeys(res.body));
         } else {
-          responseHandler(res.body);
+          errorHandler(camelizeKeys(res.body));
         }
       });
   },
 
   addUser: function(user, successHandler, errorHandler) {
     request
-      .post(API_HOST + '/auth/users')
+      .post(this.host + '/auth/users')
       .send(JSON.stringify(user))
       .end(function(err, res) {
         if (err) {
@@ -31,7 +35,7 @@ var AuthInterface = {
 
   updateUser: function(userId, user, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/auth/users/' + userId)
+      .put(this.host + '/auth/users/' + userId)
       .send(JSON.stringify(user))
       .end(function(err, res) {
         if (err) {
@@ -44,7 +48,7 @@ var AuthInterface = {
 
   deleteUser: function(userId, successHandler, errorHandler) {
     request
-      .delete(API_HOST + '/auth/users/' + userId)
+      .del(this.host + '/auth/users/' + userId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
@@ -56,7 +60,7 @@ var AuthInterface = {
 
   associateUser: function(userId, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/users/auth/' + userId + '/associate')
+      .put(this.host + '/users/auth/' + userId + '/associate')
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
@@ -68,33 +72,35 @@ var AuthInterface = {
 
   // Session
   createSession: function(email, password, successHandler, errorHandler) {
+    var user = {
+      email: email,
+      password: password
+    }
     request
-      .post(API_HOST + '/auth/sessions')
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
+      .post(this.host + '/auth/sessions')
+      .send(JSON.stringify(user))
+      .end(function(res) {
+        if (res.ok) {
+          successHandler(camelizeKeys(res.body));
         } else {
-          successHandler(res);
+          errorHandler(camelizeKeys(res.body));
         }
       });
   },
 
-  deleteSession: function(successHandler, errorHandler) {
+  deleteSession: function(responseHandler) {
     request
-      .delete(API_HOST + '/auth/sessions')
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
-          successHandler(res);
-        }
+      .del(this.host + '/auth/sessions')
+      .withCredentials()
+      .end(function(res) {
+        responseHandler(camelizeKeys(res.body));
       });
   },
 
   // Control Server
   addControlServer: function(server, successHandler, errorHandler) {
     request
-      .post(API_HOST + '/auth/control_servers')
+      .post(this.host + '/auth/control_servers')
       .send(server)
       .end(function(err, res) {
         if (err) {
@@ -107,7 +113,7 @@ var AuthInterface = {
 
   updateControlServer: function(serverId, server, successHandler, errorHandler) {
     request
-      .put(API_HOST + '/auth/control_servers/' + serverId)
+      .put(this.host + '/auth/control_servers/' + serverId)
       .send(server)
       .end(function(err, res) {
         if (err) {

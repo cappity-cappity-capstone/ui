@@ -1,8 +1,11 @@
 var React = require('react');
 
+var AuthInterface = require('interfaces/auth_interface.js');
+
 var SideMenu = React.createClass({
   propTypes: {
-    profileImageUrl: React.PropTypes.string.isRequired
+    profileImageUrl: React.PropTypes.string.isRequired,
+    host: React.PropTypes.string.isRequired
   },
 
   render: function(){
@@ -18,12 +21,26 @@ var SideMenu = React.createClass({
               <div className="image-circular" style={imageStyle}></div>
             </div>
             <ul className="list-side-menu-options">
-              <li><a href="/logout">Logout</a></li>
+              <li><a onClick={this.handleLogout}>Logout</a></li>
               <li><a href="/settings">Settings</a></li>
             </ul>
           </div>
         </aside>
     );
+  },
+
+  handleLogout: function() {
+    this.getAuthInterface().deleteSession(function() {
+      location.reload();
+    });
+  },
+
+  getAuthInterface: function() {
+    if (!(this._authInterface instanceof AuthInterface)) {
+      this._authInterface = new AuthInterface(this.props.host);
+    }
+
+    return this._authInterface;
   }
 });
 

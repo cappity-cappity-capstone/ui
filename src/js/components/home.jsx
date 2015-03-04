@@ -62,7 +62,7 @@ var Page = React.createClass({
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
     return (
       <div>
-        <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded}/>
+        <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded} host={this.props.host} />
         <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
           <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">

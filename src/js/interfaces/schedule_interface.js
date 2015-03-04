@@ -7,7 +7,7 @@ var ScheduleInterface = function(host) {
 ScheduleInterface.prototype = {
   addSchedule: function(schedule, deviceId, successHandler, errorHandler) {
     request
-      .put(this.host + '/schedules/' + deviceId)
+      .put(this.host + '/api/schedules/' + deviceId)
       .send(JSON.stringify(schedule))
       .end(function(err, res) {
         if (err) {
@@ -20,7 +20,7 @@ ScheduleInterface.prototype = {
 
   getSchedules: function(responseHandler) {
     request
-      .get(this.host + '/schedules')
+      .get(this.host + '/api/schedules')
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -32,7 +32,7 @@ ScheduleInterface.prototype = {
 
   getSchedule: function(scheduleId, responseHandler) {
     request
-      .get(this.host + '/schedules/' + scheduleId)
+      .get(this.host + '/api/schedules/' + scheduleId)
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -44,7 +44,7 @@ ScheduleInterface.prototype = {
 
   getDeviceSchedule: function(deviceId, responseHandler) {
     request
-      .get(this.host + '/devices/' + deviceId + '/schedules')
+      .get(this.host + '/api/devices/' + deviceId + '/schedules')
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -56,7 +56,7 @@ ScheduleInterface.prototype = {
 
   updateSchedule: function(scheduleId, schedule, successHandler, errorHandler) {
     request
-      .put(this.host + '/schedules/' + scheduleId)
+      .put(this.host + '/api/schedules/' + scheduleId)
       .send(JSON.stringify(schedule))
       .end(function(err, res) {
         if (err) {
@@ -69,7 +69,7 @@ ScheduleInterface.prototype = {
 
   deleteschedule: function(scheduleId, successHandler, errorHandler) {
     request
-      .delete(this.host + '/schedules/' + scheduleId)
+      .delete(this.host + '/api/schedules/' + scheduleId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
