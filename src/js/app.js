@@ -8,7 +8,8 @@ var DeviceInterface = require('interfaces/device_interface.js');
 var Home = require('components/home.jsx');
 var Login = require('components/login.jsx');
 
-var host = 'http://ccs.cappitycappitycapstone.com';
+var authHost = 'http://cappitycappitycapstone.com';
+var deviceHost = 'http://ccs.cappitycappitycapstone.com';
 
 window.onload = function() {
   // because fuck if I know a better way to do this
@@ -21,11 +22,14 @@ window.onload = function() {
 
   var documentRoot = document.querySelector('#content-anchor');
 
-  var authInterface = new AuthInterface(host);
+  var authInterface = new AuthInterface(authHost);
   authInterface.getCurrentUser(function(user) {
-    var component = React.render(<Home host={host} user={user} />, documentRoot);
+    if (user.controlServer) {
+      deviceHost = "http://" + user.controlServer.ip + ":" user.controlServer.port;
+    }
+    var component = React.render(<Home host={deviceHost} user={user} />, documentRoot);
 
-    var deviceInterface = new DeviceInterface(host);
+    var deviceInterface = new DeviceInterface(deviceHost);
     deviceInterface.getDevices(
       function (resp) {
         component.props.devices = resp;
@@ -38,6 +42,6 @@ window.onload = function() {
     );
   },
   function(error) {
-    var component = React.render(<Login host={host}/>, documentRoot);
+    var component = React.render(<Login host={authHost}/>, documentRoot);
   });
 };
