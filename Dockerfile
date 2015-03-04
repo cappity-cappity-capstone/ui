@@ -20,6 +20,7 @@ RUN bundle install
 USER ui
 RUN npm install
 RUN rm -rf static/js static/css
+RUN bower install
 RUN gulp build
 
 # Default command
