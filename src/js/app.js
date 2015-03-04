@@ -38,6 +38,6 @@ window.onload = function() {
     );
   },
   function(error) {
-    var component = React.render(<Login />, documentRoot);
+    var component = React.render(<Login host={host}/>, documentRoot);
   });
 };
