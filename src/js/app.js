@@ -21,8 +21,8 @@ window.onload = function() {
 
   var documentRoot = document.querySelector('#content-anchor');
 
-  Cookies.set("session_key", "5AOh9gCF5hHs9lziVUj6ew==", { expires: new Date("2015-04-02T12:51:59.343-04:00")});
-  AuthInterface.getCurrentUser(function(user) {
+  var authInterface = new AuthInterface(host);
+  authInterface.getCurrentUser(function(user) {
     var component = React.render(<Home host={host} user={user} />, documentRoot);
 
     var deviceInterface = new DeviceInterface(host);
