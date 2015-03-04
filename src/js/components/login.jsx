@@ -26,18 +26,18 @@ var Login = React.createClass({
           <form onSubmit={this.handleLogin}>
             <div className='input-group underline'>
               <input type="text" name="email" valueLink={this.linkState('email')} required />
-              <label for="email">
+              <label htmlFor="email">
                 <span>Email</span>
               </label>
             </div>
             <div className='input-group underline'>
               <input type="password" name="password" valueLink={this.linkState('password')} required />
-              <label for="password">
+              <label htmlFor="password">
                 <span>Password</span>
               </label>
             </div>
             <div className='input-group button'>
-              <input type="button" name="submit" value="Login" onClick={this.handleLogin} />
+              <input type="submit" name="submit" value="Login" />
             </div>
           </form>
         </div>
@@ -45,7 +45,8 @@ var Login = React.createClass({
     );
   },
 
-  handleLogin: function() {
+  handleLogin: function(event) {
+    event.preventDefault();
     this.getAuthInterface().createSession(this.state.email, this.state.password,
       function(session) {
         Cookies.set("session_key", session.key, { expires: new Date(session.expiresOn)});
