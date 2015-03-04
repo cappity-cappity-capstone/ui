@@ -1,11 +1,12 @@
 var React = require('react');
+var Cookies = require('cookies-js');
 
 var AuthInterface = require('interfaces/auth_interface.js');
 
 var SideMenu = React.createClass({
   propTypes: {
     profileImageUrl: React.PropTypes.string.isRequired,
-    host: React.PropTypes.string.isRequired
+    authHost: React.PropTypes.string.isRequired
   },
 
   render: function(){
@@ -31,13 +32,14 @@ var SideMenu = React.createClass({
 
   handleLogout: function() {
     this.getAuthInterface().deleteSession(function() {
+      Cookies.expire("session_key");
       location.reload();
     });
   },
 
   getAuthInterface: function() {
     if (!(this._authInterface instanceof AuthInterface)) {
-      this._authInterface = new AuthInterface(this.props.host);
+      this._authInterface = new AuthInterface(this.props.authHost);
     }
 
     return this._authInterface;

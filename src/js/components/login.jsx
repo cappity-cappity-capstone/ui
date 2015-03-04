@@ -7,7 +7,7 @@ var AuthInterface = require('interfaces/auth_interface.js');
 
 var Login = React.createClass({
   propTypes: {
-    host: React.PropTypes.string.isRequired
+    authHost: React.PropTypes.string.isRequired
   },
 
   mixins: [React.addons.LinkedStateMixin],
@@ -58,7 +58,7 @@ var Login = React.createClass({
 
   getAuthInterface: function() {
     if (!(this._authInterface instanceof AuthInterface)) {
-      this._authInterface = new AuthInterface(this.props.host);
+      this._authInterface = new AuthInterface(this.props.authHost);
     }
 
     return this._authInterface;

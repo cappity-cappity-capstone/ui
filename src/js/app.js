@@ -25,9 +25,9 @@ window.onload = function() {
   var authInterface = new AuthInterface(authHost);
   authInterface.getCurrentUser(function(user) {
     if (user.controlServer) {
-      deviceHost = "http://" + user.controlServer.ip + ":" user.controlServer.port;
+      deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
     }
-    var component = React.render(<Home host={deviceHost} user={user} />, documentRoot);
+    var component = React.render(<Home deviceHost={deviceHost} authHost={authHost} user={user} />, documentRoot);
 
     var deviceInterface = new DeviceInterface(deviceHost);
     deviceInterface.getDevices(
@@ -42,6 +42,6 @@ window.onload = function() {
     );
   },
   function(error) {
-    var component = React.render(<Login host={authHost}/>, documentRoot);
+    var component = React.render(<Login authHost={authHost}/>, documentRoot);
   });
 };

@@ -27,7 +27,8 @@ var Page = React.createClass({
         name: React.PropTypes.string.isRequired
       })
     ),
-    host: React.PropTypes.string.isRequired,
+    deviceHost: React.PropTypes.string.isRequired,
+    authHost: React.PropTypes.string.isRequired,
     name: React.PropTypes.string
   },
 
@@ -48,7 +49,7 @@ var Page = React.createClass({
         on={device.on}
         type={device.type}
         name={device.name}
-        host={this.props.host}
+        host={this.props.deviceHost}
         onClickModule={this.handleOnModuleClick(index)}
         showControls={this.state.devicesControlView[index]} />
     );
@@ -62,7 +63,7 @@ var Page = React.createClass({
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
     return (
       <div>
-        <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded} host={this.props.host} />
+        <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded} authHost={this.props.authHost} />
         <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
           <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
