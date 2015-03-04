@@ -8,7 +8,7 @@ var DeviceInterface = function(host) {
 DeviceInterface.prototype = {
   addDevice: function(device, successHandler, errorHandler) {
     request
-      .put(this.host + '/devices')
+      .put(this.host + '/api/devices')
       .send(JSON.stringify(device))
       .end(function(err, res) {
         if (err) {
@@ -21,7 +21,7 @@ DeviceInterface.prototype = {
 
   getDevices: function(responseHandler) {
     request
-      .get(this.host +  '/devices')
+      .get(this.host +  '/api/devices')
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -55,7 +55,7 @@ DeviceInterface.prototype = {
 
   getDevice: function(deviceId, responseHandler) {
     request
-      .get(this.host + '/devices/' + deviceId)
+      .get(this.host + '/api/devices/' + deviceId)
       .end(function(err, res) {
         if (err) {
           throw err;
@@ -67,7 +67,7 @@ DeviceInterface.prototype = {
 
   updateDevice: function(deviceId, device, successHandler, errorHandler) {
     request
-      .put(this.host + '/devices/' + deviceId)
+      .put(this.host + '/api/devices/' + deviceId)
       .send(JSON.stringify(device))
       .end(function(err, res) {
         if (err) {
@@ -80,7 +80,7 @@ DeviceInterface.prototype = {
 
   deleteDevice: function(deviceId, successHandler, errorHandler) {
     request
-      .delete(this.host + '/devices/' + deviceId)
+      .delete(this.host + '/api/devices/' + deviceId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);
@@ -92,7 +92,7 @@ DeviceInterface.prototype = {
 
   checkinDevice: function(deviceId, successHandler, errorHandler) {
     request
-      .put(this.host + '/devices/' + deviceId)
+      .put(this.host + '/api/devices/' + deviceId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);

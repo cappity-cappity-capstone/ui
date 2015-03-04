@@ -10,7 +10,7 @@ StateInterface.prototype = {
     var body = { "state": (deviceState ? "1.0" : "0") , "source": "manual_override"};
 
     request
-      .post( this.host + '/devices/' + deviceId + '/state')
+      .post( this.host + '/api/devices/' + deviceId + '/state')
       .send(body)
       .end(function(err, res) {
         if (err) {
@@ -24,7 +24,7 @@ StateInterface.prototype = {
 
   getState: function(deviceId, responseHandler, list) {
     request.get(
-      this.host +  '/devices/' + deviceId + '/state',
+      this.host +  '/api/devices/' + deviceId + '/state',
       function (err, res) {
         if (err) throw err;
         responseHandler(res.body);
@@ -34,7 +34,7 @@ StateInterface.prototype = {
 
   getStates: function(deviceId, responseHandler) {
     request.get(
-      this.host +  '/devices',
+      this.host +  '/api/devices',
       function (err, res) {
         if (err) throw err;
         responseHandler(camelizeKeys(JSON.parse(res.text)).states);

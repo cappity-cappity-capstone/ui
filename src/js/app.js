@@ -8,7 +8,7 @@ var DeviceInterface = require('interfaces/device_interface.js');
 var Home = require('components/home.jsx');
 var Login = require('components/login.jsx');
 
-var host = 'http://ccs.cappitycappitycapstone.com/api';
+var host = 'http://ccs.cappitycappitycapstone.com';
 
 window.onload = function() {
   // because fuck if I know a better way to do this
