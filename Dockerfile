@@ -6,7 +6,7 @@ RUN apt-get -y install ruby-dev nginx nodejs npm
 RUN ln -sfv "$(which nodejs)" /usr/bin/node
 
 # Install language dependencies
-RUN npm install -g gulp
+RUN npm install -g gulp bower
 RUN gem install bundler
 
 # Add source code
