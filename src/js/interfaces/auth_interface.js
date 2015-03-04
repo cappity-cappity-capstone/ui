@@ -3,7 +3,7 @@ var camelizeKeys = require('humps').camelizeKeys;
 
 var AuthInterface = function(host) {
   this.host = host;
-}
+};
 
 AuthInterface.prototype = {
   // User
@@ -75,7 +75,7 @@ AuthInterface.prototype = {
     var user = {
       email: email,
       password: password
-    }
+    };
     request
       .post(this.host + '/auth/sessions')
       .send(JSON.stringify(user))

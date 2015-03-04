@@ -3,7 +3,7 @@ var _ = require('underscore');
 
 var DeviceInterface = function(host) {
   this.host = host;
-}
+};
 
 DeviceInterface.prototype = {
   addDevice: function(device, successHandler, errorHandler) {
@@ -34,7 +34,7 @@ DeviceInterface.prototype = {
           // on: true
           var devices = [];
           _.each(res.body, function(device) {
-            var device_formated = {}
+            var device_formated = {};
             device_formated.name = device.device.name;
             device_formated.id = device.device.device_id;
             device_formated.type = device.device.device_type;

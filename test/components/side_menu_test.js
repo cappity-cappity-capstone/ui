@@ -8,10 +8,11 @@ var Icon = require('components/icon.jsx');
 
 describe('components/side-menu', function () {
   var subject;
+  var host = 'http://localhost';
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <SideMenu profileImageUrl="test.jpg" />
+      <SideMenu profileImageUrl="test.jpg" host={host} />
     );
   });
 

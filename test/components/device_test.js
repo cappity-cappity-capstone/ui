@@ -7,10 +7,11 @@ var Device = require('components/device.jsx');
 
 describe('components/device', function () {
   var subject;
+  var host = 'http://localhost';
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <Device id={1} on={true} type='outlet' name='Test Outlet' />
+      <Device id={1} on={true} type='outlet' name='Test Outlet' host={host} />
     );
   });
 

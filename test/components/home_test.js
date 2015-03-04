@@ -1,18 +1,19 @@
 var React = require('react/addons');
 var TestUtils = React.addons.TestUtils;
 
-jest.dontMock('components/page.jsx');
+jest.dontMock('components/home.jsx');
 
-var Page = require('components/page.jsx');
+var Home = require('components/home.jsx');
 var SideMenu = require('components/side_menu.jsx');
 var Device = require('components/device.jsx');
 
 describe('components/page', function () {
   var subject;
+  var host = 'http://localhost';
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <Page />
+      <Home host={host} />
     );
   });
 
