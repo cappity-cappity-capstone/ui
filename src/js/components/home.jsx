@@ -17,11 +17,11 @@ function getViewportWidth() {
       return width;
 }
 
-var Page = React.createClass({
+var Home = React.createClass({
   propTypes: {
     devices: React.PropTypes.arrayOf(
       React.PropTypes.shape({
-        id: React.PropTypes.number.isRequired,
+        id: React.PropTypes.string.isRequired,
         on: React.PropTypes.bool.isRequired,
         type: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired
@@ -108,4 +108,4 @@ var Page = React.createClass({
 
 });
 
-module.exports = Page;
+module.exports = Home;

@@ -48,7 +48,7 @@ var Device = React.createClass({
   },
 
   propTypes: {
-    id: React.PropTypes.number.isRequired,
+    id: React.PropTypes.string.isRequired,
     on: React.PropTypes.bool.isRequired,
     type: React.PropTypes.oneOf(DEVICE_TYPES).isRequired,
     name: React.PropTypes.string.isRequired,
