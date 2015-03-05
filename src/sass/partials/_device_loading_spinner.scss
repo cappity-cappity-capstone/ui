@@ -16,7 +16,7 @@ $size-circle: 14.2em;
 
   
   @include animation-iteration-count(infinite);
-  @include animation-duration(.8s);
+  @include animation-duration(.6s);
   @include animation-name(spinning);
   @include animation-timing-function(linear);
 }
