@@ -32,6 +32,32 @@ var STATUS_COPY = {
   }
 };
 
+var VERB_COPY = {
+  'outlet': {
+    'on': 'on',
+    'off': 'off',
+    'font-size': '1em'
+  },
+
+  'stove': {
+    'on': 'on',
+    'off': 'off',
+    'font-size': '1em'
+  },
+
+  'gas-sensor': {
+    'on': 'on',
+    'off': 'off',
+    'font-size': '1em'
+  },
+
+  'lock': {
+    'on': 'Lock',
+    'off': 'Unlock',
+    'font-size': '.7em'
+  }
+}
+
 var Device = React.createClass({
   // usually setting state from a prop is bad practice
   // but since we're getting these states in a request in
@@ -57,6 +83,10 @@ var Device = React.createClass({
 
   render: function() {
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
+    var off_verb = VERB_COPY[this.props.type]["off"];
+    var on_verb = VERB_COPY[this.props.type]["on"];
+    var font_size = VERB_COPY[this.props.type]["font-size"];
+
     var controlClass = this.props.showControls ? " control" : "";
     var deviceInfo;
     if(this.state.showInfo) {
@@ -78,13 +108,13 @@ var Device = React.createClass({
             <div className="device-control-on" onClick={this.handleOnButtonAction}>
               <div className="device-control-button-container">
                 <div className="fill"></div>
-                <span>On</span>
+                <span style={{fontSize: font_size}}>{on_verb}</span>
               </div>
             </div>
             <div className="device-control-off" onClick={this.handleOffButtonAction}>
               <div className="device-control-button-container">
                 <div className="fill"></div>
-                <span>Off</span>
+                <span style={{fontSize: font_size}}>{off_verb}</span>
               </div>
             </div>
             <div className="device-info" onClick={this.handleInfoButtonAction}>

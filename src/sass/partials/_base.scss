@@ -25,3 +25,16 @@ $width-drawer-expanded-mobile: 250px;
 a, input[type=button] {
   cursor: pointer;
 }
+
+
+@include keyframes( 'fade-in-and-out' ) {
+	0% {
+		opacity:1;
+	}
+	50% {
+		opacity:0;
+	}
+	100% {
+		opacity:1;
+	}
+}

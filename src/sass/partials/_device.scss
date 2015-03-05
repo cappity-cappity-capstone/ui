@@ -167,6 +167,46 @@ body:not(.touch) {
     }
   }
 
+  &.loading {
+    .device-icon-background {
+      // background-color: $color-background-circle-loading !important;
+    }
+
+    .device-info {
+      display: none;
+    }
+
+    .device-control-status {
+      // background-color: $color-background-circle-loading !important;  
+    }
+
+    .device-control-on, .device-control-off {
+      // background-color: $color-background-circle-loading !important;
+    }
+
+    // background-color: $color-background-circle-loading !important;
+    .device-icon {
+      @include transition(opacity, 1s, ease-in-out);
+      @include animation-direction(normal);
+      @include animation-iteration-count(infinite);
+      @include animation-duration(1s);
+      @include animation-name(fade-in-and-out);
+      @include animation-timing-function(ease-in-out);
+    }
+
+    &.off {
+      .device-icon {
+        color: $color-on !important;
+      }
+    }
+
+    &.on {
+      .device-icon {
+        color: $color-off !important;
+      }
+    }
+  }
+
 
   //state for controlling the outer circle
   &.control {
@@ -220,13 +260,6 @@ body:not(.touch) {
     .device-inner-circle {
       border-color: $color-off;
     }
-  }
-
-  &.loading {
-    .device-icon-background {
-      background-color: $color-background-circle-loading !important;
-    }
-    background-color: $color-background-circle-loading !important;
   }
 }
 
