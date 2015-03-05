@@ -1,5 +1,6 @@
 var React = require('react');
 var _ = require('underscore');
+var md5 = require('js-md5');
 
 var Device = require('components/device.jsx');
 var SideMenu = require('components/side_menu.jsx');
@@ -18,6 +19,8 @@ function getViewportWidth() {
 }
 
 var Home = React.createClass({
+  email_hash: "",
+
   propTypes: {
     devices: React.PropTypes.arrayOf(
       React.PropTypes.shape({
@@ -30,7 +33,8 @@ var Home = React.createClass({
     deviceHost: React.PropTypes.string.isRequired,
     authHost: React.PropTypes.string.isRequired,
     mobile: React.PropTypes.bool.isRequired,
-    name: React.PropTypes.string
+    email: React.PropTypes.string,
+    name: React.PropTypes.string,
   },
 
   getInitialState: function(){
@@ -58,6 +62,12 @@ var Home = React.createClass({
   },
 
   render: function(){
+    if (this.email_hash === "") {
+      this.props.email = this.props.email.replace(/ /g,'');
+      this.props.email = this.props.email.toLowerCase();
+      this.email_hash = md5(this.props.email);
+    }
+
     var renderedDevices = [];
     _.each(this.props.devices, function(device, index) {
       renderedDevices.push(this.renderDevice(device, index));
@@ -65,9 +75,9 @@ var Home = React.createClass({
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
     return (
       <div>
-        <SideMenu profileImageUrl="/img/todd.jpg"  menuExpanded={this.state.menuExpanded} authHost={this.props.authHost} />
+        <SideMenu profileImageUrl={this.getGravatarUrl()} menuExpanded={this.state.menuExpanded} authHost={this.props.authHost} />
         <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
-          <Header homeName="Chez Todd" onNavIconClick={this.handleNavIconClick}/>
+          <Header homeName={this.props.name + "'s House"} onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
             {renderedDevices}
           </div>
@@ -106,6 +116,14 @@ var Home = React.createClass({
 
   swallowMovement: function(event) {
     this.isMoving = true;
+  },
+
+  getGravatarUrl: function() {
+    if (this.email_hash) {
+      return "http://www.gravatar.com/avatar/" + this.email_hash + "?size=400";
+    } else {
+      return "img/todd.jpg";
+    }
   }
 
 });
