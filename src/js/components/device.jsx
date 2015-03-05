@@ -78,6 +78,7 @@ var Device = React.createClass({
     on: React.PropTypes.bool.isRequired,
     type: React.PropTypes.oneOf(DEVICE_TYPES).isRequired,
     name: React.PropTypes.string.isRequired,
+    mobile: React.PropTypes.bool.isRequired,
     host: React.PropTypes.string.isRequired
   },
 
@@ -93,10 +94,19 @@ var Device = React.createClass({
       deviceInfo = <DeviceInfo {...this.props} onDeviceInfoClose={this.handleDeviceInfoClose} />;
     }
 
+    if(this.state.loadingClass === " loading") {
+      status = "Loading"
+    }
+
     return (
       <div className="device">
         <div className="device-name">{this.props.name}</div>
         <div className={this.state.deviceState + " device-outer-circle" + controlClass + this.state.loadingClass} onTouchEnd={this.handDevicetouch} onTouchMove={this.swallowMovement}>
+          <div className="device-loading-circle-container">
+            <div className="device-loading-circle-mask">
+              <div className="device-loading-circle"></div>
+            </div>
+          </div>
           <div className="device-inner-circle">
             <div className="device-icon-background"></div>
             <div className="device-control-circle">
@@ -163,6 +173,11 @@ var Device = React.createClass({
 
   deviceStateChangeSuccess: function(response) {
     var deviceState = response.state ? 'on' : 'off';
+    //this closes the controls after we click on or off in mobile
+    if (this.props.mobile) {
+      this.props.showControls = false;
+      this.props.onClickModule();  
+    }
     this.setState({
       deviceState: deviceState,
       loadingClass: ""

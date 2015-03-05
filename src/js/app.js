@@ -27,7 +27,7 @@ window.onload = function() {
     if (user.controlServer) {
       deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
     }
-    var component = React.render(<Home deviceHost={deviceHost} authHost={authHost} user={user} />, documentRoot);
+    var component = React.render(<Home deviceHost={deviceHost} mobile={mobile} authHost={authHost} user={user} />, documentRoot);
 
     var deviceInterface = new DeviceInterface(deviceHost);
     deviceInterface.getDevices(

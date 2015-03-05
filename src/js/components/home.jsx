@@ -29,6 +29,7 @@ var Home = React.createClass({
     ),
     deviceHost: React.PropTypes.string.isRequired,
     authHost: React.PropTypes.string.isRequired,
+    mobile: React.PropTypes.bool.isRequired,
     name: React.PropTypes.string
   },
 
@@ -50,6 +51,7 @@ var Home = React.createClass({
         type={device.type}
         name={device.name}
         host={this.props.deviceHost}
+        mobile={this.props.mobile}
         onClickModule={this.handleOnModuleClick(index)}
         showControls={this.state.devicesControlView[index]} />
     );

@@ -1,14 +1,18 @@
+@import "_device_loading_spinner";
+
 $diameter-outer-circle: 15em;
 $diameter-inner-outline: 14em;
 
 // colors
 $color-text-light: white;
 $color-off: #D62027;
+
+
 $color-on: #009345;
 $color-border-inner-outline: #A6A8AB;
 $color-border-outer-outline: #404041;
 $color-background-circle-dark: #231F20;
-$color-background-circle-loading: grey;
+$color-background-circle-loading: #231F20;
 $color-info-icon: #A6A8AB;
 
 //sizes
@@ -42,11 +46,13 @@ $delay-movement: .2s;
   //so when the time comes put your media queries here
   padding: 0    20px;
   font-size: 20px;
+  margin-bottom: 4rem;
 
   @media (max-width: $breakpoint-phone-small) {
     font-size: 18px;
   }
 }
+
 
 .device-name {
     min-width: 300px;
@@ -115,6 +121,7 @@ body:not(.touch) {
 }
 
 .device-outer-circle {
+  position: relative;
   font-size: 1em;
   @include circle($diameter-outer-circle);
   @include transition(background-color, ease-in, $delay-opacity);
@@ -168,8 +175,14 @@ body:not(.touch) {
   }
 
   &.loading {
+    background-color: $color-background-circle-loading !important;
+    
     .device-icon-background {
-      // background-color: $color-background-circle-loading !important;
+      background-color: $color-background-circle-loading !important;
+    }
+
+    .device-inner-circle {
+      border-color: transparent !important;
     }
 
     .device-info {
@@ -194,15 +207,27 @@ body:not(.touch) {
       @include animation-timing-function(ease-in-out);
     }
 
+    .device-loading-circle-container {
+      display: block;
+    }
+
     &.off {
       .device-icon {
         color: $color-on !important;
+      }
+
+      .device-loading-circle {
+        border-color: $color-on;
       }
     }
 
     &.on {
       .device-icon {
         color: $color-off !important;
+      }
+
+      .device-loading-circle {
+        border-color: $color-off;
       }
     }
   }
