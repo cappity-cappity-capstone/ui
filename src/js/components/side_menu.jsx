@@ -6,6 +6,7 @@ var AuthInterface = require('interfaces/auth_interface.js');
 var SideMenu = React.createClass({
   propTypes: {
     profileImageUrl: React.PropTypes.string.isRequired,
+    email: React.PropTypes.string.isRequired,
     authHost: React.PropTypes.string.isRequired
   },
 
@@ -21,9 +22,9 @@ var SideMenu = React.createClass({
             <div className="photo-profile">
               <div className="image-circular" style={imageStyle}></div>
             </div>
+            <div className="email_address">{this.props.email}</div>
             <ul className="list-side-menu-options">
               <li><a onClick={this.handleLogout}>Logout</a></li>
-              <li><a href="/settings">Settings</a></li>
             </ul>
           </div>
         </aside>
