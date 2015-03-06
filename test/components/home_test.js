@@ -13,7 +13,7 @@ describe('components/page', function () {
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <Home host={host} />
+      <Home authHost={host} deviceHost={host} email='user@test.com' mobile={false} />
     );
   });
 
@@ -25,8 +25,8 @@ describe('components/page', function () {
     beforeEach(function() {
       subject.setProps({
         devices: [
-          { id: 1, on: true, type: 'outlet', name: 'Kitchen Outlet' },
-          { id: 2, on: false, type: 'lock', name: 'Cabinet' }
+          { id: '1', on: true, type: 'outlet', name: 'Kitchen Outlet' },
+          { id: '2', on: false, type: 'lock', name: 'Cabinet' }
         ]
       });
     });

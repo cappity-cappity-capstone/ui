@@ -56,7 +56,7 @@ var VERB_COPY = {
     'off': 'Unlock',
     'font-size': '.7em'
   }
-}
+};
 
 var Device = React.createClass({
   // usually setting state from a prop is bad practice
@@ -84,9 +84,9 @@ var Device = React.createClass({
 
   render: function() {
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
-    var off_verb = VERB_COPY[this.props.type]["off"];
-    var on_verb = VERB_COPY[this.props.type]["on"];
-    var font_size = VERB_COPY[this.props.type]["font-size"];
+    var offVerb = VERB_COPY[this.props.type].off;
+    var onVerb = VERB_COPY[this.props.type].on;
+    var fontSize = VERB_COPY[this.props.type]["font-size"];
 
     var controlClass = this.props.showControls ? " control" : "";
     var deviceInfo;
@@ -95,7 +95,7 @@ var Device = React.createClass({
     }
 
     if(this.state.loadingClass === " loading") {
-      status = "Loading"
+      status = "Loading";
     }
 
     return (
@@ -118,13 +118,13 @@ var Device = React.createClass({
             <div className="device-control-on" onClick={this.handleOnButtonAction}>
               <div className="device-control-button-container">
                 <div className="fill"></div>
-                <span style={{fontSize: font_size}}>{on_verb}</span>
+                <span style={{fontSize: fontSize}}>{onVerb}</span>
               </div>
             </div>
             <div className="device-control-off" onClick={this.handleOffButtonAction}>
               <div className="device-control-button-container">
                 <div className="fill"></div>
-                <span style={{fontSize: font_size}}>{off_verb}</span>
+                <span style={{fontSize: fontSize}}>{offVerb}</span>
               </div>
             </div>
             <div className="device-info" onClick={this.handleInfoButtonAction}>
@@ -176,7 +176,7 @@ var Device = React.createClass({
     //this closes the controls after we click on or off in mobile
     if (this.props.mobile) {
       this.props.showControls = false;
-      this.props.onClickModule();  
+      this.props.onClickModule();
     }
     this.setState({
       deviceState: deviceState,

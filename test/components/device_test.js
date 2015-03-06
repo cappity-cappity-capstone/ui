@@ -11,7 +11,7 @@ describe('components/device', function () {
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <Device id={1} on={true} type='outlet' name='Test Outlet' host={host} />
+      <Device id='1' on={true} type='outlet' name='Test Outlet' host={host} mobile={false} />
     );
   });
 
@@ -32,12 +32,12 @@ describe('components/device', function () {
       TestUtils.findRenderedDOMComponentWithClass(
         subject, 'device-control-on'
       ).getDOMNode().textContent
-    ).toBe( 'On' );
+    ).toBe( 'on' );
     expect(
       TestUtils.findRenderedDOMComponentWithClass(
         subject, 'device-control-off'
       ).getDOMNode().textContent
-    ).toBe( 'Off' );
+    ).toBe( 'off' );
   });
 
   it('renders the device info button', function() {

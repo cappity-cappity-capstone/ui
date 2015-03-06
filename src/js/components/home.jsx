@@ -33,7 +33,7 @@ var Home = React.createClass({
     deviceHost: React.PropTypes.string.isRequired,
     authHost: React.PropTypes.string.isRequired,
     mobile: React.PropTypes.bool.isRequired,
-    email: React.PropTypes.string,
+    email: React.PropTypes.string.isRequired,
     name: React.PropTypes.string,
   },
 
