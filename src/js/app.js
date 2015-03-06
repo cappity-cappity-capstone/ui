@@ -11,7 +11,9 @@ var Login = require('components/login.jsx');
 var authHost = 'http://cappitycappitycapstone.com';
 var deviceHost = 'http://ccs.cappitycappitycapstone.com';
 
-window.onload = function() {
+window.onload = function() { renderPage(renderDevicesPage, renderLoginPage) };
+
+renderPage = function(successCallback, errorCallback) {
   // because fuck if I know a better way to do this
   var isTouchDevice = 'ontouchstart' in document.documentElement;
   var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)?!0:!1;
@@ -23,7 +25,24 @@ window.onload = function() {
   var documentRoot = document.querySelector('#content-anchor');
 
   var authInterface = new AuthInterface(authHost);
+
   authInterface.getCurrentUser(function(user) {
+    successCallback(documentRoot, user, mobile, authHost, deviceHost);
+  },
+  function(error) {
+    errorCallback(documentRoot);
+  });
+};
+
+onLoginSuccess = function() {
+  renderPage(renderDevicesPage, renderLoginPage);
+}
+
+renderLoginPage = function(documentRoot) {
+    var component = React.render(<Login loginSuccessCallback={onLoginSuccess} authHost={authHost}/> , documentRoot);
+}
+
+renderDevicesPage = function(documentRoot, user, mobile, authHost, deviceHost) {
     if (user.controlServer) {
       deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
     }
@@ -40,8 +59,5 @@ window.onload = function() {
         component.setState({ devicesControlView: devicesControlView });
       }
     );
-  },
-  function(error) {
-    var component = React.render(<Login authHost={authHost}/>, documentRoot);
-  });
-};
+
+}

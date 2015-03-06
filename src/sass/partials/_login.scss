@@ -7,6 +7,22 @@
   color: white;
 }
 
+.container-signup-button {
+  a {
+    color: white;
+    @include transition(color, .2s, linear);
+  }
+  padding-right: 15px;
+  padding-top: 10px;
+}
+
+.container-login-message {
+  color: red;
+  text-align: left;
+  margin-bottom: 30px;
+  padding-left: 10px;
+}
+
 .container-login-form {
   @include vertical-align(35%);
   max-width: 300px;
@@ -16,4 +32,10 @@
 
 .input-group {
   margin-bottom: 1em;
+}
+
+.container-signup-button {
+  position: fixed;
+  right: 0;
+  top: 0;
 }

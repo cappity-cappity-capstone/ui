@@ -20,15 +20,20 @@ AuthInterface.prototype = {
       });
   },
 
-  addUser: function(user, successHandler, errorHandler) {
+  addUser: function(name, email, password, successHandler, errorHandler) {
+    var user = {
+      name: name,
+      email: email,
+      password: password
+    };
     request
       .post(this.host + '/auth/users')
       .send(JSON.stringify(user))
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
+      .end(function(res) {
+        if (res.ok) {
+          successHandler(camelizeKeys(res.body));
         } else {
-          successHandler(user);
+          errorHandler(camelizeKeys(res.body));
         }
       });
   },
