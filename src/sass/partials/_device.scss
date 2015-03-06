@@ -176,7 +176,7 @@ body:not(.touch) {
 
   &.loading {
     background-color: $color-background-circle-loading !important;
-    
+
     .device-icon-background {
       background-color: $color-background-circle-loading !important;
     }
@@ -190,7 +190,7 @@ body:not(.touch) {
     }
 
     .device-control-status {
-      // background-color: $color-background-circle-loading !important;  
+      // background-color: $color-background-circle-loading !important;
     }
 
     .device-control-on, .device-control-off {
