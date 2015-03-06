@@ -42,7 +42,7 @@ var DeviceInfo = React.createClass({
       });
     }
     return (
-      <div className="device-info-container">
+      <div className='device-info-container' onClick={this.handleContainerClickEvent}>
         <div className='info'>
           <div className='close-button' onClick={this.handleCloseButtonEventAction}>
             <Icon type='close' />
@@ -60,6 +60,12 @@ var DeviceInfo = React.createClass({
         </div>
       </div>
     );
+  },
+
+  handleContainerClickEvent: function(event) {
+    if (event.target.className === 'device-info-container') {
+      this.handleCloseButtonEventAction(event);
+    }
   },
 
   handleCloseButtonEventAction: function(event) {
