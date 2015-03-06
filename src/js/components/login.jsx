@@ -22,22 +22,47 @@ var Login = React.createClass({
   },
 
   render: function() {
-    var button_text = this.state.isSignup ? "Signup" : "Login";
-    var toggle_text = this.state.isSignup ? "Login" : "Signup";
-    var button_action = this.state.isSignup ? this.handleSignup : this.handleLogin;
-    var name_input = !this.state.isSignup ? "" : <div className='input-group underline'><input type="text" name="name" valueLink={this.linkState('name')} required /><label htmlFor="name"><span>Name</span></label></div>;
-    var message = !this.state.message ? "" : <div className='container-login-message'><span>{this.state.message}</span></div>;
+    var buttonText = this.state.isSignup ? "Signup" : "Login";
+    var toggleText = this.state.isSignup ? "Login" : "Signup";
+    var buttonAction= this.state.isSignup ? this.handleSignup : this.handleLogin;
+    var nameInput, passConfirmInput;
+    if (this.state.isSignup) {
+      nameInput = (
+        <div className='input-group underline'>
+          <input type="text" name="name" valueLink={this.linkState('name')} required />
+          <label htmlFor="name">
+            <span>Name</span>
+          </label>
+        </div>
+      );
+      passConfirmInput = (
+        <div className='input-group underline'>
+          <input type="password" name="password-confirm" valueLink={this.linkState('passwordConfirm')} required />
+          <label htmlFor="password-confirm">
+            <span>Confirm Password</span>
+          </label>
+        </div>
+      );
+    }
+    var message;
+    if (this.state.message) {
+      message = (
+        <div className='container-login-message'>
+          <span>{this.state.message}</span>
+        </div>
+      );
+    }
     return (
       <div className='login'>
         <div className='container-signup-button'>
           <span className='signup'>
-            <a onClick={this.handleModeSwitch}>{toggle_text}</a>
+            <a onClick={this.handleModeSwitch}>{toggleText}</a>
           </span>
         </div>
         <div className='container-login-form'>
           {message}
-          <form onSubmit={button_action}>
-            {name_input}
+          <form onSubmit={buttonAction}>
+            {nameInput}
             <div className='input-group underline'>
               <input type="email" name="email" valueLink={this.linkState('email')} required />
               <label htmlFor="email">
@@ -50,8 +75,9 @@ var Login = React.createClass({
                 <span>Password</span>
               </label>
             </div>
+            {passConfirmInput}
             <div className='input-group button'>
-              <input type="submit" name="submit" value={button_text} />
+              <input type="submit" name="submit" value={buttonText} />
             </div>
           </form>
         </div>
@@ -77,14 +103,19 @@ var Login = React.createClass({
   handleSignup: function(event) {
     var self = this;
     event.preventDefault();
-    this.getAuthInterface().addUser(this.state.name, this.state.email, this.state.password,
-      function(session) {
-        handleLogin();
-      },
-      function(error) {
-        self.setState({message: error.message});
-      }
-    );
+    if (this.state.password === this.state.passwordConfirm) {
+      this.getAuthInterface().addUser(this.state.name, this.state.email, this.state.password,
+        function(session) {
+          handleLogin();
+        },
+        function(error) {
+          self.setState({message: error.message});
+        }
+      );
+    }
+    else {
+      this.setState({message: 'Passwords do not match'});
+    }
   },
 
   handleModeSwitch: function() {
