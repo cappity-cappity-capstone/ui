@@ -119,11 +119,7 @@ var Home = React.createClass({
   },
 
   getGravatarUrl: function() {
-    if (this.email_hash) {
-      return "http://www.gravatar.com/avatar/" + this.email_hash + "?size=400";
-    } else {
-      return "img/todd.jpg";
-    }
+    return "http://www.gravatar.com/avatar/" + this.email_hash + "?size=400&default=mm";
   }
 
 });
