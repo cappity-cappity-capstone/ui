@@ -1,4 +1,5 @@
-var React = require('react');
+var React = require('react/addons');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var DeviceInfo = require('components/device_info.jsx');
 var StateInterface = require('interfaces/state_interface.js');
@@ -90,7 +91,7 @@ var Device = React.createClass({
 
     var controlClass = this.props.showControls ? " control" : "";
     var deviceInfo;
-    if(this.state.showInfo) {
+    if(this.props.showControls && this.state.showInfo) {
       deviceInfo = <DeviceInfo {...this.props} onDeviceInfoClose={this.handleDeviceInfoClose} />;
     }
 
@@ -108,10 +109,10 @@ var Device = React.createClass({
             </div>
           </div>
           <div className="device-inner-circle">
-            <div className="device-icon-background"></div>
             <div className="device-control-circle">
               <div className="device-control-circle-crossbar"></div>
             </div>
+            <div className="device-icon-background"></div>
             <div className="device-control-status">
               <span>{status}</span>
             </div>
@@ -127,15 +128,17 @@ var Device = React.createClass({
                 <span style={{fontSize: fontSize}}>{offVerb}</span>
               </div>
             </div>
-            <div className="device-info" onClick={this.handleInfoButtonAction}>
-              <i className="icon-info"></i>
+            <div className="device-info">
+              <i className="icon-info" onClick={this.handleInfoButtonAction}></i>
             </div>
             <div className="device-icon-container">
               <i className={"device-icon icon-" + this.props.type + "_" + this.state.deviceState}/>
             </div>
           </div>
         </div>
-        {deviceInfo}
+        <ReactCSSTransitionGroup transitionName="device-info">
+          {deviceInfo}
+        </ReactCSSTransitionGroup>
       </div>
     );
   },
@@ -192,10 +195,15 @@ var Device = React.createClass({
 
   //info can probably be bootstrapped
   handleInfoButtonAction: function() {
+    event.stopPropagation();
+    event.preventDefault();
+
+    this.props.onClickModule();
     this.setState({showInfo: true});
   },
 
   handleDeviceInfoClose: function() {
+    this.props.onClickModule();
     this.setState({showInfo: false});
   },
 

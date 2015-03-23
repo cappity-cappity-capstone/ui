@@ -1,5 +1,6 @@
 var request = require('superagent');
 var camelizeKeys = require('humps').camelizeKeys;
+var moment = require('moment');
 
 var StateInterface = function(host) {
   this.host = host;
@@ -34,10 +35,15 @@ StateInterface.prototype = {
 
   getStates: function(deviceId, responseHandler) {
     request.get(
-      this.host +  '/api/devices',
+      this.host +  '/api/devices/' + deviceId + '/states',
       function (err, res) {
         if (err) throw err;
-        responseHandler(camelizeKeys(JSON.parse(res.text)).states);
+        var states = camelizeKeys(JSON.parse(res.text));
+        states.forEach(function(state) {
+          state.state = parseFloat(state.state);
+          state.createdAt = moment(state.createdAt);
+        });
+        responseHandler(states);
       }
     );
   }

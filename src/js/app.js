@@ -8,7 +8,7 @@ var DeviceInterface = require('interfaces/device_interface.js');
 var Home = require('components/home.jsx');
 var Login = require('components/login.jsx');
 
-//var authHost = 'http://localhost:4567';
+//var authHost = 'http://localhost:2000';
 var authHost = 'http://cappitycappitycapstone.com';
 var deviceHost = 'http://ccs.cappitycappitycapstone.com';
 

@@ -1,10 +1,26 @@
 var request = require('superagent');
+var camelizeKeys = require('humps').camelizeKeys;
 
 var ScheduleInterface = function(host) {
   this.host = host;
 };
 
 ScheduleInterface.prototype = {
+  getTasks: function(deviceId, responseHandler) {
+    request
+      .get(this.host + '/api/devices/' + deviceId + '/tasks')
+      .end(function(err, res) {
+        if (err) {
+          throw err;
+        } else {
+          var tasks = camelizeKeys(JSON.parse(res.text));
+          tasks.forEach(function(task) {
+            task.state = parseFloat(task.state);
+          });
+          responseHandler(tasks);
+        }
+      });
+  },
   addSchedule: function(schedule, deviceId, successHandler, errorHandler) {
     request
       .put(this.host + '/api/schedules/' + deviceId)
@@ -67,7 +83,7 @@ ScheduleInterface.prototype = {
       });
   },
 
-  deleteschedule: function(scheduleId, successHandler, errorHandler) {
+  deleteSchedule: function(scheduleId, successHandler, errorHandler) {
     request
       .delete(this.host + '/api/schedules/' + scheduleId)
       .end(function(err, res) {

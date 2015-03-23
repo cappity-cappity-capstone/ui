@@ -396,7 +396,6 @@ body:not(.touch) {
   @include circle($width-device-icon-background);
   @include absolute_center;
   @include transition(opacity, ease-in, $delay-opacity);
-  z-index: 1;
 }
 
 .device-icon-container {
@@ -405,7 +404,6 @@ body:not(.touch) {
   @include transition(transform, linear, $delay-movement);
   overflow: hidden;
   text-align: left;
-  z-index: 2;
 
   .device-icon {
     @include transition(color, linear, $delay-movement);

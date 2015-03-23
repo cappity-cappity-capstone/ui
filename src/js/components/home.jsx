@@ -56,7 +56,7 @@ var Home = React.createClass({
         name={device.name}
         host={this.props.deviceHost}
         mobile={this.props.mobile}
-        onClickModule={this.handleOnModuleClick(index)}
+        onClickModule={this.handleOnModuleClick.bind(this, index)}
         showControls={this.state.devicesControlView[index]} />
     );
   },
@@ -76,7 +76,7 @@ var Home = React.createClass({
     return (
       <div>
         <SideMenu email={this.props.email} profileImageUrl={this.getGravatarUrl()} menuExpanded={this.state.menuExpanded} authHost={this.props.authHost} />
-        <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction}>
+        <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction} onClick={this.handleOffModuleAction}>
           <Header homeName={this.props.name + "'s House"} onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
             {renderedDevices}
@@ -92,15 +92,16 @@ var Home = React.createClass({
   },
 
   handleOnModuleClick: function(index) {
-    var self = this;
-    return function() {
-      var devicesControlView = self.state.devicesControlView;
-      devicesControlView[index] = !devicesControlView[index];
-      self.setState({devicesControlView: devicesControlView});
-    };
+    var devicesControlView = this.state.devicesControlView;
+    devicesControlView[index] = !devicesControlView[index];
+    this.setState({devicesControlView: devicesControlView});
   },
 
   handleOffModuleAction: function(event) {
+    if (event.nativeEvent.defaultPrevented) {
+      return;
+    }
+
     if (this.isMoving) {
       this.isMoving = false;
     } else {
