@@ -17,7 +17,12 @@ var DeviceLog = React.createClass({
     var log = <span>No device changes</span>;
     if (!_.isEmpty(this.props.states)) {
       var logEntries = _.map(this.props.states, function(state) {
-        var stateText = (state.state > 0.0) ? (<Icon type="toggle-on" />) : (<Icon type="toggle-off" />);
+        var stateText;
+        if (state.state > 0.0) {
+          stateText = <Icon style={{color: "green"}} type="toggle-on" />;
+        } else {
+          stateText = <Icon style={{color: "red"}} type="toggle-off" />;
+        }
         var dateTimeString = state.createdAt.format('MMMM Do YYYY, h:mm:ss a');
         var sourceText;
         switch (state.source) {
