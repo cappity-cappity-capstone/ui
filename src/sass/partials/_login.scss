@@ -9,7 +9,7 @@
 
 .container-signup-button {
   a {
-    color: white;
+    color: $color-login-highlight;
     @include transition(color, .2s, linear);
   }
   padding-right: 15px;

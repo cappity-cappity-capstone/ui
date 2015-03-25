@@ -1,11 +1,13 @@
-$color-input-text: white;
-$color-input-labels: #D3D3D3;
-$color-input-underline: white;
-$color-button-border: white;
-$color-button-border-hover: #D3D3D3;
-$color-button-background-hover: #D3D3D3;
+$color-input-text: $color-login-highlight;
+$color-input-text-focused: white;
+$color-input-label-text: $color-login-highlight;
+$color-input-labels: $color-login-highlight;
+$color-input-underline: $color-login-highlight;
+$color-input-underline-highlight: white;
+$color-button-border: $color-login-highlight;
+$color-button-border-hover: $color-login-highlight;
+$color-button-background-hover: $color-login-highlight;
 $color-button-label-hover: $color-side-menu-background;
-$color-input-underline-hightlight: #393A3F;
 
 $width-input-underline: 2px;
 $width-input-underline-highlight: 2px;
@@ -71,7 +73,7 @@ $height-input: 2.5em;
     position: absolute;
     bottom: 8px;
     left: 0;
-    color: $color-input-text;
+    color: $color-input-label-text;
     font-size: 1em;
     width: 100%;
     text-align: left;
@@ -84,7 +86,7 @@ $height-input: 2.5em;
 
   label:after {
     border-bottom: solid;
-    border-color: $color-input-underline-hightlight;
+    border-color: $color-input-underline-highlight;
     content: '';
     position: absolute;
     top: 0;
@@ -97,6 +99,7 @@ $height-input: 2.5em;
 
   input:focus {
     outline: none;
+    color: $color-input-text-focused;
   }
 
   input:focus + label > span {
