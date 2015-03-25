@@ -1,5 +1,6 @@
 var request = require('superagent');
 var camelizeKeys = require('humps').camelizeKeys;
+var moment = require('moment');
 
 var ScheduleInterface = function(host) {
   this.host = host;
@@ -16,6 +17,10 @@ ScheduleInterface.prototype = {
           var tasks = camelizeKeys(JSON.parse(res.text));
           tasks.forEach(function(task) {
             task.state = parseFloat(task.state);
+            task.schedules.forEach(function(schedule) {
+              if (schedule.startTime) schedule.startTime = moment(schedule.startTime);
+              if (schedule.endTime) schedule.endTime = moment(schedule.endTime);
+            });
           });
           responseHandler(tasks);
         }

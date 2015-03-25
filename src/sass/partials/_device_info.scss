@@ -51,6 +51,23 @@
     margin: 0 auto;
     padding: 10px;
 
+    table {
+      margin: 10px 0;
+      width: 100%;
+      border-collapse: collapse;
+
+      td {
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+      }
+
+      th {
+        text-align: left;
+
+        font-family: "Raleway Bold";
+      }
+    }
+
     .close-button {
       float: right;
 
@@ -65,31 +82,34 @@
       display: inline;
     }
 
+    .schedule {
+      th.start-time, td.start-time,
+      th.end-time, td.end-time {
+        width: 33%;
+      }
+
+      th.interval, td.interval {
+      }
+
+      th.action, td.action {
+        width: 3%;
+      }
+    }
+
     .log {
-      max-height: 300px;
       border-top: 1px solid #eee;
 
-      overflow-y: scroll;
+      th.time, td.time {
+      }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
+      th.state, td.state {
+        width: 15%;
+        text-align: center;
+      }
 
-        th, td {
-          border-top: 1px solid #eee;
-          border-bottom: 1px solid #eee;
-        }
-
-        th {
-          text-align: left;
-
-          font-family: "Raleway Bold";
-        }
+      th.source, td.source {
+        width: 20%;
       }
     }
   }
-}
-
-
-.device-info-container {
 }

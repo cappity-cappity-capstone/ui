@@ -23,11 +23,11 @@ var DeviceLog = React.createClass({
         } else {
           stateText = <Icon style={{color: "red"}} type="toggle-off" />;
         }
-        var dateTimeString = state.createdAt.format('MMMM Do YYYY, h:mm:ss a');
+        var dateTimeString = state.createdAt.format('MMM D, h:mm a');
         var sourceText;
         switch (state.source) {
           case 'manual_override': sourceText = 'Web UI'; break;
-          case 'scheduled': sourceText = 'Schedule'; break;
+          case 'scheduled': sourceText = 'Scheduled'; break;
           case 'parent_left': sourceText = 'No phone around'; break;
           default: sourceText = 'Unknown'; break;
         }
