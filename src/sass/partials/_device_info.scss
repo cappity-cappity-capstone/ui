@@ -92,7 +92,13 @@
       }
 
       th.action, td.action {
-        width: 3%;
+        width: 7%;
+        text-align: right;
+
+        i {
+          display: inline-block;
+          margin: 0 1px;
+        }
       }
     }
 

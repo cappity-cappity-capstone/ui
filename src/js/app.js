@@ -47,12 +47,12 @@ renderDevicesPage = function(documentRoot, user, mobile, authHost, deviceHost) {
     if (user.controlServer) {
       deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
     }
-    var component = React.render(<Home email={user.email} name={user.name} deviceHost={deviceHost} mobile={mobile} authHost={authHost} user={user} />, documentRoot);
+    var component = React.render(<Home email={user.email} name={user.name} deviceHost={deviceHost} mobile={mobile} authHost={authHost} user={user} devices={[]} />, documentRoot);
 
     var deviceInterface = new DeviceInterface(deviceHost);
     deviceInterface.getDevices(
       function (resp) {
-        component.props.devices = resp;
+        component.setProps({ devices: resp });
         // devicesControlView is whether or not each device is showing its controls or not
         // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
         // add a controls class onTouch to show the controls

@@ -2,12 +2,12 @@
   "name": "ui",
   "version": "0.0.1",
   "dependencies": {
+    "cookies-js": "1.2.1",
     "humps": "^0.4.2",
+    "moment": "2.9.0",
     "react": "0.13.1",
     "superagent": "0.21.0",
-    "underscore": "1.7.0",
-    "cookies-js": "1.2.1",
-    "moment": "2.9.0"
+    "underscore": "1.7.0"
   },
   "devDependencies": {
     "browser-sync": "^2.1.6",

@@ -68,9 +68,8 @@ var Home = React.createClass({
       this.email_hash = md5(this.props.email);
     }
 
-    var renderedDevices = [];
-    _.each(this.props.devices, function(device, index) {
-      renderedDevices.push(this.renderDevice(device, index));
+    var renderedDevices = this.props.devices.map(function(device, index) {
+       return this.renderDevice(device, index);
     }, this);
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
     return (

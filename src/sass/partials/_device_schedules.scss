@@ -1,0 +1,31 @@
+.tasks-container {
+  overflow: hidden;
+  width: 100%;
+}
+
+.tasks {
+  width: 200%;
+}
+
+.tasks-list, .tasks-edit-schedule {
+  display: inline-block;
+  width: 50%;
+
+  @include transition(transform, 0.2s, linear);
+}
+
+.tasks-list {
+  transform: translateX(0%);
+}
+
+.tasks-edit-schedule {
+  transform: translateX(-100%);
+}
+
+.slide-left {
+  transform: translateX(-100%);
+}
+
+.slide-right {
+  transform: translateX(0%);
+}
