@@ -38,7 +38,7 @@ var ScheduleList = React.createClass({
           <td className="end-time">{schedule.endTime ? schedule.endTime.format('MMM D, h:mm a') : "Never"}</td>
           <td className="interval">{this.prettyTimeInterval(schedule.interval)}</td>
           <td className="action">
-            <Icon type="pencil-square-o" onClick={this.props.handleEditClick.bind(this.props.handleEditContext, schedule)} />
+            <Icon type="pencil-square-o" onClick={this.props.handleEditClick(schedule)} />
             <Icon type="minus-square-o" />
           </td>
         </tr>
