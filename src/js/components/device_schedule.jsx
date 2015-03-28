@@ -21,10 +21,13 @@ var DeviceSchedule = React.createClass({
       editing: null
     }
   },
-  handleEditClick: function(schedule) {
-    return function(schedule) {
-      this.setState({ editing: schedule });
-    }.bind(this, schedule);
+  handleEditClick: function(task, schedule) {
+    return function(task, schedule) {
+      this.setState({ editing: { task: task, schedule: schedule } });
+    }.bind(this, task, schedule);
+  },
+  handleDoneEditing: function() {
+    this.setState({ editing: null });
   },
   handleSaveSchedule: function(schedule) {
     return function(schedule) {
@@ -38,7 +41,7 @@ var DeviceSchedule = React.createClass({
         <div key={task.id}>
           <div>{(task.state > 0.0) ? 'On' : 'Off'}</div>
           <ScheduleList
-            handleEditClick={this.handleEditClick.bind(this)}
+            handleEditClick={this.handleEditClick.bind(this, task)}
             schedules={task.schedules} />
         </div>
       );
@@ -48,8 +51,9 @@ var DeviceSchedule = React.createClass({
     if (this.state.editing !== null) {
        editing = (
          <EditSchedule
-           handleSaveSchedule={this.handleSaveSchedule(this.state.editing)}
-           schedule={this.state.editing} />
+           handleCancel={this.handleDoneEditing}
+           handleSaveSchedule={this.handleSaveSchedule(this.state.editing.schedule)}
+           {...this.state.editing} />
        )
     }
 
@@ -63,10 +67,13 @@ var DeviceSchedule = React.createClass({
     }
 
     return (
-      <div className="tasks-container">
-        <div className="tasks">
-          <div className={classSet(tasksClasses)}>{tasks}</div>
-          <div className={classSet(taskEditClasses)}>{editing}</div>
+      <div>
+        <h4>Schedule</h4>
+        <div className="tasks-container">
+          <div className="tasks">
+            <div className={classSet(tasksClasses)}>{tasks}</div>
+            <div className={classSet(taskEditClasses)}>{editing}</div>
+          </div>
         </div>
       </div>
     );

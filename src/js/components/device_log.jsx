@@ -51,7 +51,12 @@ var DeviceLog = React.createClass({
         </table>
       );
     }
-    return log;
+    return (
+      <div>
+        <h4>Log</h4>
+        {log}
+      </div>
+    );
   }
 });
 

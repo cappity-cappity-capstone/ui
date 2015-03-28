@@ -47,11 +47,9 @@ var DeviceInfo = React.createClass({
           <div className='close-button' onClick={this.handleCloseButtonEventAction}>
             <Icon type='close'/>
           </div>
-          <h4>Schedule</h4>
           <div className='schedule'>
             <DeviceSchedule tasks={this.state.tasks} />
           </div>
-          <h4>Log</h4>
           <div className='log'>
             <DeviceLog states={this.state.states} />
           </div>
