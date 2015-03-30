@@ -1,6 +1,8 @@
 var React = require('react');
-var Icon = require('components/icon.jsx');
 var moment = require('moment');
+
+var Icon = require('components/icon.jsx');
+var TimePicker = require('components/time_picker.jsx');
 
 var WEEK = 604800,
     DAY = 86400,
@@ -15,7 +17,7 @@ var EditSchedule = React.createClass({
         occurence = 'every',
         interval = this.props.schedule.interval;
 
-    if (interval !== null) {
+    if (interval !== null && interval !== undefined) {
       if (interval > WEEK) {
         intervalBase = WEEK;
       } else if (interval > DAY) {
@@ -38,7 +40,7 @@ var EditSchedule = React.createClass({
 
     var startTime = this.props.schedule.startTime || moment();
     var endTime = this.props.schedule.endTime;
-    var longevity = (endTime !== null) ? 'until' : 'forever';
+    var longevity = (endTime !== undefined && endTime !== null) ? 'until' : 'forever';
 
     return {
       occurence: occurence,
@@ -64,16 +66,13 @@ var EditSchedule = React.createClass({
   setLongevity: function(event) {
     var longevity = event.target.value;
     var endTime = this.state.endTime;
-    if (endTime === null) {
+    if (endTime === undefined || endTime === null) {
       endTime = moment();
     }
     this.setState({ longevity: longevity, endTime: endTime });
   },
   getStartDate: function() {
     return this.state.startTime.format('MMMM D');
-  },
-  getStartTime: function() {
-    return this.state.startTime.format('h:mm a');
   },
   getEndDate: function() {
     return this.state.endTime.format('MMMM D');
@@ -90,26 +89,26 @@ var EditSchedule = React.createClass({
   },
   renderAction: function() {
     if (this.props.task.state > 0.0) {
-      return (<p>Turn on</p>);
+      return (<div className="section">Turn on</div>);
     } else {
-      return (<p>Turn off</p>);
+      return (<div className="section">Turn off</div>);
     }
   },
   renderOccurence: function() {
     return (
-      <p>
+      <div className="section">
         <select value={this.state.occurence} onChange={this.setOccurence}>
           <option value="every">every</option>
           <option value="just-once">just once</option>
         </select>
-      </p>
+      </div>
     );
   },
   renderInterval: function() {
     if (this.state.occurence == 'every') {
       return (
         <span>
-          <p>
+          <div className="section">
             <input className="interval" value={this.state.intervalCoefficient} onChange={this.setIntervalCoefficient} />
             {' '}
             <select value={this.state.intervalBase} onChange={this.setIntervalBase}>
@@ -118,33 +117,33 @@ var EditSchedule = React.createClass({
               <option value="3600">{this.pluralizeBase("hour")}</option>
               <option value="60">{this.pluralizeBase("minute")}</option>
             </select>
-          </p>
-          <p>
+          </div>
+          <div className="section">
             beginning on
-          </p>
+          </div>
         </span>
       );
     } else {
-      return (<p>on</p>);
+      return (<div className="section">on</div>);
     }
   },
   renderStartTime: function() {
     return (
-      <p>
+      <div className="section">
         <input className="date" type="text" value={this.getStartDate()} />
         {' at '}
-        <input className="time" type="text" value={this.getStartTime()} />
-      </p>
+        <TimePicker datetime={this.state.startTime} />
+      </div>
     );
   },
   renderEndTime: function() {
     if (this.state.longevity === 'until') {
       return (
-        <p>
+        <div className="section">
           <input className="date" type="text" value={this.getEndDate()} />
           {' at '}
           <input className="time" type="text" value={this.getEndTime()} />
-        </p>
+        </div>
       );
     }
   },
@@ -152,12 +151,12 @@ var EditSchedule = React.createClass({
     if (this.state.occurence === 'every') {
       return (
         <span>
-          <p>
+          <div className="section">
             <select value={this.state.longevity} onChange={this.setLongevity}>
               <option value='until'>until</option>
               <option value='forever'>forever</option>
             </select>
-          </p>
+          </div>
           {this.renderEndTime()}
         </span>
       );

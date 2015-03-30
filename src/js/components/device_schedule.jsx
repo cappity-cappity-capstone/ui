@@ -59,11 +59,11 @@ var DeviceSchedule = React.createClass({
 
     var tasksClasses = {
       'tasks-list': true,
-      'slide-left': !!editing,
+      'focus': !editing,
     }
     var taskEditClasses = {
       'tasks-edit-schedule': true,
-      'slide-right': !editing
+      'focus': !!editing
     }
 
     return (

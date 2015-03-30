@@ -50,7 +50,9 @@ var ScheduleList = React.createClass({
           <th className="start-time">Starts</th>
           <th className="end-time">Ends</th>
           <th className="interval">Frequency</th>
-          <th className="action"><Icon type="plus-square-o" /></th>
+          <th className="action">
+            <Icon type="plus-square-o" onClick={this.props.handleEditClick({})} />
+          </th>
         </tr>
         {schedules}
       </table>

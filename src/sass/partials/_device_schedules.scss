@@ -15,12 +15,18 @@
     }
   }
 
+  .tasks-list {
+    text-align: center;
+  }
+
   .edit-schedule {
+    text-align: center;
+
     .back {
       float: left;
     }
 
-    p {
+    div.section {
       margin-top: 0;
       margin-bottom: 1em;
     }
@@ -50,21 +56,21 @@
   display: inline-block;
   width: 50%;
 
-  @include transition(transform, 0.1s, linear);
-}
-
-.tasks-list {
-  transform: translateX(0%);
+  @include transition(transform, 0.3s, ease-in);
 }
 
 .tasks-edit-schedule {
-  transform: translateX(-100%);
-}
-
-.slide-left {
-  transform: translateX(-100%);
-}
-
-.slide-right {
   transform: translateX(0%);
+
+  &.focus {
+    transform: translateX(-100%);
+  }
+}
+
+.tasks-list {
+  transform: translateX(-100%);
+
+  &.focus {
+    transform: translateX(0%);
+  }
 }
