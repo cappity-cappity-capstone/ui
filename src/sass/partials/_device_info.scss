@@ -1,34 +1,122 @@
+.device-info-enter {
+  opacity: 0.01;
+  @include animation-duration(.2s);
+  @include animation-name(fadeIn);
+}
+
+.device-info-enter.device-info-enter-active {
+  opacity: 1;
+}
+
+.device-info-leave {
+  opacity: 1;
+  @include animation-duration(.2s);
+  @include animation-name(fadeOut);
+}
+
+.device-info-leave.device-info-leave-active {
+  opacity: 0.01;
+}
+
 .device-info-container {
-  &:before {
-    content: "";
-    background: rgba(0, 0, 0, 0.3);
+	position: relative;
+  border: solid $width-border-outer-outline $color-border-outer-outline;
+  @include box-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.6));
+
+  &:after, &:before {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 10;
+    pointer-events: none;
+  }
+
+  &:after {
+    border-bottom-color: #fff;
+    border-width: 20px;
+    margin-left: -20px;
+  }
+
+  &:before {
+    border-bottom-color: #000;
+    border-width: 26px;
+    margin-left: -26px;
   }
 
   .info {
-    $width: 400px;
-    width: $width;
     background-color: white;
-    display: inline;
-    position: absolute;
-    top: 20%;
-    margin-left: -$width/2;
-    z-index: 100;
+    margin: 0 auto;
+    padding: 10px;
+
+    table {
+      margin: 10px 0;
+      width: 100%;
+      border-collapse: collapse;
+
+      td {
+        border-top: 1px solid #eee;
+      }
+
+      th {
+        text-align: left;
+
+        font-family: "Raleway Bold";
+      }
+    }
 
     .close-button {
-      width: 100%;
-      text-align: right;
+      float: right;
 
       i {
-        margin: 10px;
+        margin: 0;
+        padding: 0;
         cursor: pointer;
       }
     }
 
     .name {
       display: inline;
+    }
+
+    .schedule {
+      th.start-time, td.start-time,
+      th.end-time, td.end-time {
+        width: 33%;
+      }
+
+      th.interval, td.interval {
+      }
+
+      th.action, td.action {
+        width: 7%;
+        text-align: right;
+
+        i {
+          display: inline-block;
+          margin: 0 1px;
+        }
+      }
+    }
+
+    .log {
+      table {
+        border-top: 1px solid #d0d0d0;
+      }
+
+      th.time, td.time {
+      }
+
+      th.state, td.state {
+        width: 15%;
+        text-align: center;
+      }
+
+      th.source, td.source {
+        width: 20%;
+      }
     }
   }
 }

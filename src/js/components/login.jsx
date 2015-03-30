@@ -87,7 +87,7 @@ var Login = React.createClass({
 
   handleLogin: function(event) {
     var self = this;
-    event.preventDefault();
+    if (event) event.preventDefault();
     this.getAuthInterface().createSession(this.state.email, this.state.password,
       function(session) {
         console.log(session);
@@ -101,16 +101,15 @@ var Login = React.createClass({
   },
 
   handleSignup: function(event) {
-    var self = this;
     event.preventDefault();
     if (this.state.password === this.state.passwordConfirm) {
       this.getAuthInterface().addUser(this.state.name, this.state.email, this.state.password,
         function(session) {
-          handleLogin();
-        },
+          this.handleLogin();
+        }.bind(this),
         function(error) {
-          self.setState({message: error.message});
-        }
+          this.setState({message: error.message});
+        }.bind(this)
       );
     }
     else {

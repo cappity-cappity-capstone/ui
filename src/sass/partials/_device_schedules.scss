@@ -1,0 +1,76 @@
+.tasks-container {
+  overflow: hidden;
+  width: 100%;
+
+  border-top: 1px solid #d0d0d0;
+  border-bottom: 1px solid #d0d0d0;
+
+  padding: 10px 0;
+
+  .tasks {
+    width: 200%;
+
+    i {
+      cursor: pointer;
+    }
+  }
+
+  .tasks-list {
+    text-align: center;
+  }
+
+  .edit-schedule {
+    text-align: center;
+
+    .back {
+      float: left;
+    }
+
+    div.section {
+      margin-top: 0;
+      margin-bottom: 1em;
+    }
+
+    input, select, button {
+      font-family: "Raleway Light", sans-serif;
+      font-size: 20px;
+    }
+
+    input.interval {
+      width: 40px;
+      text-align: right;
+    }
+
+    input.date {
+      width: 130px;
+      text-align: right;
+    }
+
+    input.time {
+      width: 100px;
+    }
+  }
+}
+
+.tasks-list, .tasks-edit-schedule {
+  display: inline-block;
+  width: 50%;
+
+  @include transition(transform, 0.3s, ease-in);
+}
+
+.tasks-edit-schedule {
+  transform: translateX(0%);
+
+  &.focus {
+    transform: translateX(-100%);
+  }
+}
+
+.tasks-list {
+  transform: translateX(-100%);
+
+  &.focus {
+    transform: translateX(0%);
+  }
+}

@@ -7,7 +7,7 @@ var Icon = React.createClass({
 
   render: function(){
     var type = this.props.type;
-    return <i className={"fa fa-" + type}></i>;
+    return <i onClick={this.props.onClick} style={this.props.style} className={"fa fa-" + type}></i>;
   }
 });
 

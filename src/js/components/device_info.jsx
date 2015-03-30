@@ -1,8 +1,12 @@
 var React = require('react');
 var _ = require('underscore');
+var moment = require('moment');
 
 var Icon = require('components/icon.jsx');
 var StateInterface = require('interfaces/state_interface.js');
+var ScheduleInterface = require('interfaces/schedule_interface.js');
+var DeviceLog = require('components/device_log.jsx');
+var DeviceSchedule = require('components/device_schedule.jsx');
 
 var DEVICE_TYPES = [
   'outlet',
@@ -14,8 +18,6 @@ var DEVICE_TYPES = [
 var DeviceInfo = React.createClass({
   propTypes: {
     id: React.PropTypes.string.isRequired,
-    on: React.PropTypes.bool.isRequired,
-    type: React.PropTypes.oneOf(DEVICE_TYPES).isRequired,
     name: React.PropTypes.string.isRequired,
     onDeviceInfoClose: React.PropTypes.func.isRequired,
     host: React.PropTypes.string.isRequired
@@ -23,7 +25,8 @@ var DeviceInfo = React.createClass({
 
   getInitialState: function() {
     return {
-      states: []
+      states: [],
+      tasks: []
     };
   },
 
@@ -31,31 +34,24 @@ var DeviceInfo = React.createClass({
     this.getStateInterface().getStates(this.props.id, function(response) {
       this.setState({states: response});
     }.bind(this));
+
+    this.getScheduleInterface().getTasks(this.props.id, function(response) {
+      this.setState({tasks: response});
+    }.bind(this));
   },
 
   render: function() {
-    var log = <li>No device changes</li>;
-    if (!_.isEmpty(this.state.states)) {
-      log = _.map(this.state.states, function(state) {
-        var stateText = state.on ? 'On' : 'Off';
-        return <li key={state.createdAt}>{state.createdAt + ': ' + stateText}</li>;
-      });
-    }
     return (
       <div className='device-info-container' onClick={this.handleContainerClickEvent}>
         <div className='info'>
           <div className='close-button' onClick={this.handleCloseButtonEventAction}>
-            <Icon type='close' />
+            <Icon type='close'/>
           </div>
-          <h2 className='name'>{this.props.name}</h2>
           <div className='schedule'>
-            <h4>Schedule</h4>
+            <DeviceSchedule tasks={this.state.tasks} />
           </div>
           <div className='log'>
-            <h4>Log</h4>
-            <ul>
-              {log}
-            </ul>
+            <DeviceLog states={this.state.states} />
           </div>
         </div>
       </div>
@@ -63,9 +59,8 @@ var DeviceInfo = React.createClass({
   },
 
   handleContainerClickEvent: function(event) {
-    if (event.target.className === 'device-info-container') {
-      this.handleCloseButtonEventAction(event);
-    }
+    event.preventDefault();
+    event.stopPropagation();
   },
 
   handleCloseButtonEventAction: function(event) {
@@ -79,6 +74,14 @@ var DeviceInfo = React.createClass({
 
     return this._stateInterface;
   },
+
+  getScheduleInterface: function() {
+    if (!(this._scheduleInterface instanceof ScheduleInterface)) {
+      this._scheduleInterface = new ScheduleInterface(this.props.host);
+    }
+
+    return this._scheduleInterface;
+  }
 });
 
 module.exports = DeviceInfo;
