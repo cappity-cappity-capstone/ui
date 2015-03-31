@@ -40,25 +40,24 @@ onLoginSuccess = function() {
 }
 
 renderLoginPage = function(documentRoot) {
-    var component = React.render(<Login loginSuccessCallback={onLoginSuccess} authHost={authHost}/> , documentRoot);
+  React.render(<Login loginSuccessCallback={onLoginSuccess} authHost={authHost}/> , documentRoot);
 }
 
 renderDevicesPage = function(documentRoot, user, mobile, authHost, deviceHost) {
-    if (user.controlServer) {
-      deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
+  if (user.controlServer) {
+    deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
+  }
+  var component = React.render(<Home user={user} deviceHost={deviceHost} authHost={authHost} mobile={mobile} />, documentRoot);
+
+  var deviceInterface = new DeviceInterface(deviceHost);
+  deviceInterface.getDevices(
+    function (resp) {
+      component.setProps({ devices: resp });
+      // devicesControlView is whether or not each device is showing its controls or not
+      // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
+      // add a controls class onTouch to show the controls
+      devicesControlView = _.map(resp, function(item) { return false; });
+      component.setState({ devicesControlView: devicesControlView });
     }
-    var component = React.render(<Home email={user.email} name={user.name} deviceHost={deviceHost} mobile={mobile} authHost={authHost} user={user} devices={[]} />, documentRoot);
-
-    var deviceInterface = new DeviceInterface(deviceHost);
-    deviceInterface.getDevices(
-      function (resp) {
-        component.setProps({ devices: resp });
-        // devicesControlView is whether or not each device is showing its controls or not
-        // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
-        // add a controls class onTouch to show the controls
-        devicesControlView = _.map(resp, function(item, index) { return false; });
-        component.setState({ devicesControlView: devicesControlView });
-      }
-    );
-
+  );
 }

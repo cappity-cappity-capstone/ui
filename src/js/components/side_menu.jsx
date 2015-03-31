@@ -12,22 +12,23 @@ var SideMenu = React.createClass({
 
   render: function(){
     var imageStyle = {
-      background: 'url(' + this.props.profileImageUrl + ') no-repeat;'
+      background: 'url(' + this.props.profileImageUrl + ') no-repeat'
     };
 
     var menuExpandedClass = this.props.menuExpanded ? "" : "collapsed";
+
     return (
-        <aside id="menu-side" className={menuExpandedClass}>
-          <div className="content">
-            <div className="photo-profile">
-              <div className="image-circular" style={imageStyle}></div>
-            </div>
-            <div className="email_address">{this.props.email}</div>
-            <ul className="list-side-menu-options">
-              <li><a onClick={this.handleLogout}>Logout</a></li>
-            </ul>
+      <aside id="menu-side" className={menuExpandedClass}>
+        <div className="content">
+          <div className="photo-profile">
+            <div className="image-circular" style={imageStyle}></div>
           </div>
-        </aside>
+          <div className="email_address">{this.props.email}</div>
+          <ul className="list-side-menu-options">
+            <li><a onClick={this.handleLogout}>Logout</a></li>
+          </ul>
+        </div>
+      </aside>
     );
   },
 

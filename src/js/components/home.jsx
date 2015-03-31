@@ -19,8 +19,6 @@ function getViewportWidth() {
 }
 
 var Home = React.createClass({
-  email_hash: "",
-
   propTypes: {
     devices: React.PropTypes.arrayOf(
       React.PropTypes.shape({
@@ -29,12 +27,20 @@ var Home = React.createClass({
         type: React.PropTypes.string.isRequired,
         name: React.PropTypes.string.isRequired
       })
-    ),
+    ).isRequired,
     deviceHost: React.PropTypes.string.isRequired,
     authHost: React.PropTypes.string.isRequired,
     mobile: React.PropTypes.bool.isRequired,
-    email: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string,
+    user: React.PropTypes.shape({
+      email: React.PropTypes.string.isRequired,
+      name: React.PropTypes.string.isRequired
+    }).isRequired
+  },
+
+  getDefaultProps: function() {
+    return {
+      devices: []
+    };
   },
 
   getInitialState: function(){
@@ -62,21 +68,14 @@ var Home = React.createClass({
   },
 
   render: function(){
-    if (this.email_hash === "") {
-      this.props.email = this.props.email.replace(/ /g,'');
-      this.props.email = this.props.email.toLowerCase();
-      this.email_hash = md5(this.props.email);
-    }
-
-    var renderedDevices = this.props.devices.map(function(device, index) {
-       return this.renderDevice(device, index);
-    }, this);
+    var renderedDevices = this.props.devices.map(this.renderDevice, this);
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
+
     return (
       <div>
-        <SideMenu email={this.props.email} profileImageUrl={this.getGravatarUrl()} menuExpanded={this.state.menuExpanded} authHost={this.props.authHost} />
+        <SideMenu email={this.props.user.email} profileImageUrl={this.getGravatarUrl()} menuExpanded={this.state.menuExpanded} authHost={this.props.authHost} />
         <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction} onClick={this.handleOffModuleAction}>
-          <Header homeName={this.props.name + "'s House"} onNavIconClick={this.handleNavIconClick}/>
+          <Header homeName={this.props.user.name + "'s House"} onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
             {renderedDevices}
           </div>
@@ -104,8 +103,7 @@ var Home = React.createClass({
     if (this.isMoving) {
       this.isMoving = false;
     } else {
-      var devicesControlView = [];
-      _.each(this.state.devicesControlView, function(item, index) {devicesControlView.push(false);});
+      var devicesControlView = _.map(this.state.devicesControlView, function(item) { return false;});
       this.setState({devicesControlView: devicesControlView});
     }
   },
@@ -119,9 +117,17 @@ var Home = React.createClass({
   },
 
   getGravatarUrl: function() {
-    return "http://www.gravatar.com/avatar/" + this.email_hash + "?size=400&default=mm";
-  }
+    return "http://www.gravatar.com/avatar/" + this.getEmailHash() + "?size=400&default=mm";
+  },
 
+  getEmailHash: function() {
+    if (_.isEmpty(this._emailHash)) {
+      var email = this.props.user.email;
+      email = email.replace(/ /g,'').toLowerCase();
+      this._emailHash = md5(email);
+    }
+    return this._emailHash
+  }
 });
 
 module.exports = Home;
