@@ -2,7 +2,7 @@ var React = require('react');
 var moment = require('moment');
 
 var Icon = require('components/icon.jsx');
-var TimePicker = require('components/time_picker.jsx');
+var TimePicker = require('components/time_picker.jsx')
 
 var WEEK = 604800,
     DAY = 86400,
@@ -67,18 +67,9 @@ var EditSchedule = React.createClass({
     var longevity = event.target.value;
     var endTime = this.state.endTime;
     if (endTime === undefined || endTime === null) {
-      endTime = moment();
+      endTime = moment().toISOString();
     }
     this.setState({ longevity: longevity, endTime: endTime });
-  },
-  getStartDate: function() {
-    return this.state.startTime.format('MMMM D');
-  },
-  getEndDate: function() {
-    return this.state.endTime.format('MMMM D');
-  },
-  getEndTime: function() {
-    return this.state.endTime.format('h:mm a');
   },
   pluralizeBase: function(word) {
     if (this.state.intervalCoefficient != 1) {
@@ -130,9 +121,7 @@ var EditSchedule = React.createClass({
   renderStartTime: function() {
     return (
       <div className="section">
-        <input className="date" type="text" value={this.getStartDate()} />
-        {' at '}
-        <TimePicker datetime={this.state.startTime} />
+        <TimePicker inputFormat='MMM D, h:mm a' dateTime={this.state.startTime} />
       </div>
     );
   },
@@ -140,9 +129,7 @@ var EditSchedule = React.createClass({
     if (this.state.longevity === 'until') {
       return (
         <div className="section">
-          <input className="date" type="text" value={this.getEndDate()} />
-          {' at '}
-          <input className="time" type="text" value={this.getEndTime()} />
+          <TimePicker inputFormat='MMM D, h:mm a' dateTime={this.state.endTime} />
         </div>
       );
     }

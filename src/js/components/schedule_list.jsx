@@ -1,12 +1,13 @@
 var React = require('react');
 var Icon = require('components/icon.jsx');
+var moment = require('moment');
 
 var ScheduleList = React.createClass({
   propTypes: {
     schedules: React.PropTypes.arrayOf(
       React.PropTypes.shape({
-        startTime: React.PropTypes.object.isRequired,
-        endTime: React.PropTypes.object,
+        startTime: React.PropTypes.string.isRequired,
+        endTime: React.PropTypes.string,
         interval: React.PropTypes.number.isRequired,
       })
     )
@@ -34,8 +35,8 @@ var ScheduleList = React.createClass({
     var schedules = this.props.schedules.map(function(schedule) {
       return (
         <tr key={schedule.id}>
-          <td className="start-time">{schedule.startTime.format('MMM D, h:mm a')}</td>
-          <td className="end-time">{schedule.endTime ? schedule.endTime.format('MMM D, h:mm a') : "Never"}</td>
+          <td className="start-time">{moment(schedule.startTime).format('MMM D, h:mm a')}</td>
+          <td className="end-time">{schedule.endTime ? moment(schedule.endTime).format('MMM D, h:mm a') : "Never"}</td>
           <td className="interval">{this.prettyTimeInterval(schedule.interval)}</td>
           <td className="action">
             <Icon type="pencil-square-o" onClick={this.props.handleEditClick(schedule)} />
