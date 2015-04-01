@@ -1,14 +1,12 @@
 .time-picker-container {
-    position: relative;
     display: inline-block;
+    width: 250px;
 
     input.time {
-      width: 200px;
+      width: 100%;
     }
 
     .dropdown {
-        position: absolute;
-
         margin-top: 15px;
 
         width: 100%;
@@ -17,7 +15,7 @@
         background: #ffffff;
         box-sizing: border-box;
 
-        table {
+        table.time {
             border: 0;
             margin: 0;
 
@@ -33,13 +31,55 @@
                 &.semicolon {
                     width: 3%;
                 }
+            }
+        }
 
-                &.swap-button {
-                  border-top: 1px solid #eee;
-                  text-align: center;
-                  font-family: "Raleway Bold";
+        table.date {
+            border: 0;
+            margin: 0;
+
+            border-collapse: separate;
+            border-spacing: 3px;
+
+            td {
+                text-align: center;
+                border: 0;
+
+                &.day {
+                  padding: 5px;
+                  border-radius: 5px;
+                }
+
+                &.faded {
+                  color: #aaa;
+                }
+
+                &.day:hover {
+                  background-color: #eee;
+                  color: #000;
+                }
+
+                &.selected {
+                  background-color: $color-side-menu-background;
+                  color: #fff;
+                }
+
+                &.selected:hover {
+                  background-color: #999;
+                  color: #fff;
+                }
+
+                &.today {
+                  background-color: $color-login-highlight;
+                  color: #fff;
                 }
             }
+        }
+
+        td.swap-button {
+          border-top: 1px solid #eee;
+          text-align: center;
+          font-family: "Raleway Bold";
         }
 
         &.hidden {

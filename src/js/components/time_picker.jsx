@@ -15,24 +15,90 @@ function isNodeInRoot(node, root) {
 }
 
 var TimePickerDate = React.createClass({
+  getInitialState: function() {
+    return {
+      dateTime: moment(this.props.dateTime).clone()
+    };
+  },
+  changeMonth: function(direction) {
+    var newDateTime = moment(this.state.dateTime).clone().add(direction, 'month');
+    this.setState({
+      dateTime: newDateTime
+    });
+  },
+  renderDays: function() {
+    var cells = [];
+    var html = [];
+
+    var year = this.state.dateTime.year();
+    var month = this.state.dateTime.month();
+    var day = this.state.dateTime.date();
+    var prevMonth = this.state.dateTime.clone().subtract(1, 'month');
+    var days = prevMonth.daysInMonth();
+    prevMonth.date(days).startOf('week');
+    nextMonth = moment(prevMonth).clone().add(42, 'day');
+
+    while (prevMonth.isBefore(nextMonth)) {
+      var classes = { day: true };
+      if (prevMonth.year() < year || (prevMonth.year() === year && prevMonth.month() < month)) {
+        classes['faded'] = true
+      } else if (prevMonth.year() > year || (prevMonth.year() === year && prevMonth.month() > month)) {
+        classes['faded'] = true
+      }
+
+      if (prevMonth.isSame(this.props.dateTime, 'day')) {
+        classes['selected'] = true
+      }
+
+      if (prevMonth.isSame(moment(), 'day')) {
+        classes['today'] = true
+      }
+
+      var key = (prevMonth.month() + "-" + prevMonth.date());
+      var fn = null;
+      if (prevMonth.isSame(this.state.dateTime, 'month') && prevMonth.isSame(this.state.dateTime, 'year')) {
+         fn = this.props.alterDate(prevMonth.clone());
+      }
+
+      cells.push(<td key={key} className={classSet(classes)} onClick={fn}>{prevMonth.date()}</td>);
+
+      if (prevMonth.weekday() === moment().endOf('week').weekday()) {
+        row = <tr key={prevMonth.month() + '-' + prevMonth.date()}>{cells}</tr>;
+        html.push(row);
+        cells = [];
+      }
+      prevMonth.add(1, 'day');
+    }
+
+    return html;
+  },
   render: function() {
     return (
-      <table>
-        <tr>
-          <td colSpan="7">Month</td>
-        </tr>
-        <tr>
-          <td>S</td>
-          <td>M</td>
-          <td>T</td>
-          <td>W</td>
-          <td>T</td>
-          <td>F</td>
-          <td>S</td>
-        </tr>
-        <tr>
-          <td className="swap-button" colSpan="7" onClick={this.props.swap}>Time</td>
-        </tr>
+      <table className="date">
+        <tbody>
+          <tr>
+            <td>
+              <Icon type="chevron-left" onClick={this.changeMonth.bind(this, -1)} />
+            </td>
+            <td colSpan="5">{this.state.dateTime.format('MMMM')}</td>
+            <td>
+              <Icon type="chevron-right" onClick={this.changeMonth.bind(this, 1)} />
+            </td>
+          </tr>
+          <tr>
+            <td>S</td>
+            <td>M</td>
+            <td>T</td>
+            <td>W</td>
+            <td>T</td>
+            <td>F</td>
+            <td>S</td>
+          </tr>
+          {this.renderDays()}
+          <tr>
+            <td className="swap-button" colSpan="7" onClick={this.props.swap}>Time</td>
+          </tr>
+        </tbody>
       </table>
     );
   }
@@ -51,19 +117,19 @@ var TimePickerTime = React.createClass({
 
   togglePeriod: function() {
     if (this.props.dateTime.hours() >= 12) {
-      this.props.alterDateTime(-12, 'hour')();
+      this.props.alterTime(-12, 'hour')();
     } else {
-      this.props.alterDateTime(12, 'hour')();
+      this.props.alterTime(12, 'hour')();
     }
   },
 
   render: function() {
     return (
-      <table>
+      <table className="time">
         <tr>
-          <td className="hour" onClick={this.props.alterDateTime(1, 'hour')}><Icon type="chevron-up" /></td>
+          <td className="hour" onClick={this.props.alterTime(1, 'hour')}><Icon type="chevron-up" /></td>
           <td className="semicolon"></td>
-          <td className="minute" onClick={this.props.alterDateTime(1, 'minute')}><Icon type="chevron-up" /></td>
+          <td className="minute" onClick={this.props.alterTime(1, 'minute')}><Icon type="chevron-up" /></td>
           <td className="timezone"></td>
         </tr>
         <tr>
@@ -75,9 +141,9 @@ var TimePickerTime = React.createClass({
           </td>
         </tr>
         <tr>
-          <td className="hour" onClick={this.props.alterDateTime(-1, 'hour')}><Icon type="chevron-down" /></td>
+          <td className="hour" onClick={this.props.alterTime(-1, 'hour')}><Icon type="chevron-down" /></td>
           <td className="semicolon"></td>
-          <td className="minute" onClick={this.props.alterDateTime(-1, 'minute')}><Icon type="chevron-down" /></td>
+          <td className="minute" onClick={this.props.alterTime(-1, 'minute')}><Icon type="chevron-down" /></td>
           <td className="timezone"></td>
         </tr>
         <tr>
@@ -113,12 +179,22 @@ var TimePicker = React.createClass({
     return this.state.dateTime.format(this.props.inputFormat);
   },
 
-  alterDateTime: function(amount, type) {
+  alterTime: function(amount, type) {
     return function(amount, type) {
       this.setState({
         dateTime: this.state.dateTime.add(amount, type)
       });
     }.bind(this, amount, type);
+  },
+
+  alterDate: function(dateTime) {
+    return function(dateTime) {
+      var newDateTime = this.state.dateTime.clone();
+      newDateTime.date(dateTime.date());
+      newDateTime.month(dateTime.month());
+      newDateTime.year(dateTime.year());
+      this.setState({ dateTime: newDateTime });
+    }.bind(this, dateTime);
   },
 
   showOther: function(event) {
@@ -148,9 +224,9 @@ var TimePicker = React.createClass({
 
     var mode;
     if (this.state.showDate) {
-      mode = <TimePickerDate dateTime={this.state.dateTime} swap={this.showOther} />;
+      mode = <TimePickerDate dateTime={this.state.dateTime} swap={this.showOther} alterDate={this.alterDate}/>;
     } else {
-      mode = <TimePickerTime dateTime={this.state.dateTime} swap={this.showOther} alterDateTime={this.alterDateTime} />;
+      mode = <TimePickerTime dateTime={this.state.dateTime} swap={this.showOther} alterTime={this.alterTime} />;
     }
 
     return (
