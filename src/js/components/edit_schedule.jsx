@@ -14,7 +14,7 @@ var EditSchedule = React.createClass({
   getInitialState: function() {
     var intervalCoefficient,
         intervalBase,
-        occurence = 'every',
+        repeat = true,
         interval = this.props.schedule.interval;
 
     if (interval !== null && interval !== undefined) {
@@ -27,7 +27,7 @@ var EditSchedule = React.createClass({
       } else if (interval > MINUTE) {
         intervalBase = MINUTE;
       } else if (interval < 0) {
-        occurence = 'just-once';
+        repeat = false;
       } else {
         intervalBase = DAY;
       }
@@ -40,20 +40,20 @@ var EditSchedule = React.createClass({
 
     var startTime = this.props.schedule.startTime || moment();
     var endTime = this.props.schedule.endTime;
-    var longevity = (endTime !== undefined && endTime !== null) ? 'until' : 'forever';
+    var ends = (endTime !== undefined && endTime !== null);
 
     return {
-      occurence: occurence,
+      repeat: repeat,
       intervalCoefficient: intervalCoefficient,
       intervalBase: intervalBase,
       startTime: startTime,
-      longevity: longevity,
+      ends: ends,
       endTime: endTime
     }
   },
-  setOccurence: function(event) {
-    var occurence = event.target.value;
-    this.setState({ occurence: occurence });
+  setRepeat: function(event) {
+    var repeat = event.target.value;
+    this.setState({ repeat: repeat === 'yes' });
   },
   setIntervalCoefficient: function(event) {
     var intervalCoefficient = parseFloat(event.target.value);
@@ -63,13 +63,12 @@ var EditSchedule = React.createClass({
     var intervalBase = parseInt(event.target.value, 10);
     this.setState({ intervalBase: intervalBase });
   },
-  setLongevity: function(event) {
-    var longevity = event.target.value;
+  setEnds: function(event) {
     var endTime = this.state.endTime;
     if (endTime === undefined || endTime === null) {
       endTime = moment().toISOString();
     }
-    this.setState({ longevity: longevity, endTime: endTime });
+    this.setState({ ends: (event.target.value === 'yes'), endTime: endTime });
   },
   pluralizeBase: function(word) {
     if (this.state.intervalCoefficient != 1) {
@@ -80,73 +79,85 @@ var EditSchedule = React.createClass({
   },
   renderAction: function() {
     if (this.props.task.state > 0.0) {
-      return (<div className="section">Turn on</div>);
+      return (<tr><td className="left">Do what?</td><td className="right">Turn on</td></tr>);
     } else {
-      return (<div className="section">Turn off</div>);
+      return (<tr><td className="left">Do what?</td><td className="right">Turn off</td></tr>);
     }
   },
-  renderOccurence: function() {
+  renderRepeat: function() {
     return (
-      <div className="section">
-        <select value={this.state.occurence} onChange={this.setOccurence}>
-          <option value="every">every</option>
-          <option value="just-once">just once</option>
-        </select>
-      </div>
+      <tr>
+        <td className="left">Repeats?</td>
+        <td className="right">
+          <div className="custom-select">
+            <select value={(this.state.repeat) ? 'yes' : 'no'} onChange={this.setRepeat}>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        </td>
+      </tr>
     );
   },
   renderInterval: function() {
-    if (this.state.occurence == 'every') {
+    if (this.state.repeat) {
       return (
-        <span>
-          <div className="section">
+        <tr>
+          <td className="left">
+            How often?
+          </td>
+          <td className="right">
             <input className="interval" value={this.state.intervalCoefficient} onChange={this.setIntervalCoefficient} />
             {' '}
-            <select value={this.state.intervalBase} onChange={this.setIntervalBase}>
-              <option value="604800">{this.pluralizeBase("week")}</option>
-              <option value="86400">{this.pluralizeBase("day")}</option>
-              <option value="3600">{this.pluralizeBase("hour")}</option>
-              <option value="60">{this.pluralizeBase("minute")}</option>
-            </select>
-          </div>
-          <div className="section">
-            beginning on
-          </div>
-        </span>
+            <div className="custom-select">
+              <select value={this.state.intervalBase} onChange={this.setIntervalBase}>
+                <option value="604800">{this.pluralizeBase("week")}</option>
+                <option value="86400">{this.pluralizeBase("day")}</option>
+                <option value="3600">{this.pluralizeBase("hour")}</option>
+                <option value="60">{this.pluralizeBase("minute")}</option>
+              </select>
+            </div>
+          </td>
+        </tr>
       );
-    } else {
-      return (<div className="section">on</div>);
     }
   },
   renderStartTime: function() {
     return (
-      <div className="section">
-        <TimePicker inputFormat='MMM D, h:mm a' dateTime={this.state.startTime} />
-      </div>
+      <tr>
+        <td className="left">Starting on</td>
+        <td className="right"><TimePicker inputFormat='MMMM D, h:mm a' dateTime={this.state.startTime} /></td>
+      </tr>
     );
   },
   renderEndTime: function() {
-    if (this.state.longevity === 'until') {
+    if (this.state.ends) {
       return (
-        <div className="section">
-          <TimePicker inputFormat='MMM D, h:mm a' dateTime={this.state.endTime} />
-        </div>
+        <tr>
+          <td className="left">Ending on</td>
+          <td className="right"><TimePicker inputFormat='MMMM D, h:mm a' dateTime={this.state.endTime} /></td>
+        </tr>
       );
     }
   },
-  renderLongevity: function() {
-    if (this.state.occurence === 'every') {
-      return (
-        <span>
-          <div className="section">
-            <select value={this.state.longevity} onChange={this.setLongevity}>
-              <option value='until'>until</option>
-              <option value='forever'>forever</option>
-            </select>
-          </div>
-          {this.renderEndTime()}
-        </span>
-      );
+  renderEnds: function() {
+    if (this.state.repeat) {
+      return [
+        (
+          <tr>
+            <td className="left">Ends?</td>
+            <td className="right">
+              <div className="custom-select">
+                <select value={(this.state.ends) ? 'yes' : 'no'} onChange={this.setEnds}>
+                  <option value='yes'>Yes</option>
+                  <option value='no'>No</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        ),
+        this.renderEndTime()
+      ];
     }
   },
   render: function() {
@@ -155,11 +166,15 @@ var EditSchedule = React.createClass({
         <span className="back" onClick={this.props.handleCancel}>
           <Icon type="arrow-left"/>
         </span>
-        {this.renderAction()}
-        {this.renderOccurence()}
-        {this.renderInterval()}
-        {this.renderStartTime()}
-        {this.renderLongevity()}
+        <table className="details">
+          <tbody>
+            {this.renderAction()}
+            {this.renderRepeat()}
+            {this.renderInterval()}
+            {this.renderStartTime()}
+            {this.renderEnds()}
+          </tbody>
+        </table>
         <button>Save!</button>
       </div>
     );

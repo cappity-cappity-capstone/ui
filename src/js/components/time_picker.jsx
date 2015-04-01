@@ -231,7 +231,7 @@ var TimePicker = React.createClass({
 
     return (
       <div className="time-picker-container" onClick={this.showDropdown}>
-        <input className="time" type="text" value={this.getDateTime()} />
+        <input className="time" type="text" value={this.getDateTime()} readOnly={true} />
         <div className={dropdownClasses}>
           {mode}
         </div>

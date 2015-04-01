@@ -3,7 +3,7 @@
     width: 250px;
 
     input.time {
-      width: 100%;
+      //width: 100%;
     }
 
     .dropdown {
@@ -77,9 +77,9 @@
         }
 
         td.swap-button {
-          border-top: 1px solid #eee;
-          text-align: center;
-          font-family: "Raleway Bold";
+            border-top: 1px solid #eee;
+            text-align: center;
+            font-family: "Raleway Bold";
         }
 
         &.hidden {
