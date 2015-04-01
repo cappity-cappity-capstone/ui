@@ -2,8 +2,17 @@ FROM ubuntu:14.04
 
 # Install system dependencies
 RUN apt-get -y update
-RUN apt-get -y install ruby-dev nginx nodejs npm git
+RUN apt-get -y install ruby-dev nodejs npm git curl build-essential libpcre3-dev zlib1g
+
+# Build nginx
+RUN mkdir /tmp/nginx
+WORKDIR /tmp/nginx
+RUN curl -o nginx.tar.gz http://nginx.org/download/nginx-1.7.11.tar.gz
+RUN tar -xzf nginx.tar.gz
+RUN cd nginx-1.7.11 && ./configure && make && make install
+
 RUN ln -sfv "$(which nodejs)" /usr/bin/node
+RUN ln -sfv /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 
 # Install language dependencies
 RUN npm install -g gulp bower
