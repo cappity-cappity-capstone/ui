@@ -126,7 +126,7 @@ var Home = React.createClass({
       email = email.replace(/ /g,'').toLowerCase();
       this._emailHash = md5(email);
     }
-    return this._emailHash
+    return this._emailHash;
   }
 });
 

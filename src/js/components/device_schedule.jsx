@@ -17,7 +17,7 @@ var DeviceSchedule = React.createClass({
     return {
       editing: null,
       tasks: []
-    }
+    };
   },
 
   componentDidMount: function() {
@@ -77,17 +77,17 @@ var DeviceSchedule = React.createClass({
            handleCancel={this.handleDoneEditing}
            handleSaveSchedule={this.handleSaveSchedule}
            {...this.state.editing} />
-       )
+       );
     }
 
     var tasksClasses = {
       'tasks-list': true,
       'focus': !editing,
-    }
+    };
     var taskEditClasses = {
       'tasks-edit-schedule': true,
       'focus': !!editing
-    }
+    };
 
     return (
       <div>

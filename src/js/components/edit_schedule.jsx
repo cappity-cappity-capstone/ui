@@ -2,7 +2,7 @@ var React = require('react');
 var moment = require('moment');
 
 var Icon = require('components/icon.jsx');
-var TimePicker = require('components/time_picker.jsx')
+var TimePicker = require('components/time_picker.jsx');
 
 var WEEK = 604800,
     DAY = 86400,
@@ -52,7 +52,7 @@ var EditSchedule = React.createClass({
       startTime: startTime,
       ends: ends,
       endTime: endTime
-    }
+    };
   },
   setRepeat: function(event) {
     var repeat = event.target.value;
@@ -211,4 +211,4 @@ var EditSchedule = React.createClass({
   }
 });
 
-module.exports = EditSchedule
+module.exports = EditSchedule;

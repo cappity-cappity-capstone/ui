@@ -41,17 +41,17 @@ var TimePickerDate = React.createClass({
     while (prevMonth.isBefore(nextMonth)) {
       var classes = { day: true };
       if (prevMonth.year() < year || (prevMonth.year() === year && prevMonth.month() < month)) {
-        classes['faded'] = true
+        classes.faded = true;
       } else if (prevMonth.year() > year || (prevMonth.year() === year && prevMonth.month() > month)) {
-        classes['faded'] = true
+        classes.faded = true;
       }
 
       if (prevMonth.isSame(this.props.dateTime, 'day')) {
-        classes['selected'] = true
+        classes.selected = true;
       }
 
       if (prevMonth.isSame(moment(), 'day')) {
-        classes['today'] = true
+        classes.today = true;
       }
 
       var key = (prevMonth.month() + "-" + prevMonth.date());
@@ -158,7 +158,7 @@ var TimePicker = React.createClass({
   getDefaultProps: function() {
     return {
       inputFormat: 'MMM D, h:mm a'
-    }
+    };
   },
   getInitialState: function() {
     return {
@@ -237,4 +237,4 @@ var TimePicker = React.createClass({
   }
 });
 
-module.exports = TimePicker
+module.exports = TimePicker;

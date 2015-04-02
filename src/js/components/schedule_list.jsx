@@ -21,12 +21,12 @@ var ScheduleList = React.createClass({
       [interval / (60 * 60), "hour"],
       [interval / (60), "minute"],
       [interval, "seconds"]
-    ]
+    ];
 
     var values = units.filter(function(unit) {
-      return unit[0] >= 1
+      return unit[0] >= 1;
     }).map(function (unit) {
-      return "" + unit[0] + " " + unit[1] + (unit[0] > 1 ? "s" : "")
+      return "" + unit[0] + " " + unit[1] + (unit[0] > 1 ? "s" : "");
     });
 
     return values[0];

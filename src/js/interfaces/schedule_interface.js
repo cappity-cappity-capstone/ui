@@ -26,9 +26,9 @@ ScheduleInterface.prototype = {
   pushSchedule: function(schedule, successHandler, errorHandler) {
     var r;
     if (schedule.id) {
-      r = request.put(this.host + '/api/schedules/' + schedule.id)
+      r = request.put(this.host + '/api/schedules/' + schedule.id);
     } else {
-      r = request.post(this.host + '/api/schedules/' + schedule.taskId)
+      r = request.post(this.host + '/api/schedules/' + schedule.taskId);
     }
     r.send(JSON.stringify(decamelizeKeys(schedule)))
       .end(function(err, res) {
