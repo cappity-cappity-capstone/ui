@@ -2,25 +2,34 @@ var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var classSet = React.addons.classSet;
 
+var ScheduleInterface = require('interfaces/schedule_interface.js');
+
 var Icon = require('components/icon.jsx');
 var ScheduleList = require('components/schedule_list.jsx');
-var StateInterface = require('interfaces/state_interface.js');
 var EditSchedule = require('components/edit_schedule.jsx');
 
 var DeviceSchedule = React.createClass({
   propTypes: {
-    tasks: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        state: React.PropTypes.number.isRequired,
-        schedules: React.PropTypes.array.isRequired
-      })
-    )
+    deviceId: React.PropTypes.string.isRequired,
+    host: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
-      editing: null
+      editing: null,
+      tasks: []
     }
   },
+
+  componentDidMount: function() {
+    this.reload();
+  },
+
+  reload: function() {
+    this.getScheduleInterface().getTasks(this.props.deviceId, function(response) {
+      this.setState({tasks: response});
+    }.bind(this));
+  },
+
   handleEditClick: function(task, schedule) {
     return function(task, schedule) {
       this.setState({ editing: { task: task, schedule: schedule } });
@@ -30,13 +39,27 @@ var DeviceSchedule = React.createClass({
     this.setState({ editing: null });
   },
   handleSaveSchedule: function(schedule) {
-    return function(schedule) {
-      console.log(schedule);
-      this.setState({ editing: null });
-    }.bind(this, schedule)
+    schedule.startTime = schedule.startTime.format();
+    if (schedule.endTime) schedule.endTime = schedule.endTime.format();
+
+    this.getScheduleInterface().pushSchedule(schedule, function(response) {
+      this.reload();
+    }.bind(this), function(err) {
+      console.log(err);
+    });
+    this.setState({ editing: null });
   },
+
+  getScheduleInterface: function() {
+    if (!(this._scheduleInterface instanceof ScheduleInterface)) {
+      this._scheduleInterface = new ScheduleInterface(this.props.host);
+    }
+
+    return this._scheduleInterface;
+  },
+
   render: function() {
-    var tasks = this.props.tasks.map(function(task) {
+    var tasks = this.state.tasks.map(function(task) {
       return (
         <div key={task.id}>
           <div>{(task.state > 0.0) ? 'On' : 'Off'}</div>
@@ -52,7 +75,7 @@ var DeviceSchedule = React.createClass({
        editing = (
          <EditSchedule
            handleCancel={this.handleDoneEditing}
-           handleSaveSchedule={this.handleSaveSchedule(this.state.editing.schedule)}
+           handleSaveSchedule={this.handleSaveSchedule}
            {...this.state.editing} />
        )
     }

@@ -38,9 +38,12 @@ var EditSchedule = React.createClass({
       intervalBase = DAY;
     }
 
-    var startTime = this.props.schedule.startTime || moment();
+    var startTime = moment(this.props.schedule.startTime) || moment();
     var endTime = this.props.schedule.endTime;
     var ends = (endTime !== undefined && endTime !== null);
+    if (ends) {
+      endTime = moment(endTime);
+    }
 
     return {
       repeat: repeat,
@@ -66,9 +69,15 @@ var EditSchedule = React.createClass({
   setEnds: function(event) {
     var endTime = this.state.endTime;
     if (endTime === undefined || endTime === null) {
-      endTime = moment().toISOString();
+      endTime = moment();
     }
     this.setState({ ends: (event.target.value === 'yes'), endTime: endTime });
+  },
+  setStartTime: function(dateTime) {
+    this.setState({ startTime: dateTime });
+  },
+  setEndTime: function(dateTime) {
+    this.setState({ endTime: dateTime });
   },
   pluralizeBase: function(word) {
     if (this.state.intervalCoefficient != 1) {
@@ -77,6 +86,27 @@ var EditSchedule = React.createClass({
       return word;
     }
   },
+
+  saveSchedule: function() {
+    var newSchedule = {
+      id: this.props.schedule.id,
+      taskId: this.props.task.id,
+      startTime: this.state.startTime.clone()
+    };
+
+    if (this.state.repeat) {
+      newSchedule.interval = this.state.intervalBase * this.state.intervalCoefficient;
+    } else {
+      newSchedule.interval = -1;
+    }
+
+    if (this.state.ends) {
+      newSchedule.endTime = this.state.endTime.clone();
+    }
+
+    this.props.handleSaveSchedule(newSchedule);
+  },
+
   renderAction: function() {
     if (this.props.task.state > 0.0) {
       return (<tr><td className="left">Do what?</td><td className="right">Turn on</td></tr>);
@@ -126,7 +156,7 @@ var EditSchedule = React.createClass({
     return (
       <tr>
         <td className="left">Starting on</td>
-        <td className="right"><TimePicker inputFormat='MMMM D, h:mm a' dateTime={this.state.startTime} /></td>
+        <td className="right"><TimePicker onChange={this.setStartTime} inputFormat='MMMM D, h:mm a' dateTime={this.state.startTime} /></td>
       </tr>
     );
   },
@@ -135,7 +165,7 @@ var EditSchedule = React.createClass({
       return (
         <tr>
           <td className="left">Ending on</td>
-          <td className="right"><TimePicker inputFormat='MMMM D, h:mm a' dateTime={this.state.endTime} /></td>
+          <td className="right"><TimePicker onChange={this.setEndTime} inputFormat='MMMM D, h:mm a' dateTime={this.state.endTime} /></td>
         </tr>
       );
     }
@@ -175,7 +205,7 @@ var EditSchedule = React.createClass({
             {this.renderEnds()}
           </tbody>
         </table>
-        <button>Save!</button>
+        <button onClick={this.saveSchedule}>Save!</button>
       </div>
     );
   }

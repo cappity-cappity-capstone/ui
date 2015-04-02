@@ -163,7 +163,6 @@ var TimePicker = React.createClass({
   getInitialState: function() {
     return {
       isHidden: true,
-      dateTime: moment(this.props.dateTime),
       showDate: true
     };
   },
@@ -176,24 +175,22 @@ var TimePicker = React.createClass({
   },
 
   getDateTime: function() {
-    return this.state.dateTime.format(this.props.inputFormat);
+    return this.props.dateTime.format(this.props.inputFormat);
   },
 
   alterTime: function(amount, type) {
     return function(amount, type) {
-      this.setState({
-        dateTime: this.state.dateTime.add(amount, type)
-      });
+      this.props.onChange(this.props.dateTime.add(amount, type));
     }.bind(this, amount, type);
   },
 
   alterDate: function(dateTime) {
     return function(dateTime) {
-      var newDateTime = this.state.dateTime.clone();
+      var newDateTime = this.props.dateTime.clone();
       newDateTime.date(dateTime.date());
       newDateTime.month(dateTime.month());
       newDateTime.year(dateTime.year());
-      this.setState({ dateTime: newDateTime });
+      this.props.onChange(newDateTime);
     }.bind(this, dateTime);
   },
 
@@ -224,9 +221,9 @@ var TimePicker = React.createClass({
 
     var mode;
     if (this.state.showDate) {
-      mode = <TimePickerDate dateTime={this.state.dateTime} swap={this.showOther} alterDate={this.alterDate}/>;
+      mode = <TimePickerDate dateTime={this.props.dateTime} swap={this.showOther} alterDate={this.alterDate}/>;
     } else {
-      mode = <TimePickerTime dateTime={this.state.dateTime} swap={this.showOther} alterTime={this.alterTime} />;
+      mode = <TimePickerTime dateTime={this.props.dateTime} swap={this.showOther} alterTime={this.alterTime} />;
     }
 
     return (
