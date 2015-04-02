@@ -163,7 +163,7 @@ var EditSchedule = React.createClass({
   renderEndTime: function() {
     if (this.state.ends) {
       return (
-        <tr>
+        <tr key="endTime">
           <td className="left">Ending on</td>
           <td className="right"><TimePicker onChange={this.setEndTime} inputFormat='MMMM D, h:mm a' dateTime={this.state.endTime} /></td>
         </tr>
@@ -174,7 +174,7 @@ var EditSchedule = React.createClass({
     if (this.state.repeat) {
       return [
         (
-          <tr>
+          <tr key="ends">
             <td className="left">Ends?</td>
             <td className="right">
               <div className="custom-select">

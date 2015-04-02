@@ -6,6 +6,7 @@
     "url": "https://github.com/cappity-cappity-capstone/ui"
   },
   "dependencies": {
+    "classnames": "^1.2.0",
     "cookies-js": "1.2.1",
     "humps": "^0.4.2",
     "moment": "2.9.0",

@@ -1,6 +1,6 @@
 var React = require('react/addons');
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
-var classSet = React.addons.classSet;
+var classNames = require('classnames');
 
 var ScheduleInterface = require('interfaces/schedule_interface.js');
 
@@ -94,8 +94,8 @@ var DeviceSchedule = React.createClass({
         <h4>Schedule</h4>
         <div className="tasks-container">
           <div className="tasks">
-            <div className={classSet(tasksClasses)}>{tasks}</div>
-            <div className={classSet(taskEditClasses)}>{editing}</div>
+            <div className={classNames(tasksClasses)}>{tasks}</div>
+            <div className={classNames(taskEditClasses)}>{editing}</div>
           </div>
         </div>
       </div>

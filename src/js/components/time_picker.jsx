@@ -1,5 +1,5 @@
 var React = require('react/addons');
-var classSet = React.addons.classSet;
+var classNames = require('classnames');
 var Icon = require('components/icon.jsx');
 var moment = require('moment');
 
@@ -60,7 +60,7 @@ var TimePickerDate = React.createClass({
          fn = this.props.alterDate(prevMonth.clone());
       }
 
-      cells.push(<td key={key} className={classSet(classes)} onClick={fn}>{prevMonth.date()}</td>);
+      cells.push(<td key={key} className={classNames(classes)} onClick={fn}>{prevMonth.date()}</td>);
 
       if (prevMonth.weekday() === moment().endOf('week').weekday()) {
         row = <tr key={prevMonth.month() + '-' + prevMonth.date()}>{cells}</tr>;
@@ -214,7 +214,7 @@ var TimePicker = React.createClass({
     this.setState({ isHidden: false });
   },
   render: function() {
-    var dropdownClasses = classSet({
+    var dropdownClasses = classNames({
       dropdown: true,
       hidden: this.state.isHidden
     });
