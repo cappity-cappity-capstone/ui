@@ -13,7 +13,7 @@ describe('components/page', function () {
 
   beforeEach(function() {
     subject = TestUtils.renderIntoDocument(
-      <Home authHost={host} deviceHost={host} user={{user: 'user', email: 'user@test.com'}} mobile={false} />
+      <Home authHost={host} deviceHost={host} user={{name: 'user', email: 'user@test.com'}} mobile={false} />
     );
   });
 
