@@ -1,5 +1,6 @@
 var request = require('superagent');
 var camelizeKeys = require('humps').camelizeKeys;
+var decamelizeKeys = require('humps').decamelizeKeys;
 var moment = require('moment');
 
 var ScheduleInterface = function(host) {
@@ -17,15 +18,28 @@ ScheduleInterface.prototype = {
           var tasks = camelizeKeys(JSON.parse(res.text));
           tasks.forEach(function(task) {
             task.state = parseFloat(task.state);
-            task.schedules.forEach(function(schedule) {
-              if (schedule.startTime) schedule.startTime = moment(schedule.startTime);
-              if (schedule.endTime) schedule.endTime = moment(schedule.endTime);
-            });
           });
           responseHandler(tasks);
         }
       });
   },
+  pushSchedule: function(schedule, successHandler, errorHandler) {
+    var r;
+    if (schedule.id) {
+      r = request.put(this.host + '/api/schedules/' + schedule.id)
+    } else {
+      r = request.post(this.host + '/api/schedules/' + schedule.taskId)
+    }
+    r.send(JSON.stringify(decamelizeKeys(schedule)))
+      .end(function(err, res) {
+        if (err) {
+          errorHandler(err);
+        } else {
+          successHandler(res.body);
+        }
+      });
+  },
+
   addSchedule: function(schedule, deviceId, successHandler, errorHandler) {
     request
       .put(this.host + '/api/schedules/' + deviceId)

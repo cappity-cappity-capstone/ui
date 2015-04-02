@@ -4,7 +4,6 @@ var moment = require('moment');
 
 var Icon = require('components/icon.jsx');
 var StateInterface = require('interfaces/state_interface.js');
-var ScheduleInterface = require('interfaces/schedule_interface.js');
 var DeviceLog = require('components/device_log.jsx');
 var DeviceSchedule = require('components/device_schedule.jsx');
 
@@ -26,17 +25,12 @@ var DeviceInfo = React.createClass({
   getInitialState: function() {
     return {
       states: [],
-      tasks: []
     };
   },
 
   componentDidMount: function() {
     this.getStateInterface().getStates(this.props.id, function(response) {
       this.setState({states: response});
-    }.bind(this));
-
-    this.getScheduleInterface().getTasks(this.props.id, function(response) {
-      this.setState({tasks: response});
     }.bind(this));
   },
 
@@ -48,7 +42,7 @@ var DeviceInfo = React.createClass({
             <Icon type='close'/>
           </div>
           <div className='schedule'>
-            <DeviceSchedule tasks={this.state.tasks} />
+            <DeviceSchedule host={this.props.host} deviceId={this.props.id} />
           </div>
           <div className='log'>
             <DeviceLog states={this.state.states} />
@@ -74,14 +68,6 @@ var DeviceInfo = React.createClass({
 
     return this._stateInterface;
   },
-
-  getScheduleInterface: function() {
-    if (!(this._scheduleInterface instanceof ScheduleInterface)) {
-      this._scheduleInterface = new ScheduleInterface(this.props.host);
-    }
-
-    return this._scheduleInterface;
-  }
 });
 
 module.exports = DeviceInfo;

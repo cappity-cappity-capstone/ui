@@ -26,28 +26,89 @@
       float: left;
     }
 
-    div.section {
-      margin-top: 0;
-      margin-bottom: 1em;
+    table.details {
+      border: 0;
+      position: relative;
+      top: 10px;
+
+      td {
+        font-family: "Raleway Light", sans-serif;
+        font-size: 20px;
+
+        border: 0;
+
+        height: 32px;
+        padding: 2px;
+
+        &.left {
+          width: 50%;
+        }
+
+        &.right {
+          text-align: right;
+        }
+      }
     }
 
     input, select, button {
       font-family: "Raleway Light", sans-serif;
       font-size: 20px;
+
+      border: 0;
+      border-bottom: 1px solid #aaa;
+      box-sizing: border-box;
+
+      padding: 3px;
+
+      text-align: right;
+    }
+
+    button {
+      padding: 7px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+
+    div.custom-select {
+      display: inline-flex;
+
+      height: 30px;
+
+      overflow: hidden;
+
+      border: 0;
+      border-bottom: 1px solid #aaa;
+
+      box-sizing: border-box;
+
+      position: relative;
+
+      padding-right: 20px;
+
+      &:before {
+        font: normal normal normal 14px/1 FontAwesome;
+        content: "\f078";
+        position: absolute;
+        top: 7px;
+        right: 5px;
+      }
+
+      select {
+        background: transparent;
+        line-height: 1;
+        border: 0;
+        border-radius: 0;
+        -webkit-appearance: none;
+        outline: none;
+
+        height: 100%;
+      }
     }
 
     input.interval {
+      height: 30px;
       width: 40px;
       text-align: right;
-    }
-
-    input.date {
-      width: 130px;
-      text-align: right;
-    }
-
-    input.time {
-      width: 100px;
     }
   }
 }
