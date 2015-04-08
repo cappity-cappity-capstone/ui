@@ -93,14 +93,12 @@ var Home = React.createClass({
     event.stopPropagation();
     event.preventDefault();
 
-    console.log("OnModuleClick", event);
     var devicesControlView = this.state.devicesControlView;
     devicesControlView[index] = !devicesControlView[index];
     this.setState({devicesControlView: devicesControlView});
   },
 
   handleOffModuleAction: function(event) {
-    console.log("OffModuleClick", event);
     if (event.nativeEvent.defaultPrevented) {
       return;
     }
