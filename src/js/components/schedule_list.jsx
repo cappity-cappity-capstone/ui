@@ -34,12 +34,12 @@ var ScheduleList = React.createClass({
   toClick: null,
   moving: false,
   handleTouchStart: function(fn, args, event) {
-    this.toClick = [fn, args]
+    this.toClick = [fn, args];
   },
   handleTouchMove: function(event) {
     event.stopPropagation();
 
-    this.moving = true
+    this.moving = true;
   },
   handleTouchEnd: function(event) {
     if (this.toClick && !this.moving) {

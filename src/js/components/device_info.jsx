@@ -120,7 +120,7 @@ var DeviceInfo = React.createClass({
       } else if (this.toClick == "log") {
         this.showLog(event);
       } else if (this.toClick == "close") {
-        this.handleCloseButtonEventAction(event)
+        this.handleCloseButtonEventAction(event);
       }
     }
   },
