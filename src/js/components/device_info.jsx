@@ -1,19 +1,9 @@
 var React = require('react');
-var _ = require('underscore');
-var moment = require('moment');
 var classNames = require('classnames');
 
 var Icon = require('components/icon.jsx');
-var StateInterface = require('interfaces/state_interface.js');
 var DeviceLog = require('components/device_log.jsx');
 var DeviceSchedule = require('components/device_schedule.jsx');
-
-var DEVICE_TYPES = [
-  'outlet',
-  'stove',
-  'gas-sensor',
-  'lock'
-];
 
 var DeviceInfo = React.createClass({
   propTypes: {
@@ -28,12 +18,6 @@ var DeviceInfo = React.createClass({
       states: [],
       activeTab: 'schedule'
     };
-  },
-
-  componentDidMount: function() {
-    this.getStateInterface().getStates(this.props.id, function(response) {
-      this.setState({states: response});
-    }.bind(this));
   },
 
   scheduleClasses: function() {
@@ -60,7 +44,7 @@ var DeviceInfo = React.createClass({
     } else if (this.state.activeTab === 'log') {
       return (
         <div className='log'>
-          <DeviceLog states={this.state.states} />
+          <DeviceLog host={this.props.host} deviceId={this.props.id} />
         </div>
       );
     }
@@ -140,14 +124,6 @@ var DeviceInfo = React.createClass({
 
   handleOutsideClick: function(event) {
     this.props.onDeviceInfoClose(event);
-  },
-
-  getStateInterface: function() {
-    if (!(this._stateInterface instanceof StateInterface)) {
-      this._stateInterface = new StateInterface(this.props.host);
-    }
-
-    return this._stateInterface;
   },
 });
 

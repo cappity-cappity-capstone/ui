@@ -19,17 +19,14 @@ var DeviceSchedule = React.createClass({
       tasks: []
     };
   },
-
   componentDidMount: function() {
     this.reload();
   },
-
   reload: function() {
     this.getScheduleInterface().getTasks(this.props.deviceId, function(response) {
       this.setState({tasks: response});
     }.bind(this));
   },
-
   handleEditClick: function(task, schedule) {
     return function(task, schedule) {
       this.setState({ editing: { task: task, schedule: schedule } });
