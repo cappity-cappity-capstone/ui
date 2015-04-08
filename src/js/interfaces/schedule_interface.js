@@ -104,7 +104,7 @@ ScheduleInterface.prototype = {
 
   deleteSchedule: function(scheduleId, successHandler, errorHandler) {
     request
-      .delete(this.host + '/api/schedules/' + scheduleId)
+      .del(this.host + '/api/schedules/' + scheduleId)
       .end(function(err, res) {
         if (err) {
           errorHandler(err);

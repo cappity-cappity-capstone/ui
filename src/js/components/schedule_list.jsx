@@ -60,22 +60,26 @@ var ScheduleList = React.createClass({
           <td className="interval">{this.prettyTimeInterval(schedule.interval)}</td>
           <td className="action">
             <Icon type="pencil-square-o" onTouchStart={this.handleTouchStart.bind(this, this.props.handleEditClick(schedule))} onClick={this.props.handleEditClick(schedule)} />
-            <Icon type="minus-square-o" />
+            <Icon type="minus-square-o" onTouchStart={this.handleTouchStart.bind(this, this.props.handleDeleteSchedule(schedule))} onClick={this.props.handleDeleteSchedule(schedule)} />
           </td>
         </tr>
       );
     }, this);
     return (
       <table onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd}>
-        <tr>
-          <th className="start-time">Starts</th>
-          <th className="end-time">Ends</th>
-          <th className="interval">Frequency</th>
-          <th className="action">
-            <Icon type="plus-square-o" onTouchStart={this.handleTouchStart.bind(this, this.props.handleEditClick({}))}  onClick={this.props.handleEditClick({})} />
-          </th>
-        </tr>
-        {schedules}
+        <thead>
+          <tr>
+            <th className="start-time">Starts</th>
+            <th className="end-time">Ends</th>
+            <th className="interval">Frequency</th>
+            <th className="action">
+              <Icon type="plus-square-o" onTouchStart={this.handleTouchStart.bind(this, this.props.handleEditClick({}))}  onClick={this.props.handleEditClick({})} />
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {schedules}
+        </tbody>
       </table>
     );
   }

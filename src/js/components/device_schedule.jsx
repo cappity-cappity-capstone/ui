@@ -49,6 +49,15 @@ var DeviceSchedule = React.createClass({
     });
     this.setState({ editing: null });
   },
+  handleDeleteSchedule: function(schedule) {
+    return function(schedule) {
+      this.getScheduleInterface().deleteSchedule(schedule.id, function(response) {
+        this.reload();
+      }.bind(this), function(err) {
+        console.log(err);
+      });
+    }.bind(this, schedule);
+  },
 
   getScheduleInterface: function() {
     if (!(this._scheduleInterface instanceof ScheduleInterface)) {
@@ -65,6 +74,7 @@ var DeviceSchedule = React.createClass({
           <div>{(task.state > 0.0) ? 'On' : 'Off'}</div>
           <ScheduleList
             handleEditClick={this.handleEditClick.bind(this, task)}
+            handleDeleteSchedule={this.handleDeleteSchedule}
             schedules={task.schedules} />
         </div>
       );
