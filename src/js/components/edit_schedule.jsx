@@ -18,13 +18,13 @@ var EditSchedule = React.createClass({
         interval = this.props.schedule.interval;
 
     if (interval !== null && interval !== undefined) {
-      if (interval > WEEK) {
+      if (interval >= WEEK) {
         intervalBase = WEEK;
-      } else if (interval > DAY) {
+      } else if (interval >= DAY) {
         intervalBase = DAY;
-      } else if (interval > HOUR) {
+      } else if (interval >= HOUR) {
         intervalBase = HOUR;
-      } else if (interval > MINUTE) {
+      } else if (interval >= MINUTE) {
         intervalBase = MINUTE;
       } else if (interval < 0) {
         repeat = false;
@@ -156,7 +156,7 @@ var EditSchedule = React.createClass({
     return (
       <tr>
         <td className="left">Starting on</td>
-        <td className="right"><TimePicker onChange={this.setStartTime} inputFormat='MMMM D, h:mm a' dateTime={this.state.startTime} /></td>
+        <td className="right"><TimePicker onChange={this.setStartTime} dateTime={this.state.startTime.startOf('minute')} /></td>
       </tr>
     );
   },
@@ -165,7 +165,7 @@ var EditSchedule = React.createClass({
       return (
         <tr key="endTime">
           <td className="left">Ending on</td>
-          <td className="right"><TimePicker onChange={this.setEndTime} inputFormat='MMMM D, h:mm a' dateTime={this.state.endTime} /></td>
+          <td className="right"><TimePicker onChange={this.setEndTime} dateTime={this.state.endTime.startOf('minute')} /></td>
         </tr>
       );
     }

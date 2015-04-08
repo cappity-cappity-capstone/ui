@@ -157,7 +157,7 @@ var TimePickerTime = React.createClass({
 var TimePicker = React.createClass({
   getDefaultProps: function() {
     return {
-      inputFormat: 'MMM D, h:mm a'
+      inputFormat: 'MMMM D, h:mm:ss a'
     };
   },
   getInitialState: function() {
