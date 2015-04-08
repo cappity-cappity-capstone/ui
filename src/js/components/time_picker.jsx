@@ -130,13 +130,13 @@ var TimePickerTime = React.createClass({
           <td className="hour" onClick={this.props.alterTime(1, 'hour')}><Icon type="chevron-up" /></td>
           <td className="semicolon"></td>
           <td className="minute" onClick={this.props.alterTime(1, 'minute')}><Icon type="chevron-up" /></td>
-          <td className="timezone"></td>
+          <td className="timeperiod"></td>
         </tr>
         <tr>
           <td className="hour">{this.getHour()}</td>
           <td className="semicolon">:</td>
           <td className="minute">{this.getMinute()}</td>
-          <td className="timezone">
+          <td className="timeperiod">
             <button onClick={this.togglePeriod}>{this.getPeriod()}</button>
           </td>
         </tr>
@@ -144,7 +144,7 @@ var TimePickerTime = React.createClass({
           <td className="hour" onClick={this.props.alterTime(-1, 'hour')}><Icon type="chevron-down" /></td>
           <td className="semicolon"></td>
           <td className="minute" onClick={this.props.alterTime(-1, 'minute')}><Icon type="chevron-down" /></td>
-          <td className="timezone"></td>
+          <td className="timeperiod"></td>
         </tr>
         <tr>
           <td className="swap-button" colSpan="4" onClick={this.props.swap}>Date</td>

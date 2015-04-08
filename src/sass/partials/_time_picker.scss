@@ -1,89 +1,103 @@
 .time-picker-container {
-    display: inline-block;
-    width: 250px;
+  display: inline-block;
+  width: 100%;
 
-    input.time {
-      //width: 100%;
+  .dropdown {
+    margin-top: 15px;
+
+    position: absolute;
+
+    right: 0;
+
+    border-radius: 5px;
+    border: 2px solid #000000;
+    background: #ffffff;
+    box-sizing: border-box;
+
+    z-index: 1000;
+
+    table.time {
+      border: 0;
+      margin: 0;
+
+      td {
+        text-align: center;
+        border: 0;
+        padding: 5px;
+
+        &.hour, &.minute {
+          width: 40%;
+        }
+
+        &.semicolon {
+          width: 3%;
+        }
+
+        &.timeperiod {
+          width: 17%;
+
+          button {
+            width: 100%;
+          }
+        }
+      }
     }
 
-    .dropdown {
-        margin-top: 15px;
+    table.date {
+      border: 0;
+      margin: 0;
 
-        width: 100%;
-        border-radius: 5px;
-        border: 2px solid #000000;
-        background: #ffffff;
-        box-sizing: border-box;
+      border-collapse: separate;
 
-        table.time {
-            border: 0;
-            margin: 0;
+      td {
+        text-align: center;
+        border: 0;
 
-            td {
-                text-align: center;
-                border: 0;
-                padding: 5px;
-
-                &.hour, &.minute, &.timezone {
-                    width: 30%;
-                }
-
-                &.semicolon {
-                    width: 3%;
-                }
-            }
+        &.day {
+          padding: 5px;
+          border-radius: 5px;
         }
 
-        table.date {
-            border: 0;
-            margin: 0;
-
-            border-collapse: separate;
-            border-spacing: 3px;
-
-            td {
-                text-align: center;
-                border: 0;
-
-                &.day {
-                  padding: 5px;
-                  border-radius: 5px;
-                }
-
-                &.faded {
-                  color: #aaa;
-                }
-
-                &.day:hover {
-                  background-color: #eee;
-                  color: #000;
-                }
-
-                &.selected {
-                  background-color: $color-side-menu-background;
-                  color: #fff;
-                }
-
-                &.selected:hover {
-                  background-color: #999;
-                  color: #fff;
-                }
-
-                &.today {
-                  background-color: $color-login-highlight;
-                  color: #fff;
-                }
-            }
+        &.faded {
+          color: #aaa;
         }
 
-        td.swap-button {
-            border-top: 1px solid #eee;
-            text-align: center;
-            font-family: "Raleway Bold";
+        &.day:not(.faded):hover {
+          background-color: #eee;
+          color: #000;
+
+          cursor: pointer;
         }
 
-        &.hidden {
-            display: none;
+        &.selected {
+          background-color: $color-side-menu-background;
+          color: #fff;
         }
+
+        &.selected:hover {
+          background-color: #999;
+          color: #fff;
+        }
+
+        &.today {
+          background-color: $color-login-highlight;
+          color: #fff;
+        }
+      }
     }
+
+    table {
+      td.swap-button {
+        border-top: 1px solid #eee;
+        text-align: center;
+        font-family: "Raleway Bold";
+
+        cursor: pointer;
+      }
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
 }

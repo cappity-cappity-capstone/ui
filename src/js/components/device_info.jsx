@@ -1,6 +1,7 @@
 var React = require('react');
 var _ = require('underscore');
 var moment = require('moment');
+var classNames = require('classnames');
 
 var Icon = require('components/icon.jsx');
 var StateInterface = require('interfaces/state_interface.js');
@@ -25,6 +26,7 @@ var DeviceInfo = React.createClass({
   getInitialState: function() {
     return {
       states: [],
+      activeTab: 'schedule'
     };
   },
 
@@ -34,22 +36,93 @@ var DeviceInfo = React.createClass({
     }.bind(this));
   },
 
+  scheduleClasses: function() {
+    return classNames({
+      tab: true,
+      active: this.state.activeTab === 'schedule'
+    });
+  },
+
+  logClasses: function() {
+    return classNames({
+      tab: true,
+      active: this.state.activeTab === 'log'
+    });
+  },
+
+  renderActiveTab: function() {
+    if (this.state.activeTab === 'schedule') {
+      return (
+        <div className='schedule'>
+          <DeviceSchedule host={this.props.host} deviceId={this.props.id} />
+        </div>
+      );
+    } else if (this.state.activeTab === 'log') {
+      return (
+        <div className='log'>
+          <DeviceLog states={this.state.states} />
+        </div>
+      );
+    }
+  },
+
+  showSchedule: function(event) {
+    event.stopPropagation();
+    this.setState({ activeTab: 'schedule' });
+  },
+
+  scheduleClick: function() {
+    this.toClick = "schedule";
+  },
+
+  showLog: function(event) {
+    event.stopPropagation();
+    this.setState({ activeTab: 'log' });
+  },
+
+  logClick: function() {
+    this.toClick = "log";
+  },
+
   render: function() {
     return (
-      <div className='device-info-container' onClick={this.handleContainerClickEvent}>
-        <div className='info'>
-          <div className='close-button' onClick={this.handleCloseButtonEventAction}>
+      <div className='device-info-container' onClick={this.handleOutsideClick}>
+        <div className='info' onTouchMove={this.handleTouchMove} onTouchEnd={this.handleTouchEnd} onClick={this.handleContainerClickEvent}>
+          <div className='close-button' onTouchStart={this.closeClicked} onClick={this.handleCloseButtonEventAction}>
             <Icon type='close'/>
           </div>
-          <div className='schedule'>
-            <DeviceSchedule host={this.props.host} deviceId={this.props.id} />
-          </div>
-          <div className='log'>
-            <DeviceLog states={this.state.states} />
+          <ul className="nav">
+            <li className={this.scheduleClasses()} onTouchStart={this.scheduleClick} onClick={this.showSchedule}>Schedule</li>
+            <li className={this.logClasses()} onTouchStart={this.logClick} onClick={this.showLog}>Log</li>
+          </ul>
+          <div className="info-content">
+            {this.renderActiveTab()}
           </div>
         </div>
       </div>
     );
+  },
+
+  toClick: null,
+  moving: false,
+
+  handleTouchMove: function(event) {
+    event.stopPropagation();
+    this.moving = true;
+  },
+
+  handleTouchEnd: function(event) {
+    event.stopPropagation();
+
+    if (this.toClick && !this.moving) {
+      if (this.toClick == "schedule") {
+        this.showSchedule(event);
+      } else if (this.toClick == "log") {
+        this.showLog(event);
+      } else if (this.toClick == "close") {
+        this.handleCloseButtonEventAction(event)
+      }
+    }
   },
 
   handleContainerClickEvent: function(event) {
@@ -57,7 +130,15 @@ var DeviceInfo = React.createClass({
     event.stopPropagation();
   },
 
+  closeClicked: function(event) {
+    this.toClick = "close";
+  },
+
   handleCloseButtonEventAction: function(event) {
+    this.props.onDeviceInfoClose(event);
+  },
+
+  handleOutsideClick: function(event) {
     this.props.onDeviceInfoClose(event);
   },
 

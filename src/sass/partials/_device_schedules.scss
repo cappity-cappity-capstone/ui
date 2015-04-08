@@ -1,14 +1,46 @@
+.schedule {
+  table {
+    margin: 10px 0;
+    width: 100%;
+    border-collapse: collapse;
+
+    td {
+      border-top: 1px solid #eee;
+    }
+
+    th {
+      text-align: left;
+
+      font-family: "Raleway Bold";
+    }
+
+    th.start-time, td.start-time,
+    th.end-time, td.end-time {
+      width: 33%;
+    }
+
+    th.interval, td.interval {
+    }
+
+    th.action, td.action {
+      width: 7%;
+      text-align: right;
+
+      i {
+        display: inline-block;
+        margin: 0 1px;
+      }
+    }
+  }
+}
+
 .tasks-container {
-  overflow: hidden;
   width: 100%;
 
-  border-top: 1px solid #d0d0d0;
-  border-bottom: 1px solid #d0d0d0;
-
-  padding: 10px 0;
-
   .tasks {
-    width: 200%;
+    width: 100%;
+
+    position: relative;
 
     i {
       cursor: pointer;
@@ -20,7 +52,7 @@
   }
 
   .edit-schedule {
-    text-align: center;
+    text-align: left;
 
     .back {
       float: left;
@@ -32,8 +64,10 @@
       top: 10px;
 
       td {
+        vertical-align: top;
+
         font-family: "Raleway Light", sans-serif;
-        font-size: 20px;
+        font-size: 17px;
 
         border: 0;
 
@@ -41,7 +75,7 @@
         padding: 2px;
 
         &.left {
-          width: 50%;
+          width: 10%;
         }
 
         &.right {
@@ -52,7 +86,7 @@
 
     input, select, button {
       font-family: "Raleway Light", sans-serif;
-      font-size: 20px;
+      font-size: 17px;
 
       border: 0;
       border-bottom: 1px solid #aaa;
@@ -67,6 +101,12 @@
       padding: 7px;
       border: 1px solid #aaa;
       border-radius: 5px;
+
+      width: 70px;
+
+      margin: 0 auto;
+
+      display: block;
     }
 
     div.custom-select {
@@ -114,24 +154,11 @@
 }
 
 .tasks-list, .tasks-edit-schedule {
-  display: inline-block;
-  width: 50%;
+  @include transition(0.3s, ease-in);
 
-  @include transition(transform, 0.3s, ease-in);
-}
-
-.tasks-edit-schedule {
-  transform: translateX(0%);
+  display: none;
 
   &.focus {
-    transform: translateX(-100%);
-  }
-}
-
-.tasks-list {
-  transform: translateX(-100%);
-
-  &.focus {
-    transform: translateX(0%);
+    display: block;
   }
 }

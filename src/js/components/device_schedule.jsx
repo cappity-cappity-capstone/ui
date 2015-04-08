@@ -90,13 +90,10 @@ var DeviceSchedule = React.createClass({
     };
 
     return (
-      <div>
-        <h4>Schedule</h4>
-        <div className="tasks-container">
-          <div className="tasks">
-            <div className={classNames(tasksClasses)}>{tasks}</div>
-            <div className={classNames(taskEditClasses)}>{editing}</div>
-          </div>
+      <div className="tasks-container">
+        <div className="tasks">
+          <div className={classNames(tasksClasses)}>{tasks}</div>
+          <div className={classNames(taskEditClasses)}>{editing}</div>
         </div>
       </div>
     );

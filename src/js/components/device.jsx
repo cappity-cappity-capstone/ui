@@ -145,6 +145,8 @@ var Device = React.createClass({
 
   handDevicetouch: function(event) {
     event.stopPropagation();
+    event.nativeEvent.stopImmediatePropagation();
+
     if (this.isMoving) {
       this.isMoving = false;
     } else {
@@ -194,11 +196,13 @@ var Device = React.createClass({
   },
 
   //info can probably be bootstrapped
-  handleInfoButtonAction: function() {
+  handleInfoButtonAction: function(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    this.props.onClickModule();
+    if (!this.props.mobile) {
+      this.props.onClickModule();
+    }
     this.setState({showInfo: true});
   },
 

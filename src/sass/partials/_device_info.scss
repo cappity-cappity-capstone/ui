@@ -19,56 +19,45 @@
 }
 
 .device-info-container {
-	position: relative;
-  border: solid $width-border-outer-outline $color-border-outer-outline;
-  @include box-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.6));
+  position: fixed;
 
-  &:after, &:before {
-    bottom: 100%;
-    left: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-  }
+  z-index: 1000;
 
-  &:after {
-    border-bottom-color: #fff;
-    border-width: 20px;
-    margin-left: -20px;
-  }
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  &:before {
-    border-bottom-color: #000;
-    border-width: 26px;
-    margin-left: -26px;
-  }
+  background-color: rgba(255, 255, 255, 0.5);
 
   .info {
-    background-color: white;
-    margin: 0 auto;
+    position: fixed;
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+
+    height: 80%;
+    width: 80%;
+
+    margin: auto;
+
+    border: solid $width-border-outer-outline $color-border-outer-outline;
+    @include box-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.6));
+
+    background-color: #fff;
+
     padding: 10px;
 
-    table {
-      margin: 10px 0;
-      width: 100%;
-      border-collapse: collapse;
-
-      td {
-        border-top: 1px solid #eee;
-      }
-
-      th {
-        text-align: left;
-
-        font-family: "Raleway Bold";
-      }
-    }
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
 
     .close-button {
-      float: right;
+      height: 20px;
+
+      text-align: right;
 
       i {
         margin: 0;
@@ -77,45 +66,83 @@
       }
     }
 
+    ul.nav {
+      text-align: left;
+
+      margin: 0;
+      padding: 0;
+
+      list-style: none;
+
+      border-bottom: 1px solid #eee;
+
+      li.tab {
+        padding: 0 10px;
+        display: inline-block;
+
+        color: #999;
+
+        &:hover {
+          color: #000;
+        }
+      }
+
+      li:not(.active) {
+        cursor: pointer;
+      }
+
+      li.active {
+        color: #000;
+
+        border-bottom: 2px solid $color-login-highlight;
+      }
+    }
+
+    div.info-content {
+      overflow-x: hidden;
+      overflow-y: scroll;
+
+      padding: 10px 0;
+
+      box-sizing: border-box;
+
+      -webkit-flex: auto;
+      flex: auto;
+    }
+
     .name {
       display: inline;
     }
 
-    .schedule {
-      th.start-time, td.start-time,
-      th.end-time, td.end-time {
-        width: 33%;
-      }
-
-      th.interval, td.interval {
-      }
-
-      th.action, td.action {
-        width: 7%;
-        text-align: right;
-
-        i {
-          display: inline-block;
-          margin: 0 1px;
-        }
-      }
-    }
-
     .log {
+      overflow: scroll;
+
       table {
-        border-top: 1px solid #d0d0d0;
-      }
+        margin: 10px 0;
+        width: 100%;
+        border-collapse: collapse;
 
-      th.time, td.time {
-      }
+        td {
+          border-top: 1px solid #eee;
+        }
 
-      th.state, td.state {
-        width: 15%;
-        text-align: center;
-      }
+        th {
+          text-align: left;
 
-      th.source, td.source {
-        width: 20%;
+          font-family: "Raleway Bold";
+        }
+
+        th.time, td.time {
+        }
+
+        th.state, td.state {
+          width: 15%;
+          text-align: center;
+        }
+
+        th.source, td.source {
+          width: 20%;
+        }
       }
     }
   }
