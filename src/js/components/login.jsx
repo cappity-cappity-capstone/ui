@@ -95,7 +95,7 @@ var Login = React.createClass({
         self.props.loginSuccessCallback();
       },
       function(error) {
-        self.setState({message: error.message});
+        self.setState({message: "Sorry, we don't know that user"});
       }
     );
   },

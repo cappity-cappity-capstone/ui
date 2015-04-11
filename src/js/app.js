@@ -7,12 +7,12 @@ var DeviceInterface = require('interfaces/device_interface.js');
 
 var Home = require('components/home.jsx');
 var Login = require('components/login.jsx');
+var Searching = require('components/searching.jsx');
 
-//var authHost = 'http://localhost:2000';
-var authHost = 'http://cappitycappitycapstone.com';
-var deviceHost = 'http://ccs.cappitycappitycapstone.com';
+var authHost = 'http://localhost:2000';
+//var authHost = 'http://cappitycappitycapstone.com';
 
-window.onload = function() { renderPage(renderDevicesPage, renderLoginPage) };
+window.onload = function() { renderPage(checkControlServer, renderLoginPage) };
 
 renderPage = function(successCallback, errorCallback) {
   // because fuck if I know a better way to do this
@@ -28,7 +28,7 @@ renderPage = function(successCallback, errorCallback) {
   var authInterface = new AuthInterface(authHost);
 
   authInterface.getCurrentUser(function(user) {
-    successCallback(documentRoot, user, mobile, authHost, deviceHost);
+    successCallback(documentRoot, user, mobile, authHost);
   },
   function(error) {
     errorCallback(documentRoot);
@@ -44,9 +44,6 @@ renderLoginPage = function(documentRoot) {
 }
 
 renderDevicesPage = function(documentRoot, user, mobile, authHost, deviceHost) {
-  if (user.controlServer) {
-    deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
-  }
   var component = React.render(<Home user={user} deviceHost={deviceHost} authHost={authHost} mobile={mobile} />, documentRoot);
 
   var deviceInterface = new DeviceInterface(deviceHost);
@@ -60,4 +57,17 @@ renderDevicesPage = function(documentRoot, user, mobile, authHost, deviceHost) {
       component.setState({ devicesControlView: devicesControlView });
     }
   );
+}
+
+renderSearchingPage = function(documentRoot, user, mobile, authHost) {
+  React.render(<Searching authHost={authHost} renderPage={renderPage.bind(undefined, checkControlServer, renderLoginPage)} />, documentRoot);
+}
+
+checkControlServer = function(documentRoot, user, mobile, authHost) {
+  if (user.controlServer) {
+    deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
+    renderDevicesPage(documentRoot, user, mobile, authHost, deviceHost);
+  } else {
+    renderSearchingPage(documentRoot, user, mobile, authHost);
+  }
 }

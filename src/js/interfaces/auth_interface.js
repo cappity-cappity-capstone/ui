@@ -63,14 +63,13 @@ AuthInterface.prototype = {
       });
   },
 
-  associateUser: function(userId, successHandler, errorHandler) {
+  associateUser: function(successHandler) {
     request
-      .put(this.host + '/users/auth/' + userId + '/associate')
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
-          successHandler(userId);
+      .post(this.host + '/auth/users/associate')
+      .withCredentials()
+      .end(function(res) {
+        if (res.ok) {
+          successHandler();
         }
       });
   },
@@ -88,7 +87,7 @@ AuthInterface.prototype = {
         if (res.ok) {
           successHandler(camelizeKeys(res.body));
         } else {
-          errorHandler(camelizeKeys(res.body));
+          errorHandler(res);
         }
       });
   },
