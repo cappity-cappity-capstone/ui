@@ -39,40 +39,38 @@ var Home = React.createClass({
     var menuExpanded = viewportWidth > widthCutoff;
     return {
       menuExpanded: menuExpanded,
-      devicesControlView: [],
+      devicesControlView: {},
       devices: [],
       alerts: []
     };
   },
 
   componentDidMount: function() {
+    this.getDevices();
+    this.checkAlerts();
+    setInterval(this.getDevices, 3000);
+    setInterval(this.checkAlerts, 3000);
+  },
+
+  getDevices: function() {
     this.getDeviceInterface().getDevices(
       function (resp) {
-        // devicesControlView is whether or not each device is showing its controls or not
-        // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
-        // add a controls class onTouch to show the controls
-        devicesControlView = _.map(resp, function(item) { return false; });
-        this.setState({ devices: resp, devicesControlView: devicesControlView });
+        this.setState({devices: resp});
       }.bind(this)
     );
-    this.checkAlerts();
-    setInterval(this.checkAlerts, 3000);
   },
 
   checkAlerts: function() {
     this.getAlertInterface().getAlerts(
       function (resp) {
-        // devicesControlView is whether or not each device is showing its controls or not
-        // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
-        // add a controls class onTouch to show the controls
-        this.setState({ alerts: resp });
+        this.setState({alerts: resp});
       }.bind(this)
     );
   },
 
   renderAlert: function(alert, index) {
     if (alert.state && alert.state.state) {
-      return (<Alert {...alert} />);
+      return (<Alert key={alert.id} {...alert} />);
     }
   },
 
@@ -85,8 +83,8 @@ var Home = React.createClass({
         name={device.name}
         host={this.props.deviceHost}
         mobile={this.props.mobile}
-        onClickModule={this.handleOnModuleClick.bind(this, index)}
-        showControls={this.state.devicesControlView[index]} />
+        onClickModule={this.handleOnModuleClick.bind(this, device.id)}
+        showControls={this.state.devicesControlView[device.id] || false} />
     );
   },
 
@@ -132,8 +130,7 @@ var Home = React.createClass({
     if (this.isMoving) {
       this.isMoving = false;
     } else {
-      var devicesControlView = _.map(this.state.devicesControlView, function(item) { return false;});
-      this.setState({devicesControlView: devicesControlView});
+      this.setState({devicesControlView: {}});
     }
   },
 
