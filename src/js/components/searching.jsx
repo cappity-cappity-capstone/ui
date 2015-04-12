@@ -4,7 +4,7 @@ var AuthInterface = require('interfaces/auth_interface.js');
 
 var Searching = React.createClass({
   getInitialState: function() {
-    return { dots: '', dotsInterval: null }
+    return {dots: '', dotsInterval: null, searchingInterval: null};
   },
   componentDidMount: function() {
     this.setState({

@@ -23,7 +23,7 @@ describe('components/page', function () {
 
   describe('with devices', function() {
     beforeEach(function() {
-      subject.setProps({
+      subject.setState({
         devices: [
           { id: '1', on: true, type: 'outlet', name: 'Kitchen Outlet' },
           { id: '2', on: false, type: 'lock', name: 'Cabinet' }
