@@ -2,9 +2,13 @@ var React = require('react');
 var _ = require('underscore');
 var md5 = require('js-md5');
 
+var Alert = require('components/alert.jsx');
 var Device = require('components/device.jsx');
 var SideMenu = require('components/side_menu.jsx');
 var Header = require('components/header.jsx');
+
+var DeviceInterface = require('interfaces/device_interface.js');
+var AlertInterface = require('interfaces/alert_interface.js');
 
 React.initializeTouchEvents(true);
 
@@ -20,14 +24,6 @@ function getViewportWidth() {
 
 var Home = React.createClass({
   propTypes: {
-    devices: React.PropTypes.arrayOf(
-      React.PropTypes.shape({
-        id: React.PropTypes.string.isRequired,
-        on: React.PropTypes.bool.isRequired,
-        type: React.PropTypes.string.isRequired,
-        name: React.PropTypes.string.isRequired
-      })
-    ).isRequired,
     deviceHost: React.PropTypes.string.isRequired,
     authHost: React.PropTypes.string.isRequired,
     mobile: React.PropTypes.bool.isRequired,
@@ -37,23 +33,50 @@ var Home = React.createClass({
     }).isRequired
   },
 
-  getDefaultProps: function() {
-    return {
-      devices: []
-    };
-  },
-
   getInitialState: function(){
     var widthCutoff  = 750;
     var viewportWidth = getViewportWidth();
     var menuExpanded = viewportWidth > widthCutoff;
     return {
       menuExpanded: menuExpanded,
-      devicesControlView: []
+      devicesControlView: [],
+      devices: [],
+      alerts: []
     };
   },
 
-  renderDevice: function(device, index){
+  componentDidMount: function() {
+    this.getDeviceInterface().getDevices(
+      function (resp) {
+        // devicesControlView is whether or not each device is showing its controls or not
+        // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
+        // add a controls class onTouch to show the controls
+        devicesControlView = _.map(resp, function(item) { return false; });
+        this.setState({ devices: resp, devicesControlView: devicesControlView });
+      }.bind(this)
+    );
+    this.checkAlerts();
+    setInterval(this.checkAlerts, 3000);
+  },
+
+  checkAlerts: function() {
+    this.getAlertInterface().getAlerts(
+      function (resp) {
+        // devicesControlView is whether or not each device is showing its controls or not
+        // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
+        // add a controls class onTouch to show the controls
+        this.setState({ alerts: resp });
+      }.bind(this)
+    );
+  },
+
+  renderAlert: function(alert, index) {
+    if (alert.state && alert.state.state) {
+      return (<Alert {...alert} />);
+    }
+  },
+
+  renderDevice: function(device, index) {
     return (
       <Device key={device.id}
         id={device.id}
@@ -68,13 +91,17 @@ var Home = React.createClass({
   },
 
   render: function(){
-    var renderedDevices = this.props.devices.map(this.renderDevice, this);
+    var renderedAlerts = this.state.alerts.map(this.renderAlert, this);
+    var renderedDevices = this.state.devices.map(this.renderDevice, this);
     var menuExpandedClass = this.state.menuExpanded ? "" : "menu-collapsed";
 
     return (
       <div>
         <SideMenu email={this.props.user.email} profileImageUrl={this.getGravatarUrl()} menuExpanded={this.state.menuExpanded} authHost={this.props.authHost} />
         <div className={menuExpandedClass} id="main-container" onTouchMove={this.swallowMovement} onTouchEnd={this.handleOffModuleAction} onClick={this.handleOffModuleAction}>
+          <div className="alerts">
+            {renderedAlerts}
+          </div>
           <Header homeName={this.props.user.name + "'s House"} onNavIconClick={this.handleNavIconClick}/>
           <div className="content">
             {renderedDevices}
@@ -129,7 +156,24 @@ var Home = React.createClass({
       this._emailHash = md5(email);
     }
     return this._emailHash;
+  },
+
+  getAlertInterface: function() {
+    if (!(this._alertInterface instanceof AlertInterface)) {
+      this._alertInterface = new AlertInterface(this.props.deviceHost);
+    }
+
+    return this._alertInterface;
+  },
+
+  getDeviceInterface: function() {
+    if (!(this._deviceInterface instanceof DeviceInterface)) {
+      this._deviceInterface = new DeviceInterface(this.props.deviceHost);
+    }
+
+    return this._deviceInterface;
   }
+
 });
 
 module.exports = Home;

@@ -1,0 +1,22 @@
+.alerts {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+
+  text-align: left;
+
+  z-index: 10000;
+
+  .alert {
+    display: block;
+
+    margin: 5px;
+    padding: 10px;
+
+    color: #a94442;
+    background-color: #f2dede;
+
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+  }
+}

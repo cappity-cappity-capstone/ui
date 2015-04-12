@@ -9,6 +9,8 @@ $delay-drawer-transition: .3s;
 // on the viewport size and is set when react initilizes
 // the view.
 #main-container {
+  position: relative;
+
   &.dark {
     background-color: $color-main-container-dark;
     .content {

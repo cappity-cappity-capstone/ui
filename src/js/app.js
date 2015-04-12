@@ -44,19 +44,7 @@ renderLoginPage = function(documentRoot) {
 }
 
 renderDevicesPage = function(documentRoot, user, mobile, authHost, deviceHost) {
-  var component = React.render(<Home user={user} deviceHost={deviceHost} authHost={authHost} mobile={mobile} />, documentRoot);
-
-  var deviceInterface = new DeviceInterface(deviceHost);
-  deviceInterface.getDevices(
-    function (resp) {
-      component.setProps({ devices: resp });
-      // devicesControlView is whether or not each device is showing its controls or not
-      // on desktop we do it on :hover, but on Mobile we handle touches and thus we need to
-      // add a controls class onTouch to show the controls
-      devicesControlView = _.map(resp, function(item) { return false; });
-      component.setState({ devicesControlView: devicesControlView });
-    }
-  );
+  React.render(<Home user={user} deviceHost={deviceHost} authHost={authHost} mobile={mobile} />, documentRoot);
 }
 
 renderSearchingPage = function(documentRoot, user, mobile, authHost) {
