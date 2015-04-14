@@ -10,7 +10,7 @@ var Login = require('components/login.jsx');
 var Searching = require('components/searching.jsx');
 
 //var authHost = 'http://localhost:2000';
-var authHost = 'http://cappitycappitycapstone.com';
+var authHost = '';
 
 window.onload = function() { renderPage(checkControlServer, renderLoginPage) };
 
