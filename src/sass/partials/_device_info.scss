@@ -57,6 +57,9 @@
     .close-button {
       height: 20px;
 
+      -webkit-flex: none;
+      flex: none;
+
       text-align: right;
 
       i {
@@ -68,6 +71,11 @@
 
     ul.nav {
       text-align: left;
+
+      -webkit-flex: none;
+      flex: none;
+
+      height: 26px;
 
       margin: 0;
       padding: 0;
@@ -101,8 +109,6 @@
     div.info-content {
       overflow-x: hidden;
       overflow-y: scroll;
-
-      padding: 10px 0;
 
       box-sizing: border-box;
 
