@@ -36,7 +36,7 @@ renderPage = function(successCallback, errorCallback) {
 };
 
 onLoginSuccess = function() {
-  renderPage(renderDevicesPage, renderLoginPage);
+  renderPage(checkControlServer, renderLoginPage);
 }
 
 renderLoginPage = function(documentRoot) {
@@ -47,13 +47,17 @@ renderDevicesPage = function(documentRoot, user, mobile, authHost, deviceHost) {
   React.render(<Home user={user} deviceHost={deviceHost} authHost={authHost} mobile={mobile} />, documentRoot);
 }
 
+onAssociationSuccess = function() {
+  renderPage(checkControlServer, renderLoginPage);
+}
+
 renderSearchingPage = function(documentRoot, user, mobile, authHost) {
-  React.render(<Searching authHost={authHost} renderPage={renderPage.bind(undefined, checkControlServer, renderLoginPage)} />, documentRoot);
+  React.render(<Searching authHost={authHost} renderPage={onAssociationSuccess} />, documentRoot);
 }
 
 checkControlServer = function(documentRoot, user, mobile, authHost) {
   if (user.controlServer) {
-    deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
+    var deviceHost = "http://" + user.controlServer.ip + ":" + user.controlServer.port;
     renderDevicesPage(documentRoot, user, mobile, authHost, deviceHost);
   } else {
     renderSearchingPage(documentRoot, user, mobile, authHost);
