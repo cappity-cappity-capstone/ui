@@ -35,16 +35,16 @@ var DeviceSchedule = React.createClass({
   handleDoneEditing: function() {
     this.setState({ editing: null });
   },
-  handleSaveSchedule: function(schedule) {
+  handleSaveSchedule: function(schedule, errorCallback) {
     schedule.startTime = schedule.startTime.format();
     if (schedule.endTime) schedule.endTime = schedule.endTime.format();
 
     this.getScheduleInterface().pushSchedule(schedule, function(response) {
+      this.setState({ editing: null });
       this.reload();
     }.bind(this), function(err) {
-      console.log(err);
+      errorCallback(err);
     });
-    this.setState({ editing: null });
   },
   handleDeleteSchedule: function(schedule) {
     return function(schedule) {

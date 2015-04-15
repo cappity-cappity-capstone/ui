@@ -42,11 +42,11 @@ AuthInterface.prototype = {
     request
       .put(this.host + '/auth/users/' + userId)
       .send(JSON.stringify(user))
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(user);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
@@ -54,11 +54,11 @@ AuthInterface.prototype = {
   deleteUser: function(userId, successHandler, errorHandler) {
     request
       .del(this.host + '/auth/users/' + userId)
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(userId);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
@@ -87,7 +87,7 @@ AuthInterface.prototype = {
         if (res.ok) {
           successHandler(camelizeKeys(res.body));
         } else {
-          errorHandler(res);
+          errorHandler(res.body);
         }
       });
   },
@@ -106,11 +106,11 @@ AuthInterface.prototype = {
     request
       .post(this.host + '/auth/control_servers')
       .send(server)
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
+      .end(function(res) {
+        if (res.ok) {
+          successHandler(res.body);
         } else {
-          successHandler(res);
+          errorHandler(res.body);
         }
       });
   },
@@ -119,11 +119,11 @@ AuthInterface.prototype = {
     request
       .put(this.host + '/auth/control_servers/' + serverId)
       .send(server)
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
+      .end(function(res) {
+        if (res.ok) {
+          successHandler(res.body);
         } else {
-          successHandler(res);
+          errorHandler(res.body);
         }
       });
   }

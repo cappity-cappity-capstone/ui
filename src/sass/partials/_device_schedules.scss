@@ -54,8 +54,17 @@
   .edit-schedule {
     text-align: left;
 
-    .back {
-      float: left;
+    .error {
+      display: block;
+
+      margin: 15px 5px 5px 5px;
+      padding: 10px;
+
+      color: #a94442;
+      background-color: #f2dede;
+
+      border: 1px solid #ebccd1;
+      border-radius: 4px;
     }
 
     table.details {
@@ -107,6 +116,8 @@
       margin: 0 auto;
 
       display: block;
+
+      text-align: center;
     }
 
     div.custom-select {

@@ -13,12 +13,12 @@ StateInterface.prototype = {
     request
       .post( this.host + '/api/devices/' + deviceId + '/state')
       .send(body)
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           res.body.state = res.body.state != "0.0";
           successHandler(res.body);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
@@ -26,9 +26,10 @@ StateInterface.prototype = {
   getState: function(deviceId, responseHandler, list) {
     request.get(
       this.host +  '/api/devices/' + deviceId + '/state',
-      function (err, res) {
-        if (err) throw err;
-        responseHandler(res.body);
+      function (res) {
+        if (res.ok) {
+          responseHandler(res.body);
+        }
       }
     );
   },
@@ -36,14 +37,15 @@ StateInterface.prototype = {
   getStates: function(deviceId, responseHandler) {
     request.get(
       this.host +  '/api/devices/' + deviceId + '/states',
-      function (err, res) {
-        if (err) throw err;
-        var states = camelizeKeys(JSON.parse(res.text));
-        states.forEach(function(state) {
-          state.state = parseFloat(state.state);
-          state.createdAt = moment(state.createdAt);
-        });
-        responseHandler(states);
+      function (res) {
+        if (res.ok) {
+          var states = camelizeKeys(JSON.parse(res.text));
+          states.forEach(function(state) {
+            state.state = parseFloat(state.state);
+            state.createdAt = moment(state.createdAt);
+          });
+          responseHandler(states);
+        }
       }
     );
   }

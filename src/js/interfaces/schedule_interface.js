@@ -11,15 +11,15 @@ ScheduleInterface.prototype = {
   getTasks: function(deviceId, responseHandler) {
     request
       .get(this.host + '/api/devices/' + deviceId + '/tasks')
-      .end(function(err, res) {
-        if (err) {
-          throw err;
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           var tasks = camelizeKeys(JSON.parse(res.text));
           tasks.forEach(function(task) {
             task.state = parseFloat(task.state);
           });
           responseHandler(tasks);
+        } else {
+          console.log
         }
       });
   },
@@ -31,11 +31,11 @@ ScheduleInterface.prototype = {
       r = request.post(this.host + '/api/schedules/' + schedule.taskId);
     }
     r.send(JSON.stringify(decamelizeKeys(schedule)))
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(res.body);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
@@ -44,11 +44,11 @@ ScheduleInterface.prototype = {
     request
       .put(this.host + '/api/schedules/' + deviceId)
       .send(JSON.stringify(schedule))
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(device);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
@@ -56,10 +56,8 @@ ScheduleInterface.prototype = {
   getSchedules: function(responseHandler) {
     request
       .get(this.host + '/api/schedules')
-      .end(function(err, res) {
-        if (err) {
-          throw err;
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           responseHandler(res.body);
         }
       });
@@ -68,10 +66,8 @@ ScheduleInterface.prototype = {
   getSchedule: function(scheduleId, responseHandler) {
     request
       .get(this.host + '/api/schedules/' + scheduleId)
-      .end(function(err, res) {
-        if (err) {
-          throw err;
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           responseHandler(res.body);
         }
       });
@@ -80,10 +76,8 @@ ScheduleInterface.prototype = {
   getDeviceSchedule: function(deviceId, responseHandler) {
     request
       .get(this.host + '/api/devices/' + deviceId + '/schedules')
-      .end(function(err, res) {
-        if (err) {
-          throw err;
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           responseHandler(res.body);
         }
       });
@@ -93,11 +87,11 @@ ScheduleInterface.prototype = {
     request
       .put(this.host + '/api/schedules/' + scheduleId)
       .send(JSON.stringify(schedule))
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(schedule);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
@@ -105,11 +99,11 @@ ScheduleInterface.prototype = {
   deleteSchedule: function(scheduleId, successHandler, errorHandler) {
     request
       .del(this.host + '/api/schedules/' + scheduleId)
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(scheduleId);
+        } else {
+          errorHandler(res.body);
         }
       });
   }

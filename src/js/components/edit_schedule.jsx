@@ -46,6 +46,7 @@ var EditSchedule = React.createClass({
     }
 
     return {
+      error: null,
       repeat: repeat,
       intervalCoefficient: intervalCoefficient,
       intervalBase: intervalBase,
@@ -59,7 +60,7 @@ var EditSchedule = React.createClass({
     this.setState({ repeat: repeat === 'yes' });
   },
   setIntervalCoefficient: function(event) {
-    var intervalCoefficient = parseFloat(event.target.value);
+    var intervalCoefficient = event.target.value;
     this.setState({ intervalCoefficient: intervalCoefficient });
   },
   setIntervalBase: function(event) {
@@ -94,8 +95,15 @@ var EditSchedule = React.createClass({
       startTime: this.state.startTime.clone()
     };
 
+    var intervalCoefficient = parseFloat(intervalCoefficient);
+
     if (this.state.repeat) {
-      newSchedule.interval = this.state.intervalBase * this.state.intervalCoefficient;
+      if (isNaN(intervalCoefficient)) {
+        this.setState({ error: 'Please set a numerical repeat number' });
+        return;
+      } else {
+        newSchedule.interval = this.state.intervalBase * parseFloat(this.state.intervalCoefficient);
+      }
     } else {
       newSchedule.interval = -1;
     }
@@ -104,7 +112,23 @@ var EditSchedule = React.createClass({
       newSchedule.endTime = this.state.endTime.clone();
     }
 
-    this.props.handleSaveSchedule(newSchedule);
+    this.props.handleSaveSchedule(newSchedule, function(err) {
+      this.setState({ error: err });
+    }.bind(this));
+  },
+  closeError: function() {
+    this.setState({ error: null });
+  },
+
+  renderErrors: function() {
+    if (this.state.error) {
+      return (
+        <div className="error">
+          {this.state.error}
+          <Icon onClick={this.closeError} type="times" style={{ float: 'right' }} />
+        </div>
+      );
+    }
   },
 
   renderAction: function() {
@@ -196,6 +220,7 @@ var EditSchedule = React.createClass({
         <span className="back" onClick={this.props.handleCancel}>
           <Icon type="arrow-left"/>
         </span>
+        {this.renderErrors()}
         <table className="details">
           <tbody>
             {this.renderAction()}

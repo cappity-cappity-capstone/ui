@@ -37,11 +37,11 @@ DeviceInterface.prototype = {
   getDevice: function(deviceId, responseHandler) {
     request
       .get(this.host + '/api/devices/' + deviceId)
-      .end(function(err, res) {
-        if (err) {
-          throw err;
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           responseHandler(res.body);
+        } else {
+          console.log(res.body);
         }
       });
   },
@@ -50,11 +50,11 @@ DeviceInterface.prototype = {
     request
       .put(this.host + '/api/devices/' + deviceId)
       .send(JSON.stringify(device))
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(device);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
@@ -62,11 +62,11 @@ DeviceInterface.prototype = {
   deleteDevice: function(deviceId, successHandler, errorHandler) {
     request
       .delete(this.host + '/api/devices/' + deviceId)
-      .end(function(err, res) {
-        if (err) {
-          errorHandler(err);
-        } else {
+      .end(function(res) {
+        if (res.ok) {
           successHandler(deviceId);
+        } else {
+          errorHandler(res.body);
         }
       });
   },
