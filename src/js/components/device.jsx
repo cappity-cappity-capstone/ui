@@ -83,6 +83,10 @@ var Device = React.createClass({
     host: React.PropTypes.string.isRequired
   },
 
+  componentWillReceiveProps: function(nextProps) {
+    this.setState({ deviceState: nextProps.on ? 'on' : 'off' });
+  },
+
   render: function() {
     var status = STATUS_COPY[this.props.type][this.state.deviceState];
     var offVerb = VERB_COPY[this.props.type].off;
