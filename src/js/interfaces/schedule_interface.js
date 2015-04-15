@@ -19,7 +19,7 @@ ScheduleInterface.prototype = {
           });
           responseHandler(tasks);
         } else {
-          console.log
+          console.log(res.body)
         }
       });
   },
